@@ -1,0 +1,11 @@
+*.log
+*.pot
+*.pyc
+*.pdf
+*.ico
+*.sqlite3
+__pycache__/
+media/
+.vscode
+.DS_Store
+static/*.png
