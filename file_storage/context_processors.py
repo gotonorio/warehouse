@@ -1,4 +1,4 @@
-from managing_doc.models import BigCategory
+from file_storage.models import BigCategory
 
 
 def menu(request):

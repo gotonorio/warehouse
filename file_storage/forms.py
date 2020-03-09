@@ -1,6 +1,6 @@
 from django import forms
 
-from managing_doc.models import BigCategory, Category, File
+from file_storege.models import BigCategory, Category, File
 
 
 class FileForm(forms.ModelForm):
