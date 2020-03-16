@@ -1,0 +1,213 @@
+
+/* 固定フッタスタイル */
+html {
+    position: relative;
+    min-height: 100%;
+    margin:0px;
+    background-color:#ffffff;
+    color:#333333;
+}
+/*
+  my_footerを使う場合、本体をmargin-bottomでfooterエリアを確保しなければならない。
+*/
+main {
+    font-family: BlinkMacSystemFont,"Helvetica Neue",HiraginoSans-W4,"Yu Gothic Medium",Meiryo,sans-serif;
+    font-size: 95%;
+    font-weight: medium;
+    margin-bottom: 40px; /* フッタの下側マージンの高さ */
+}
+/* footerだとBulmaのfooterを上書きしてしまう */
+.my_footer {
+    font-size: 80%;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px; /* ここでフッタの固定高さを設定 */
+    line-height: 40px; /* ここでテキストを垂直に中央に配置 */
+    background-color: #f5f5f5;
+}
+/*
+  https://webcommu.net/phone-table-scroll/
+  scrollクラスでtable要素を囲む。
+*/
+table{
+  width:100%;
+}
+.scroll{
+  overflow: auto;
+  white-space: nowrap;
+}
+.scroll::-webkit-scrollbar{
+  height: 5px;
+}
+.scroll::-webkit-scrollbar-track{
+  background: #F1F1F1;
+}
+.scroll::-webkit-scrollbar-thumb {
+   background: #BCBCBC;
+}
+/* 
+セル幅を固定して、オーバーする場合はスクロールする。divでclass設定すること。
+<td><div class="cell_scroll">テキスト</div></td>
+*/
+div.cell_min_200 {
+  min-width: 200px;
+}
+div.cell_240 {
+  max-width: 240px;
+  overflow: auto;
+}
+div.cell_400 {
+  max-width: 400px;
+  overflow: auto;
+}
+div.cell_420 {
+  max-width: 420px;
+  overflow: auto;
+}
+/* 入力フォーム用テーブルの設定 */
+.form_table {
+  width: 480px;
+  margin: auto;
+}
+/* https://htmlcss.step-learn.com/contents/c031-table-width-percent.html */
+.tbl_width {
+  table-layout: fixed;
+  width: 100%;
+}
+th.width10 {
+  width: 10%;
+  min-width: 10%;
+}
+th.width20 {
+  width: 20%;
+  min-width: 20%;
+}
+th.width30 {
+  width: 30%;
+  min-width: 30%;
+}
+th.width40 {
+  width: 40%;
+  min-width: 40%;
+}
+th.width50 {
+  width: 50%;
+  min-width: 50%;
+}
+th.width60 {
+  width: 60%;
+  min-width: 60%;
+}
+th.width70 {
+  width: 70%;
+  min-width: 70%;
+}
+th.width80 {
+  width: 80%;
+  min-width: 80%;
+}
+
+a.vmenu {
+    text-decoration: none; 
+    color:#000000; /* リンク要素のデフォルトの青を黒に */
+    font-size:100%;
+    /*猫の足跡は背景として敷く。背景画像は繰り返さず、横0、上10px空けて配置する*/
+    background:url(/static/cat_foot.png) no-repeat 0 7px ;
+    /*猫の足跡アイコンとメニュー項目の文字がカブらないように、左側を20px空ける*/
+    padding:3px 0 3px 20px;
+}
+a.vmenu:hover {
+    color:#666666;
+    background-color:#ffdcd7
+}
+/* tableの列を改行禁止にする */
+td.nowrap {
+  white-space: nowrap;
+  }
+th {
+  white-space: nowrap;
+}
+
+/* 2019/08/02現在、safariでBulmaのclass = "select"が機能しないため、下記cssを使用。*/
+/* https://coliss.com/articles/build-websites/operation/css/consistent-select-element-styling.html*/
+.select-css {
+  display: block;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #444;
+  line-height: 1.0;
+  padding: .6em 1.4em .5em .8em;
+  max-width: 100%; 
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid #aaa;
+  box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+  border-radius: .5em;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+    linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+  background-repeat: no-repeat, repeat;
+  background-position: right .7em top 50%, 0 0;
+  background-size: .65em auto, 100%;
+}
+
+.select-css::-ms-expand {
+  display: none;
+}
+.select-css:hover {
+  border-color: #888;
+}
+.select-css:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+  box-shadow: 0 0 0 3px -moz-mac-focusring;
+  color: #222; 
+  outline: none;
+}
+.select-css option {
+  font-weight:normal;
+}
+/*
+.nowrap {
+  white-space: nowrap;
+}
+*/
+/*
+ https://obel.hatenablog.jp/entry/20160626/1466937585 
+ md_containerクラスは画面幅が768px以上になったら、width:748px、margin:autoとなる。
+*/
+@media screen and (min-width: 375px) {
+  .ss_container {
+    width: 355px;
+    margin: auto;
+  }
+}
+@media screen and (min-width: 512px) {
+  .sm_container {
+    width: 500px;
+    margin: auto;
+  }
+}
+@media screen and (min-width: 768px) {
+  .md_container {
+    width: 748px;
+    margin: auto;
+  }
+}
+@media screen and (min-width: 992px) {
+  .lg_container {
+    width: 972px;
+    margin: auto;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .xl_container {
+    width: 1180px;
+    margin: auto;
+  }
+}

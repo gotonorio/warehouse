@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/png" href="{{STATIC_URL}}/static/favicon.ico" />
+  {# css #}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css" rel="stylesheet">
+  <link href="{% static 'mycss/mycss.css' %}" rel="stylesheet">
+  <title>{% block title %}文書資料{% endblock %}</title>
+</head>
+<body>
+  <!-- navbar -->
+  <nav class="navbar is-black is-size-6" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="{% url 'showcase:news_card' %}">ホーム</a>
+      {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+      <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+    <div id="navbarMypage" class="navbar-menu">
+      <div class="navbar-start">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">メインメニュー</a>
+          <div class="navbar-dropdown">
+            <a href="{% url 'showcase:news_card' %}" class="dropdown-item is-size-6">お知らせ</a>
+            <a href="{% url 'information:information' %}" class="dropdown-item is-size-6">その他情報<a>
+            <hr class="navbar-divider">
+            <a href="{% static 'pamphlet.pdf' %}" class="dropdown-item is-size-6">パンフレット<a>
+          </div>
+        </div>
+        <a class="navbar-item" href="https://accounting2.sophiagardens.org" target="_blank">会計資料</a>
+      </div>
+    
+      <div class="navbar-end">
+        {% if perms.showcase.add_news or perms.file_uploader.add_file %}
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">管理者用</a>
+            <div class="navbar-dropdown">
+              {% if perms.showcase.add_news %}
+                <a class="dropdown-item is-size-6" href="{% url 'showcase:news_list' %}">お知らせ管理</a>
+              {% endif %}
+              {% if perms.file_uploader.add_file %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item is-size-6" href="{% url 'file_uploader:file_index' %}">文書ファイル登録・修正</a>
+                <a class="dropdown-item is-size-6" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if not user.id %}
+          <a class="navbar-item" href="{% url 'permit:login' %}">区分所有者ログイン</a>
+        {% else %}
+          <a class="navbar-item" href="{% url 'permit:logout' %}">ログアウト</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  <!-- ヘッダー（hero) -->
+  {% block header %}
+  {% endblock %}
+  <br>
+  <!-- contents -->
+  <div class="container is-fluid">
+    <div class="columns">
+      <!-- 左サイド -->
+      <div class="column is-3">
+        <div class="content">
+          <table class="table is-bordered">
+            <thead>
+              <tr class="has-background-dark">
+                <th class="has-text-centered has-text-white">文書資料</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for menu in menu_list %}
+              <tr>
+                <td class="has-text-left">
+                  <a href="{% url 'showcase:bigcategory' menu.pk %}" class="vmenu">{{menu}}</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p>*：区分所有者専用</p>
+        </div>
+        <p>検索キーワード</p>
+        <form method="GET" action="{% url 'showcase:search' %}">
+          <input type="search" class="input" placeholder="Search" name="keyword" value={{keyword}}>
+          <button type="submit" class="button is-small" style="display:none"></button>
+        </form>
+      </div>
+      <!-- 本体 -->
+      <div class="column is-9 ">
+        <main>
+          {% block content %}
+          {% endblock %}
+        </main>
+      </div>
+    </div>
+  </div>
+  <!-- フッタ -->
+  <footer class="my_footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <span class="text-muted">
+          &copy; 2016 -
+          <script language="JavaScript" type="text/javascript">
+            document.write(new Date().getFullYear());
+          </script> ソフィア・ガーデンズ川崎 管理組合 gotonorio@gmail.com
+        </span>
+      </div>
+    </div>
+  </footer>
+  {# 参考： https://bulma.io/documentation/components/navbar/ #}
+  {# ToDo ハンバーガアイコン用のjs。staticから読み込むことはできないか？ #}
+  <script>
+  // navbar-burgerのボタン処理。https://bulma.io/documentation/components/navbar/
+    document.addEventListener('DOMContentLoaded', () => {
+      // Get all "navbar-burger" elements
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      // Check if there are any navbar burgers
+      if ($navbarBurgers.length > 0) {
+        // Add a click event on each of them
+        $navbarBurgers.forEach( el => {
+          el.addEventListener('click', () => {
+              // Get the target from the "data-target" attribute
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

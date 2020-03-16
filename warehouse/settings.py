@@ -146,9 +146,9 @@ STATICFILES_DIRS = (
 AUTH_USER_MODEL = 'register.User'
 NUMBER_GROUPING = 3
 
-#LOGIN_URL = 'register:login'
+LOGIN_URL = 'register:login'
 #LOGIN_REDIRECT_URL = 'showcase:news_card'
-#LOGOUT_REDIRECT_URL = 'register:login'
+LOGOUT_REDIRECT_URL = 'register:login'
 
 # ブラウザを閉じたらログアウトさせる。
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
