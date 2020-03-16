@@ -148,7 +148,7 @@ AUTH_USER_MODEL = 'register.User'
 NUMBER_GROUPING = 3
 
 LOGIN_URL = 'register:login'
-#LOGIN_REDIRECT_URL = 'showcase:news_card'
+LOGIN_REDIRECT_URL = 'notice:news_card'
 LOGOUT_REDIRECT_URL = 'register:login'
 
 # ブラウザを閉じたらログアウトさせる。

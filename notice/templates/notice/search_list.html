@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- navbar base.html -->
+
+{% block header %}
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title"> ソフィア・ガーデンズ川崎 </h1>
+      <h4 class="subtitle"> 管理組合 電子データ </h4>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block content %}
+{# 検索結果をリスト表示する #}
+<table class="table table-sm table-striped table-bordered table-responsive-sm mx-auto">
+  <thead>
+    <tr class="bg-dark text-white">
+      <th class="w-20 text-center">文書名</th>
+      <th class="w-80 text-center">概要</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for file in file_list %}
+    <tr>
+      <td class="text-left"><a href="{{file.src.url}}" target="_blank">{{file.title}}</a></td>
+      <td class="text-left">{{file.comment|linebreaksbr|urlize}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include "page.html" %}
+{% endblock %}

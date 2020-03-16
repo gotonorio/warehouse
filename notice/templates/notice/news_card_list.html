@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- navbar base.html -->
+
+{% block header %}
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title"> ソフィア・ガーデンズ川崎 </h1>
+      <h4 class="subtitle"> 管理組合 ホームページ (ver-1.0.0) </h4>
+      <p>IEやEdgeではドロップダウンメニューが動作不安定です。取り敢えずchromeを使ってください。</p>
+    </div>
+  </div>
+</section>
+<br>
+{% endblock %}
+{% block content %}
+{% for news in news_list %}
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title has-background-dark has-text-white is-size-5">{{news.title}}</p>
+  </header>
+  <p>{{ news.created_at|date }}</p>
+  <div class="card-content">
+    <p>{{news.comment|safe|linebreaksbr}}</p>
+  </div>
+</div>
+<br>
+{% endfor %}
+{% include 'page.html' %}
+{% endblock %}

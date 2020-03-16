@@ -1,0 +1,43 @@
+{% extends "base_single_page.html" %}
+{% block navbar %}
+<!-- navbar -->
+<nav class="navbar is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">ファイル管理</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarMypage" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{% url 'showcase:news_card' %}" target="_blank">ホーム</a>
+      <a class="navbar-item" href="{% url 'library:file_index' %}">ファイル一覧</a>
+      <a class="navbar-item" href="{% url 'library:category_index' %}">カテゴリ一覧</a>
+      <a class="navbar-item" href="{% url 'library:big_category_index' %}">親カテゴリ一覧</a>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+{% block file_page %}active{% endblock %}
+{% block content %}
+<div class="container is-fluid">
+  <div class="content has-text-centered">
+    <br>
+    <form action="" method="POST" enctype='multipart/form-data'>
+      <table class="table is-narrow is-responsible">
+      {{form}}
+      </table>
+      {% csrf_token %}
+      <div class="has-text-centered">
+        <button type="submit" class="button is-primary" value="send" name="action">送信する</button>
+        <button type="submit" class="button is-primary" value="send_more" name="action">送信してもう1つ追加</button>
+        <a class="button is-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
+      </div>
+    </form>
+  </div>
+  <br>
+</div>
+{% endblock %}

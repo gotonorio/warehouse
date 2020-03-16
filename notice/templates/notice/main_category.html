@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- navbar base.html -->
+
+{% block header %}
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title"> ソフィア・ガーデンズ川崎 </h1>
+      <h4 class="subtitle">{{ big_category_name }}</h4>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{# 親カテゴリに属するカテゴリ毎にループを回して、各カテゴリごとにファイルをtableで表示させる。 #}
+{% block content %}
+{% for category in category_list %}
+  <div class="content">
+    <h3 class="has-text-centered">{{category.0.category}}</h3>
+  </div>
+  <table class="table is-narrow is-striped is-bordered">
+    <thead>
+      <tr class="has-background-dark">
+        <th class="has-text-centered has-text-white">文書名</th>
+        <th class="has-text-centered has-text-white">概要</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for file in category %}
+      <tr>
+        {% if file.download %}
+          <td class="has-text-left"><a href="{{file.src.url}}" download>{{file.title}}</a></td>
+        {% else %}
+          <td class="has-text-left"><a href="{{file.src.url}}" target="_blank">{{file.title}}</a></td>
+        {% endif %}
+        {% if forloop.counter < comment_limit %}
+          <td class="has-text-left">{{file.comment|escape|linebreaksbr|urlize}}</td>
+        {% else %}
+          <td></td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br>
+{% endfor %}
+{% endblock %}

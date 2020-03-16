@@ -1,0 +1,70 @@
+{% extends "base_single_page.html" %}
+{% block navbar %}
+<!-- navbar -->
+<nav class="navbar is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">ファイル管理</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarMypage" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{% url 'showcase:news_card' %}" target="_blank">ホーム</a>
+      <a class="navbar-item" href="{% url 'library:file_index' %}">ファイル一覧</a>
+      <a class="navbar-item" href="{% url 'library:category_index' %}">カテゴリ一覧</a>
+      <a class="navbar-item" href="{% url 'library:big_category_index' %}">親カテゴリ一覧</a>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+{% block content %}
+<div class="md_container is-fluid">
+  <div class="content has-text-centered">
+    <h3>親カテゴリ一覧</h3>
+  </div>
+  <a href="{% url 'library:big_category_create' %}" class="button is-primary">新規作成</a>
+  <a href="{% url 'showcase:news_card' %}" class="button is-primary">戻る</a>      
+  <br>
+  <div class="scroll">
+    <table class="table is-narrow">
+      <thead>
+        <tr>
+          <th class="has-text-centered">親カテゴリ名</th>
+          <th class="has-text-centered">作成日</th>
+          <th class="has-text-centered">order</th>
+          <th class="has-text-centered">#</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pcategory in bigcategory_list %}
+          <tr>
+            <td class="has-text-left">{{ pcategory.name }}</td>
+            <td class="has-text-left">{{ pcategory.created_at }}</td>
+            <td class="has-text-centered">{{ pcategory.order }}</td>
+            <td>
+                <a href="{% url 'library:big_category_update' pcategory.pk %}" class="button has-background-grey-lighter is-small">
+                  更新
+                </a>
+                <a href="{% url 'library:big_category_delete' pcategory.pk %}" class="button has-background-grey-lighter is-small">
+                  削除 
+                </a>
+                <a href="{% url 'library:category_big' pcategory.pk %}" class="button has-background-grey-lighter is-small">
+                  カテゴリのファイル一覧
+                </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <div class="text-center">
+  {% include "page.html" %}
+  </div>
+  <br>
+</div>
+{% endblock %}

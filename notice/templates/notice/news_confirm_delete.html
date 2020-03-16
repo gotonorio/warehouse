@@ -1,0 +1,18 @@
+{% extends "base_single_page.html" %}
+{% block content %}
+<div class="sm_container">
+  <br>
+  <form action="" method="POST" enctype='multipart/form-data'>
+    <div class="content ">
+      <h4>タイトル:{{ news.title }}</h4>
+      <p>カテゴリ名:{{ news.comment }}</p>
+      <hr>
+      <div class="has-text-centered">
+        <button type="submit" class="button is-primary">削除する</button>
+        <a class="button is-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
+      </div>
+    </div>
+    {% csrf_token %}
+  </form>
+</div>
+{% endblock %}

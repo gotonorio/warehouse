@@ -1,0 +1,37 @@
+{% extends "base_single_page.html" %}
+{% load static %}
+
+{% block navbar %}
+<!-- navbar -->
+<nav class="navbar is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">ファイル管理</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarMypage" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{% url 'showcase:news_card' %}" target="_blank">ホーム</a>
+      <a class="navbar-item" href="{% url 'library:file_index' %}">ファイル一覧</a>
+      <a class="navbar-item" href="{% url 'library:category_index' %}">カテゴリ一覧</a>
+      <a class="navbar-item" href="{% url 'library:big_category_index' %}">親カテゴリ一覧</a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+{% block content %}
+<div class="container">
+  <form action="" method="POST" enctype='multipart/form-data'>
+    <div class="content has-text-centered">
+      <p>親カテゴリ名:{{ bigcategory.name }}</p>
+      <button type="submit" class="button is-danger">削除する</button>
+      <a href="{% url 'library:big_category_index' %}" class="button is-primary">やめる</a>
+    </div>
+    {% csrf_token %}
+  </form>
+</div>
+{% endblock %}
