@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'register.apps.RegisterConfig',
-    'file_storage.apps.FileStorageConfig',
+    'library.apps.LibraryConfig',
+    'notice.apps.NoticeConfig',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'file_storage.context_processors.menu',
+                'library.context_processors.menu',
             ],
         },
     },
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'warehouse.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'warehouse.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'wh2.sqlite3'),
     }
 }
 

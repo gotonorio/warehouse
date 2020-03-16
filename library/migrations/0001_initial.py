@@ -3,7 +3,7 @@
 from django.db import migrations, models
 import django.db.models.deletion
 import django.utils.timezone
-import file_storage.models
+import library.models
 
 
 class Migration(migrations.Migration):
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('order', models.IntegerField(default=0, verbose_name='表示順')),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now, verbose_name='作成日')),
                 ('limit', models.BooleanField(default=False, verbose_name='制限')),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='file_storage.BigCategory', verbose_name='親カテゴリ')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='library.BigCategory', verbose_name='親カテゴリ')),
             ],
         ),
         migrations.CreateModel(
@@ -42,12 +42,12 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(blank=True, max_length=255, verbose_name='タイトル')),
                 ('comment', models.TextField(blank=True, verbose_name='コメント')),
                 ('table_of_contents', models.TextField(blank=True, verbose_name='目次')),
-                ('src', models.FileField(upload_to=file_storage.models.get_upload_to, verbose_name='ファイル')),
+                ('src', models.FileField(upload_to=library.models.get_upload_to, verbose_name='ファイル')),
                 ('order', models.IntegerField(default=0, verbose_name='表示順')),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now, verbose_name='作成日')),
                 ('alive', models.BooleanField(default=True, verbose_name='表示')),
                 ('download', models.BooleanField(default=False, verbose_name='ダウンロード')),
-                ('category', models.ForeignKey(default=file_storage.models.default_category, on_delete=django.db.models.deletion.PROTECT, to='file_storage.Category', verbose_name='カテゴリ')),
+                ('category', models.ForeignKey(default=library.models.default_category, on_delete=django.db.models.deletion.PROTECT, to='library.Category', verbose_name='カテゴリ')),
             ],
         ),
     ]

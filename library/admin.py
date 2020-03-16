@@ -1,5 +1,5 @@
 from django.contrib import admin
-from file_storage.models import BigCategory, Category, File
+from library.models import BigCategory, Category, File
 
 
 class BigCategoryAdmin(admin.ModelAdmin):
