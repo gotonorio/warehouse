@@ -39,7 +39,7 @@ class FileCategoryView(PermissionRequiredMixin, generic.ListView):
         """ カテゴリでfilter. """
         category_pk = self.kwargs['category_pk']
         return File.objects.filter(
-            category__pk=category_pk).order_by('-order')
+            category__pk=category_pk).order_by('-rank')
 
     def get_context_data(self, *args, **kwargs):
         """ カテゴリのpkをテンプレートへ渡す. """
@@ -189,7 +189,7 @@ class BigCategoryIndexView(PermissionRequiredMixin, generic.ListView):
     permission_required = ("library.add_file")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-    queryset = BigCategory.objects.order_by('order')
+    queryset = BigCategory.objects.order_by('rank')
     paginate_by = 10
 
 

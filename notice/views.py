@@ -81,17 +81,17 @@ class BigCategoryView(generic.TemplateView):
         # ログインしている場合は表示。していない場合はlimit=Trueのカテゴリは非表示とする。
         if user_id is None:
             category_obj = Category.objects.filter(
-                parent=big_category, limit=False).order_by('-order', '-created_at')
+                parent=big_category, limit=False).order_by('-rank', '-created_at')
         else:
             category_obj = Category.objects.filter(
-                parent=big_category).order_by('-order', '-created_at')
+                parent=big_category).order_by('-rank', '-created_at')
         category_list = []
         # settings.pyでSELECT構文のLIMIT値を設定してある。
         limit = settings.SELECT_LIMIT_NUM
         for i in category_obj:
             file_obj = File.objects.filter(
                 category=i.pk).filter(
-                    alive=True).order_by('-order', '-created_at')[:limit]
+                    alive=True).order_by('-rank', '-created_at')[:limit]
             file_list = []
             for j in file_obj:
                 file_list.append(j)

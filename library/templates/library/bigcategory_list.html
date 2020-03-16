@@ -35,7 +35,7 @@
         <tr>
           <th class="has-text-centered">親カテゴリ名</th>
           <th class="has-text-centered">作成日</th>
-          <th class="has-text-centered">order</th>
+          <th class="has-text-centered">rank</th>
           <th class="has-text-centered">#</th>
         </tr>
       </thead>
@@ -44,7 +44,7 @@
           <tr>
             <td class="has-text-left">{{ pcategory.name }}</td>
             <td class="has-text-left">{{ pcategory.created_at }}</td>
-            <td class="has-text-centered">{{ pcategory.order }}</td>
+            <td class="has-text-centered">{{ pcategory.rank }}</td>
             <td>
                 <a href="{% url 'library:big_category_update' pcategory.pk %}" class="button has-background-grey-lighter is-small">
                   更新

@@ -41,7 +41,7 @@
         <th class="has-text-centered">タイトル</th>
         <th class="has-text-centered">カテゴリ</th>
         <th class="has-text-centered">表示</th>
-        <th class="has-text-centered">order</th>
+        <th class="has-text-centered">rank</th>
         <th class="has-text-centered">#</th>
       </tr>
     </thead>
@@ -51,7 +51,7 @@
         <td class="has-text-left">{{file.title}}</td>
         <td class="nowrap"><a href="{% url 'library:file_category' file.category.pk %}"><div class="cell_240">{{file.category.name}}</div></a></td>
         <td class="has-text-centered">{{ file.alive }}</td>
-        <td class="has-text-centered">{{ file.order }}</td>
+        <td class="has-text-centered">{{ file.rank }}</td>
         <td class="nowrap">
           <a href="{% url 'library:file_update' file.pk %}" class="button has-background-grey-lighter is-small">
             更新

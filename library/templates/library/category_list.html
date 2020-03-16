@@ -41,7 +41,7 @@
         <th class="has-text-centered">ファイルパス名</th>
         <th class="has-text-centered">親カテゴリ名</th>
         <th class="has-text-centered">ログイン制限</th>
-        <th class="has-text-centered">order</th>
+        <th class="has-text-centered">rank</th>
         <th class="has-text-centered">#</th>
       </tr>
     </thead>
@@ -52,7 +52,7 @@
         <td class="has-text-left">{{ category.path_name }}</td>
         <td class="has-text-left">{{ category.parent }}</td>
         <td class="has-text-centered">{{ category.limit }}</td>
-        <td class="has-text-centered">{{ category.order }}</td>
+        <td class="has-text-centered">{{ category.rank }}</td>
         <td class="has-text-left nowrap">
           <a href="{% url 'library:category_update' category.pk %}" class="button has-background-grey-lighter is-small">
             更新

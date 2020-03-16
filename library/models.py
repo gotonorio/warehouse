@@ -8,7 +8,7 @@ from django.utils import timezone
 
 class BigCategory(models.Model):
     name = models.CharField('親カテゴリ名', max_length=255, null=True)
-    order = models.IntegerField('表示順', default=0)
+    rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
 
     def __str__(self):
@@ -21,7 +21,7 @@ class Category(models.Model):
     path_name = models.CharField('ディレクトリ名', max_length=255)
     parent = models.ForeignKey(BigCategory, verbose_name='親カテゴリ',
                                on_delete=models.PROTECT, blank=True, null=True)
-    order = models.IntegerField('表示順', default=0)
+    rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
     limit = models.BooleanField('制限', default=False)
 
@@ -59,7 +59,7 @@ class File(models.Model):
     comment = models.TextField('コメント', blank=True)
     table_of_contents = models.TextField('目次', blank=True)
     src = models.FileField('ファイル', upload_to=get_upload_to)
-    order = models.IntegerField('表示順', default=0)
+    rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
     alive = models.BooleanField('表示', default=True)
     download = models.BooleanField('ダウンロード', default=False)
@@ -98,7 +98,7 @@ from django.utils import timezone
 
 class BigCategory(models.Model):
     name = models.CharField('親カテゴリ名', max_length=255, null=True)
-    order = models.IntegerField('表示順', default=0)
+    rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
 
     def __str__(self):
@@ -111,7 +111,7 @@ class Category(models.Model):
     path_name = models.CharField('ディレクトリ名', max_length=255)
     parent = models.ForeignKey(BigCategory, verbose_name='親カテゴリ',
                                on_delete=models.PROTECT, blank=True, null=True)
-    order = models.IntegerField('表示順', default=0)
+    rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
     limit = models.BooleanField('制限', default=False)
 
@@ -149,7 +149,7 @@ class File(models.Model):
     comment = models.TextField('コメント', blank=True)
     table_of_contents = models.TextField('目次', blank=True)
     src = models.FileField('ファイル', upload_to=get_upload_to)
-    order = models.IntegerField('表示順', default=0)
+    rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
     alive = models.BooleanField('表示', default=True)
     download = models.BooleanField('ダウンロード', default=False)

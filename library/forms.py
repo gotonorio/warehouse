@@ -11,7 +11,7 @@ class FileForm(forms.ModelForm):
     class Meta:
         model = File
         fields = ("title", "category", "comment", "table_of_contents",
-                  "src", "order", "created_at", "alive", "download")
+                  "src", "rank", "created_at", "alive", "download")
         # field毎に異なるclassを設定する場合には、この方法を取る。
         widgets = {
             'title': forms.TextInput(attrs={
@@ -29,7 +29,7 @@ class FileForm(forms.ModelForm):
             'src': forms.ClearableFileInput(attrs={
                 'class': "file is-size-6",
             }),
-            'order': forms.TextInput(attrs={
+            'rank': forms.TextInput(attrs={
                 'class': "input is-size-6",
             }),
             'created_at': forms.DateTimeInput(attrs={
@@ -49,7 +49,7 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ('name', 'path_name', 'parent',
-                  'order', 'created_at', 'limit')
+                  'rank', 'created_at', 'limit')
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': "input is-size-6",
@@ -60,7 +60,7 @@ class CategoryForm(forms.ModelForm):
             'parent': forms.Select(attrs={
                 'class': "select is-size-6",
             }),
-            'order': forms.TextInput(attrs={
+            'rank': forms.TextInput(attrs={
                 'class': "input is-size-6",
             }),
             'created_at': forms.DateTimeInput(attrs={
@@ -76,12 +76,12 @@ class BigCategoryForm(forms.ModelForm):
     """ 親Categoryモデルのフォーム """
     class Meta:
         model = BigCategory
-        fields = ('name', 'order', 'created_at')
+        fields = ('name', 'rank', 'created_at')
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': "input is-size-6",
             }),
-            'order': forms.TextInput(attrs={
+            'rank': forms.TextInput(attrs={
                 'class': "input is-size-6",
             }),
             'created_at': forms.DateTimeInput(attrs={

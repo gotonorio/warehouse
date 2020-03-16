@@ -6,6 +6,6 @@ def menu(request):
     この関数をsetting.pyのTEMPLATESに登録する。
     """
     context = {
-        'menu_list': BigCategory.objects.all().order_by('order'),
+        'menu_list': BigCategory.objects.all().order_by('rank'),
     }
     return context
