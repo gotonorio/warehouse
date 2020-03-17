@@ -13,7 +13,7 @@
   </div>
   <div id="navbarMypage" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="{% url 'showcase:news_card' %}" target="_blank">ホーム</a>
+      <a class="navbar-item" href="{% url 'notice:news_card' %}" target="_blank">ホーム</a>
       <a class="navbar-item" href="{% url 'library:file_index' %}">ファイル一覧</a>
       <a class="navbar-item" href="{% url 'library:category_index' %}">カテゴリ一覧</a>
       <a class="navbar-item" href="{% url 'library:big_category_index' %}">親カテゴリ一覧</a>
@@ -27,7 +27,7 @@
     <h3>親カテゴリ一覧</h3>
   </div>
   <a href="{% url 'library:big_category_create' %}" class="button is-primary">新規作成</a>
-  <a href="{% url 'showcase:news_card' %}" class="button is-primary">戻る</a>      
+  <a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>      
   <br>
   <div class="scroll">
     <table class="table is-narrow">
