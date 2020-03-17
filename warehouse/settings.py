@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'register.apps.RegisterConfig',
     'library.apps.LibraryConfig',
     'notice.apps.NoticeConfig',
+    'information.apps.InformationConfig',
 ]
 
 MIDDLEWARE = [
