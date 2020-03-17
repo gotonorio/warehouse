@@ -1,0 +1,21 @@
+# 開発用
+version: "3.7"
+services:
+  swap:
+    # 相対パスでDockerfileのpathを指定。
+    build: ./
+    # image名:タグ
+    image: warehouse
+    # container名
+    container_name: warehouse
+    restart: always
+    # ホスト上のswap/ディレクトリをcode/としてコンテナにマウントする。
+    volumes:
+      - ../:/code
+    # 環境変数TZを設定。
+    environment:
+      TZ: "Asia/Tokyo"
+    # 開発環境 localテスト用にポートを公開。
+    ports:
+      - "8100:8100"
+    command: python3 manage.py runserver 0.0.0.0:8100
