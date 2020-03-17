@@ -149,7 +149,7 @@ NUMBER_GROUPING = 3
 
 LOGIN_URL = 'register:login'
 LOGIN_REDIRECT_URL = 'notice:news_card'
-LOGOUT_REDIRECT_URL = 'register:login'
+LOGOUT_REDIRECT_URL = 'notice:news_card'
 
 # ブラウザを閉じたらログアウトさせる。
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

@@ -49,7 +49,7 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ('name', 'path_name', 'parent',
-                  'rank', 'created_at', 'limit')
+                  'rank', 'created_at', 'restrict')
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': "input is-size-6",
@@ -66,7 +66,7 @@ class CategoryForm(forms.ModelForm):
             'created_at': forms.DateTimeInput(attrs={
                 'class': "datetimeinput is-size-6",
             }),
-            'limit': forms.CheckboxInput(attrs={
+            'restrict': forms.CheckboxInput(attrs={
                 'class': "checkboxinput is-size-4",
             }),
         }

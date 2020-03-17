@@ -1,4 +1,4 @@
-# import logging
+import logging
 
 from django.conf import settings
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -78,16 +78,16 @@ class BigCategoryView(generic.TemplateView):
         big_category = get_object_or_404(BigCategory, pk=self.kwargs['pk'])
         # user_idは、ログインしていないとNoneとなる。
         user_id = self.request.user.id
-        # ログインしている場合は表示。していない場合はlimit=Trueのカテゴリは非表示とする。
+        # ログインしている場合は表示。していない場合はrestrict=Trueのカテゴリは非表示とする。
         if user_id is None:
             category_obj = Category.objects.filter(
-                parent=big_category, limit=False).order_by('-rank', '-created_at')
+                parent=big_category, restrict=False).order_by('-rank', '-created_at')
         else:
             category_obj = Category.objects.filter(
                 parent=big_category).order_by('-rank', '-created_at')
-        category_list = []
         # settings.pyでSELECT構文のLIMIT値を設定してある。
         limit = settings.SELECT_LIMIT_NUM
+        category_list = []
         for i in category_obj:
             file_obj = File.objects.filter(
                 category=i.pk).filter(
@@ -96,6 +96,7 @@ class BigCategoryView(generic.TemplateView):
             for j in file_obj:
                 file_list.append(j)
             category_list.append(file_list)
+        # templatesデータ設定
         context['category_list'] = category_list
         context['big_category_name'] = big_category.name
         context['comment_limit'] = settings.COMMENT_LIMIT + 1
