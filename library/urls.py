@@ -44,4 +44,9 @@ urlpatterns = [
     path('big_category/delete/<int:pk>',
          views.BigCategoryDeleteView.as_view(), name='big_category_delete'),
 
+    # BigCategoruに属するファイルを一覧表示
+    path('bigcategory/<int:pk>/',
+         views.BigCategoryView.as_view(), name='bigcategory'),
+    # 検索結果表示
+    path('search/', views.SearchlistView.as_view(), name='search'),
 ]

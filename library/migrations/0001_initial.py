@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('path_name', models.CharField(max_length=255, verbose_name='ディレクトリ名')),
                 ('order', models.IntegerField(default=0, verbose_name='表示順')),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now, verbose_name='作成日')),
-                ('limit', models.BooleanField(default=False, verbose_name='制限')),
+                ('restrict', models.BooleanField(default=False, verbose_name='制限')),
                 ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='library.BigCategory', verbose_name='親カテゴリ')),
             ],
         ),

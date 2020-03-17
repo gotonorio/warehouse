@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block navbar %}
+<!-- navbar -->
+{% endblock %}
+{% block header %}
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title"> ソフィア・ガーデンズ川崎 </h1>
+      <h4 class="subtitle">管理組合 インフォメーション</h4>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block content %}
+<div class="content">
+  {% for item in information_list %}
+  <p>
+    <h4>{{ item.title }}</h4>
+    <p>{{item.created_at|date}}</p>
+    {{ item.information| safe }}
+  </p>
+  <br>
+  {% endfor %}
+  {% include 'page.html' %}
+  <br>
+</div>
+{% endblock %}
