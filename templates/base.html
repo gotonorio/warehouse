@@ -82,7 +82,7 @@
               {% for menu in menu_list %}
               <tr>
                 <td class="has-text-left">
-                  <a href="{% url 'notice:bigcategory' menu.pk %}" class="vmenu">{{menu}}</a>
+                  <a href="{% url 'library:bigcategory' menu.pk %}" class="vmenu">{{menu}}</a>
                 </td>
               </tr>
               {% endfor %}
@@ -91,7 +91,7 @@
           <p>*：区分所有者専用</p>
         </div>
         <p>検索キーワード</p>
-        <form method="GET" action="{% url 'notice:search' %}">
+        <form method="GET" action="{% url 'library:search' %}">
           <input type="search" class="input" placeholder="Search" name="keyword" value={{keyword}}>
           <button type="submit" class="button is-small" style="display:none"></button>
         </form>

@@ -14,9 +14,4 @@ urlpatterns = [
          views.NewsUpdateView.as_view(), name='news_update'),
     path('news/delete/<int:pk>',
          views.NewsDeleteView.as_view(), name='news_delete'),
-    # BigCategoruに属するファイルを一覧表示
-    path('bigcategory/<int:pk>/',
-         views.BigCategoryView.as_view(), name='bigcategory'),
-    # 検索結果表示
-    path('search/', views.SearchlistView.as_view(), name='search'),
 ]
