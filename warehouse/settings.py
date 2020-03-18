@@ -162,7 +162,7 @@ COMMENT_LIMIT = 20
 
 # settings.pyの末尾
 try:
-    from warehouse.local_settings import *
+    from .local_settings import *
 except ImportError:
     pass
 
