@@ -4,7 +4,8 @@
 <nav class="navbar is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item">情報の管理</a>
-    <a class="navbar-item" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
+    <a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>
+    <!--<a class="navbar-item" href="javascript:void(0);" onclick="window.history.back();">戻る</a>-->
   </div>
 </nav>
 {% endblock navbar %}
@@ -15,7 +16,7 @@
   </div>
   <hr>
   <a href="{% url 'information:info_add' %}" class="button is-primary">新規作成</a>
-  <a href="{% url 'showcase:news_card' %}" class="button is-primary">戻る</a>
+  <a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>
   <br>
   <table class="table ">
     <thead>
