@@ -21,8 +21,10 @@ services:
     expose:
       - "8100"
     command: /usr/local/bin/gunicorn warehouse.wsgi:application -w 2 -b :8100
+    #
+    networks:
+      - sophiag-network
 
 networks:
-  default:
-    external:
-      name: my_nginx_network
+  sophiag-network:
+    external: true
