@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '5sy@y2ual*=7x#1@i*i&(u-e6d331kqr5to4)vv-@!rvuc9wrc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
-# STATIC_ROOT = '/code/static'
+# DEBUG = True
+DEBUG = False
+STATIC_ROOT = '/code/static'
 
 ALLOWED_HOSTS = ['*']
 
@@ -159,6 +159,12 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SELECT_LIMIT_NUM = 100
 # コメントを表示する件数。
 COMMENT_LIMIT = 20
+
+# settings.pyの末尾
+try:
+    from warehouse.local_settings import *
+except ImportError:
+    pass
 
 # For debugging
 if DEBUG:
