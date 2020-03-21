@@ -9,5 +9,4 @@ media/
 .vscode
 .DS_Store
 static/*.png
-docker-compose_local.yml
 local_settings.py
