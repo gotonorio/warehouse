@@ -24,9 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '5sy@y2ual*=7x#1@i*i&(u-e6d331kqr5to4)vv-@!rvuc9wrc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
 DEBUG = False
-STATIC_ROOT = '/code/static'
 
 ALLOWED_HOSTS = ['*']
 
@@ -174,6 +172,8 @@ if DEBUG:
         format='%(asctime)s %(levelname)s %(message)s',
     )
 else:
+    # for nginx
+    STATIC_ROOT = '/code/static'
     # will output to logging file
     logging.basicConfig(
         level=logging.DEBUG,

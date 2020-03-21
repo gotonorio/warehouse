@@ -6,7 +6,8 @@
 *.sqlite3
 __pycache__/
 media/
-.vscode
+.vscode/
+dev_docker/
 .DS_Store
 static/*.png
 local_settings.py
