@@ -156,7 +156,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # viewクラスでselectする時のlimit値を設定する。
 SELECT_LIMIT_NUM = 100
 # コメントを表示する件数。
-COMMENT_LIMIT = 20
+COMMENT_LIMIT = 50
 
 # settings.pyの末尾
 try:
