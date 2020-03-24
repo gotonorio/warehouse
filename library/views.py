@@ -18,7 +18,7 @@ class FileIndexView(PermissionRequiredMixin, generic.ListView):
     permission_required = ("library.add_file")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = False  # ログイン画面に飛ばす。
-    queryset = File.objects.order_by('category', '-created_at')
+    queryset = File.objects.order_by('-created_at', 'category')
     paginate_by = 50
 
 
