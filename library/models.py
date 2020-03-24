@@ -6,8 +6,14 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 
+def default_category():
+    """デフォルトのカテゴリを返す（まだなければ作る）."""
+    category, _ = Category.objects.get_or_create(name='default')
+    return category
+
+
 class BigCategory(models.Model):
-    name = models.CharField('親カテゴリ名', max_length=255, null=True)
+    name = models.CharField('親カテゴリ名', max_length=255)
     rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
 
@@ -20,7 +26,7 @@ class Category(models.Model):
     name = models.CharField('カテゴリ名', max_length=255)
     path_name = models.CharField('ディレクトリ名', max_length=255)
     parent = models.ForeignKey(BigCategory, verbose_name='親カテゴリ',
-                               on_delete=models.PROTECT, blank=True, null=True)
+                               on_delete=models.PROTECT)
     rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
     restrict = models.BooleanField('制限', default=False)
@@ -43,21 +49,15 @@ def get_upload_to(instance, filename):
     return path
 
 
-def default_category():
-    """デフォルトのカテゴリを返す（まだなければ作る）."""
-    category, _ = Category.objects.get_or_create(name='default')
-    return category
-
-
 class File(models.Model):
     """アップロードするファイル."""
-    title = models.CharField('タイトル', max_length=255, blank=True)
+    title = models.CharField('タイトル', max_length=255, default='no_title')
     category = models.ForeignKey(
         Category, verbose_name='カテゴリ', on_delete=models.PROTECT,
-        default=default_category,
+        default=default_category
     )
-    comment = models.TextField('コメント', blank=True)
-    table_of_contents = models.TextField('目次', blank=True)
+    comment = models.TextField('コメント', blank=True, null=True)
+    table_of_contents = models.TextField('目次', blank=True, null=True)
     src = models.FileField('ファイル', upload_to=get_upload_to)
     rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)

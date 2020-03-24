@@ -228,8 +228,8 @@ class BigCategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
 
 
 class BigCategoryView(generic.TemplateView):
-    """ 全体メニューで選択された「BigCategory」に属するファイルを「Category」毎に表示する。
-    表示数は100に制限する。（増えたらまた考える）
+    """ 全体メニューで選択された「BigCategory」に属するファイルを「Category」毎
+    に表示する。表示数は100に制限する。（増えたらまた考える）
     """
     template_name = "notice/main_category.html"
 
