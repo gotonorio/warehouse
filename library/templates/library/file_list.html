@@ -20,6 +20,7 @@
     </div>
   </div>
 </nav>
+<!-- navbar -->
 {% endblock navbar %}
 {% block content %}
 <div class="container ">
@@ -33,7 +34,7 @@
   {% else %}
     <a href="{% url 'library:file_create' %}" class="button is-primary">新規アップロード</a>
   {% endif %}
-  <a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>      
+  <a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>
   <br><br>
   <table class="table is-narrow is-bordered is-striped">
     <thead>
@@ -49,7 +50,8 @@
       {% for file in file_list %}
       <tr>
         <td class="has-text-left">{{file.title}}</td>
-        <td class="nowrap"><a href="{% url 'library:file_category' file.category.pk %}"><div class="cell_240">{{file.category.name}}</div></a></td>
+        <!--<td class="nowrap"><a href="{% url 'library:file_category' file.category.pk %}"><div class="cell_240">{{file.category.name}}</div></a></td>-->
+        <td class="nowrap"><a href="{% url 'library:file_category' file.category.pk %}">{{file.category.name}}</a></td>
         <td class="has-text-centered">{{ file.alive }}</td>
         <td class="has-text-centered">{{ file.rank }}</td>
         <td class="nowrap">
