@@ -23,7 +23,7 @@
         <span aria-hidden="true"></span>
       </a>
     </div>
-  
+
     <div id="navbarMypage" class="navbar-menu">
       <div class="navbar-start">
         <div class="navbar-item has-dropdown is-hoverable">
@@ -37,7 +37,7 @@
         </div>
         <a class="navbar-item" href="https://accounting.sophiagardens.org" target="_blank">会計資料</a>
       </div>
-    
+
       <div class="navbar-end">
         {% if perms.notice.add_news or perms.library.add_file %}
           <div class="navbar-item has-dropdown is-hoverable">
@@ -68,6 +68,7 @@
   <br>
   <!-- contents -->
   <div class="container is-fluid">
+  <main>
     <div class="columns">
       <!-- 左サイド -->
       <div class="column is-3">
@@ -98,12 +99,11 @@
       </div>
       <!-- 本体 -->
       <div class="column is-9 ">
-        <main>
-          {% block content %}
-          {% endblock %}
-        </main>
+        {% block content %}
+        {% endblock %}
       </div>
     </div>
+  </main>
   </div>
   <!-- フッタ -->
   <footer class="my_footer">
@@ -118,28 +118,28 @@
       </div>
     </div>
   </footer>
-  {# 参考： https://bulma.io/documentation/components/navbar/ #}
-  {# ToDo ハンバーガアイコン用のjs。staticから読み込むことはできないか？ #}
-  <script>
-  // navbar-burgerのボタン処理。https://bulma.io/documentation/components/navbar/
-    document.addEventListener('DOMContentLoaded', () => {
-      // Get all "navbar-burger" elements
-      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-      // Check if there are any navbar burgers
-      if ($navbarBurgers.length > 0) {
-        // Add a click event on each of them
-        $navbarBurgers.forEach( el => {
-          el.addEventListener('click', () => {
-              // Get the target from the "data-target" attribute
-            const target = el.dataset.target;
-            const $target = document.getElementById(target);
-            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-            el.classList.toggle('is-active');
-            $target.classList.toggle('is-active');
-          });
-        });
-      }
-    });
-  </script>
 </body>
 </html>
+{# 参考： https://bulma.io/documentation/components/navbar/ #}
+{# ToDo ハンバーガアイコン用のjs。staticから読み込むことはできないか？ #}
+<script>
+// navbar-burgerのボタン処理。https://bulma.io/documentation/components/navbar/
+  document.addEventListener('DOMContentLoaded', () => {
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+      // Add a click event on each of them
+      $navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+            // Get the target from the "data-target" attribute
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+        });
+      });
+    }
+  });
+</script>
