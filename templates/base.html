@@ -23,7 +23,7 @@
         <span aria-hidden="true"></span>
       </a>
     </div>
-  
+
     <div id="navbarMypage" class="navbar-menu">
       <div class="navbar-start">
         <div class="navbar-item has-dropdown is-hoverable">
@@ -37,7 +37,7 @@
         </div>
         <a class="navbar-item" href="https://accounting.sophiagardens.org" target="_blank">会計資料</a>
       </div>
-    
+
       <div class="navbar-end">
         {% if perms.notice.add_news or perms.library.add_file %}
           <div class="navbar-item has-dropdown is-hoverable">
@@ -68,6 +68,7 @@
   <br>
   <!-- contents -->
   <div class="container is-fluid">
+  <main>
     <div class="columns">
       <!-- 左サイド -->
       <div class="column is-3">
@@ -98,12 +99,11 @@
       </div>
       <!-- 本体 -->
       <div class="column is-9 ">
-        <main>
-          {% block content %}
-          {% endblock %}
-        </main>
+        {% block content %}
+        {% endblock %}
       </div>
     </div>
+  </main>
   </div>
   <!-- フッタ -->
   <footer class="my_footer">
@@ -118,6 +118,8 @@
       </div>
     </div>
   </footer>
+</body>
+</html>
   {# 参考： https://bulma.io/documentation/components/navbar/ #}
   {# ToDo ハンバーガアイコン用のjs。staticから読み込むことはできないか？ #}
   <script>
@@ -141,5 +143,3 @@
       }
     });
   </script>
-</body>
-</html>
