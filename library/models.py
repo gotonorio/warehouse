@@ -31,6 +31,7 @@ class Category(models.Model):
     rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
     restrict = models.BooleanField('制限', default=False)
+    alive = models.BooleanField('有効', default=True)
 
     def __str__(self):
         return self.name

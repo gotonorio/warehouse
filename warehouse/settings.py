@@ -154,9 +154,9 @@ LOGOUT_REDIRECT_URL = 'notice:news_card'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # viewクラスでselectする時のlimit値を設定する。
-SELECT_LIMIT_NUM = 100
-# コメントを表示する件数。
-COMMENT_LIMIT = 50
+SELECT_LIMIT_NUM = 20
+# コメントを表示する件数。タイトル表示は20個、コメントも20タイトル分表示。
+COMMENT_LIMIT = 20
 
 # settings.pyの末尾
 try:

@@ -2,7 +2,8 @@
 
 from django.conf import settings
 from django.db.models import Q  # filterでor検索するために必要。
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -289,12 +290,10 @@ class SearchlistView(generic.ListView):
         return context
 
 
-class RijikaiMinutesView(PermissionRequiredMixin, generic.ListView):
+class RijikaiMinutesView(LoginRequiredMixin, generic.ListView):
     """ 理事会議事録ファイルの一覧表 """
     model = File
     template_name = "library/rijikai_minutes_list.html"
-    # 必要な権限
-    permission_required = ("library.add_file")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     paginate_by = 20
