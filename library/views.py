@@ -113,7 +113,6 @@ class FileDeleteView(PermissionRequiredMixin, generic.DeleteView):
 
 class CategoryIndexView(PermissionRequiredMixin, generic.ListView):
     """ カテゴリの一覧. """
-
     model = Category
     # 必要な権限
     permission_required = ("library.add_file")
