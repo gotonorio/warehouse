@@ -16,6 +16,9 @@ urlpatterns = [
          views.FileUpdateView.as_view(), name='file_update'),
     path('file/delete/<int:pk>',
          views.FileDeleteView.as_view(), name='file_delete'),
+    # 保管庫メニュー
+    path('rijikai_minutes',
+         views.RijikaiMinutesView.as_view(), name='rijikai_minutes'),
 
     # 間接リンク
     path('indirect/link/<int:pk>', views.indirect_link, name='indirect_link'),

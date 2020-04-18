@@ -113,7 +113,6 @@ class FileDeleteView(PermissionRequiredMixin, generic.DeleteView):
 
 class CategoryIndexView(PermissionRequiredMixin, generic.ListView):
     """ カテゴリの一覧. """
-
     model = Category
     # 必要な権限
     permission_required = ("library.add_file")
@@ -136,7 +135,7 @@ class CategoryBigView(PermissionRequiredMixin, generic.ListView):
         """ カテゴリでfilter. """
         big_pk = self.kwargs['big_pk']
         return Category.objects.filter(
-            parent__pk=big_pk).order_by('-created_at')
+            parent__pk=big_pk, alive=True).order_by('-created_at')
 
     def get_context_data(self, *args, **kwargs):
         """ 親カテゴリのpkをテンプレートへ渡す. """
@@ -288,3 +287,18 @@ class SearchlistView(generic.ListView):
         keyword = self.request.GET.get('keyword')
         context['keyword'] = keyword
         return context
+
+
+class RijikaiMinutesView(PermissionRequiredMixin, generic.ListView):
+    """ 理事会議事録ファイルの一覧表 """
+    model = File
+    template_name = "library/rijikai_minutes_list.html"
+    # 必要な権限
+    permission_required = ("library.add_file")
+    # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
+    raise_exception = True
+    paginate_by = 20
+
+    def get_queryset(self):
+        """ カテゴリ名「理事会議事録」でfilter. """
+        return File.objects.filter(category__name='理事会議事録').order_by('-rank')

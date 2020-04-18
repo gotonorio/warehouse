@@ -76,7 +76,7 @@ class BigCategoryForm(forms.ModelForm):
     """ 親Categoryモデルのフォーム """
     class Meta:
         model = BigCategory
-        fields = ('name', 'rank', 'created_at')
+        fields = ('name', 'rank', 'created_at', 'alive')
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': "input is-size-6",
@@ -86,5 +86,8 @@ class BigCategoryForm(forms.ModelForm):
             }),
             'created_at': forms.DateTimeInput(attrs={
                 'class': "datetimeinput is-size-6",
+            }),
+            'alive': forms.CheckboxInput(attrs={
+                'class': "checkboxinput is-size-4",
             }),
         }

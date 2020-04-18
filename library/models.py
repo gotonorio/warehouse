@@ -16,6 +16,7 @@ class BigCategory(models.Model):
     name = models.CharField('親カテゴリ名', max_length=255)
     rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
+    alive = models.BooleanField('有効', default=True)
 
     def __str__(self):
         return self.name
