@@ -1,5 +1,6 @@
-from library.models import BigCategory
 from django.conf import settings
+
+from library.models import BigCategory
 
 
 def menu(request):
@@ -7,7 +8,7 @@ def menu(request):
     この関数をsetting.pyのTEMPLATESに登録する。
     """
     context = {
-        'menu_list': BigCategory.objects.all().order_by('rank'),
+        'menu_list': BigCategory.objects.all().filter(alive=True).order_by('rank'),
     }
     return context
 
