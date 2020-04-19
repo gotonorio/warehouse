@@ -67,7 +67,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'library.context_processors.menu',
+                'warehouse.context_processors.menu',
+                'warehouse.context_processors.version_no',
             ],
         },
     },
@@ -128,6 +129,7 @@ STATIC_URL = '/static/'
 ###############
 # user setting
 ###############
+VERSION_NO = '2.0.0'
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -154,9 +156,9 @@ LOGOUT_REDIRECT_URL = 'notice:news_card'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # viewクラスでselectする時のlimit値を設定する。
-SELECT_LIMIT_NUM = 100
-# コメントを表示する件数。
-COMMENT_LIMIT = 50
+SELECT_LIMIT_NUM = 20
+# コメントを表示する件数。タイトル表示は20個、コメントも20タイトル分表示。
+COMMENT_LIMIT = 20
 
 # settings.pyの末尾
 try:
@@ -166,6 +168,12 @@ except ImportError:
 
 # For debugging
 if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'wh2_dev.sqlite3'),
+        }
+    }
     # will output to your console
     logging.basicConfig(
         level=logging.DEBUG,

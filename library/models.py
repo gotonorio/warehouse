@@ -13,9 +13,10 @@ def default_category():
 
 
 class BigCategory(models.Model):
-    name = models.CharField('親カテゴリ名', max_length=255)
+    name = models.CharField('親カテゴリ名', max_length=128)
     rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
+    alive = models.BooleanField('有効', default=True)
 
     def __str__(self):
         return self.name
@@ -23,13 +24,14 @@ class BigCategory(models.Model):
 
 class Category(models.Model):
     """カテゴリ."""
-    name = models.CharField('カテゴリ名', max_length=255)
-    path_name = models.CharField('ディレクトリ名', max_length=255)
+    name = models.CharField('カテゴリ名', max_length=128)
+    path_name = models.CharField('ディレクトリ名', max_length=128)
     parent = models.ForeignKey(BigCategory, verbose_name='親カテゴリ',
-                               on_delete=models.PROTECT)
+                               on_delete=models.PROTECT, default=1)
     rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
     restrict = models.BooleanField('制限', default=False)
+    alive = models.BooleanField('有効', default=True)
 
     def __str__(self):
         return self.name
@@ -51,11 +53,9 @@ def get_upload_to(instance, filename):
 
 class File(models.Model):
     """アップロードするファイル."""
-    title = models.CharField('タイトル', max_length=255)
-    category = models.ForeignKey(
-        Category, verbose_name='カテゴリ', on_delete=models.PROTECT,
-        default=default_category
-    )
+    title = models.CharField('タイトル', max_length=128)
+    category = models.ForeignKey(Category, verbose_name='カテゴリ',
+                                 on_delete=models.PROTECT, default=1)
     comment = models.TextField('コメント', blank=True, null=True)
     table_of_contents = models.TextField('目次', blank=True, null=True)
     src = models.FileField('ファイル', upload_to=get_upload_to)
