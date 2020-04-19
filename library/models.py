@@ -27,7 +27,7 @@ class Category(models.Model):
     name = models.CharField('カテゴリ名', max_length=255)
     path_name = models.CharField('ディレクトリ名', max_length=255)
     parent = models.ForeignKey(BigCategory, verbose_name='親カテゴリ',
-                               on_delete=models.PROTECT)
+                               on_delete=models.PROTECT, default=1)
     rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
     restrict = models.BooleanField('制限', default=False)
@@ -54,10 +54,8 @@ def get_upload_to(instance, filename):
 class File(models.Model):
     """アップロードするファイル."""
     title = models.CharField('タイトル', max_length=255)
-    category = models.ForeignKey(
-        Category, verbose_name='カテゴリ', on_delete=models.PROTECT,
-        default=default_category
-    )
+    category = models.ForeignKey(Category, verbose_name='カテゴリ',
+                                 on_delete=models.PROTECT, default=1)
     comment = models.TextField('コメント', blank=True, null=True)
     table_of_contents = models.TextField('目次', blank=True, null=True)
     src = models.FileField('ファイル', upload_to=get_upload_to)
