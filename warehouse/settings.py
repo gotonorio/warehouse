@@ -67,7 +67,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'library.context_processors.menu',
+                'warehouse.context_processors.menu',
+                'warehouse.context_processors.version_no',
             ],
         },
     },
@@ -128,6 +129,7 @@ STATIC_URL = '/static/'
 ###############
 # user setting
 ###############
+VERSION_NO = '2.0.0'
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
