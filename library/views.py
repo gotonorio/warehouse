@@ -1,9 +1,9 @@
 # import logging
 
 from django.conf import settings
-from django.db.models import Q  # filterでor検索するために必要。
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -241,7 +241,8 @@ class BigCategoryView(generic.TemplateView):
         # ログインしている場合は表示。していない場合はrestrict=Trueのカテゴリは非表示とする。
         if user_id is None:
             category_obj = Category.objects.filter(
-                parent=big_category, restrict=False).order_by('-rank', '-created_at')
+                parent=big_category, restrict=False).order_by('-rank',
+                                                              '-created_at')
         else:
             category_obj = Category.objects.filter(
                 parent=big_category).order_by('-rank', '-created_at')
