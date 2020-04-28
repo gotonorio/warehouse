@@ -231,7 +231,8 @@ class BigCategoryView(generic.TemplateView):
     """ 全体メニューで選択された「BigCategory」に属するファイルを「Category」毎
     に表示する。表示数は100に制限する。（増えたらまた考える）
     """
-    template_name = "notice/main_category.html"
+    # template_name = "notice/main_category.html"
+    template_name = "library/main_category.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -292,7 +293,10 @@ class SearchlistView(generic.ListView):
 
 
 class RijikaiMinutesView(LoginRequiredMixin, generic.ListView):
-    """ 理事会議事録ファイルの一覧表 """
+    """ 理事会議事録ファイルの一覧表 
+    左サイドのBigCategoryメニューからの表示は20件に制限している。
+    ここでは全ファイルを表示する。
+    """
     model = File
     template_name = "library/rijikai_minutes_list.html"
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
