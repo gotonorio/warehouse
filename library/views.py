@@ -19,8 +19,11 @@ class FileIndexView(PermissionRequiredMixin, generic.ListView):
     permission_required = ("library.add_file")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = False  # ログイン画面に飛ばす。
-    queryset = File.objects.order_by('-created_at', 'category')
     paginate_by = 50
+
+    def get_queryset(self):
+        return File.objects.select_related().order_by(
+            '-created_at', 'category')
 
 
 def indirect_link(request, pk):
@@ -42,7 +45,7 @@ class FileCategoryView(PermissionRequiredMixin, generic.ListView):
         """ カテゴリでfilter. """
         category_pk = self.kwargs['category_pk']
         return File.objects.filter(
-            category__pk=category_pk).order_by('-rank')
+            category__pk=category_pk).select_related().order_by('-rank')
 
     def get_context_data(self, *args, **kwargs):
         """ カテゴリのpkをテンプレートへ渡す. """
@@ -119,8 +122,10 @@ class CategoryIndexView(PermissionRequiredMixin, generic.ListView):
     permission_required = ("library.add_file")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-    queryset = Category.objects.order_by('parent')
     paginate_by = 20
+
+    def get_queryset(self):
+        return Category.objects.select_related().order_by('parent')
 
 
 class CategoryBigView(PermissionRequiredMixin, generic.ListView):
@@ -136,7 +141,7 @@ class CategoryBigView(PermissionRequiredMixin, generic.ListView):
         """ カテゴリでfilter. """
         big_pk = self.kwargs['big_pk']
         return Category.objects.filter(
-            parent__pk=big_pk, alive=True).order_by('-created_at')
+            parent__pk=big_pk, alive=True).select_related().order_by('-created_at')
 
     def get_context_data(self, *args, **kwargs):
         """ 親カテゴリのpkをテンプレートへ渡す. """
@@ -293,7 +298,7 @@ class SearchlistView(generic.ListView):
 
 
 class RijikaiMinutesView(LoginRequiredMixin, generic.ListView):
-    """ 理事会議事録ファイルの一覧表 
+    """ 理事会議事録ファイルの一覧表
     左サイドのBigCategoryメニューからの表示は20件に制限している。
     ここでは全ファイルを表示する。
     """
