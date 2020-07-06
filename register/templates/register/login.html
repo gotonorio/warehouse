@@ -4,7 +4,7 @@
 <div class="ss_container is-fluid ">
   <br>
   <div class="content has-text-centered">
-    <h4>ログイン</h4>
+    <h4>区分所有者 ログイン</h4>
   <br>
   <form method='post' action=''>
     {% csrf_token %}
@@ -13,7 +13,8 @@
     </table>
     <br>
     <div>
-      <button type="submit" name='next' value='{{next}}' class="button is-primary ">login</button>
+      <button type="submit" name='next' value='{{next}}' class="button is-danger ">ログイン</button>
+      <a class="button is-warning" href="{% url 'notice:news_card' %}">戻る</a>
     </div>
   </form>
   </div>
