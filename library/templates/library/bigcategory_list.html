@@ -29,7 +29,8 @@
     <h3>親カテゴリ一覧</h3>
   </div>
   <a href="{% url 'library:big_category_create' %}" class="button is-primary">新規作成</a>
-  <a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>      
+  <!--<a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>--> 
+  <a class="button is-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
   <br>
   <div class="scroll">
     <table class="table is-narrow">

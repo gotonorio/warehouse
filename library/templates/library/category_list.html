@@ -33,7 +33,8 @@
   {% else %}
     <a href="{% url 'library:category_create' %}" class="button is-primary">新規作成</a>
   {% endif %}
-  <a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>      
+  <!--<a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>--> 
+  <a class="button is-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
   <br><br>
   <!--<div class="scroll">-->
   <table class="table is-narrow">
