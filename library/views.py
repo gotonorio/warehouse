@@ -268,7 +268,7 @@ class BigCategoryView(generic.TemplateView):
         return context
 
 
-class SearchlistView(generic.ListView):
+class SearchlistView(LoginRequiredMixin, generic.ListView):
     """ 検索結果表示用View
      検索ボタンで抽出されたFileオブジェクトを一覧表示する。
      検索対象は「title」「comment」
