@@ -1,4 +1,5 @@
 # import logging
+from django.http import FileResponse
 
 from django.conf import settings
 from django.contrib.auth.mixins import (LoginRequiredMixin,
@@ -309,3 +310,11 @@ class RijikaiMinutesView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         """ カテゴリ名「理事会議事録」でfilter. """
         return File.objects.filter(category__name='理事会議事録').order_by('-rank')
+
+
+def pdf_view(request, pk):
+    """ 効率的にはwebサーバが静的ファイルを配信するべきだが、
+    djangoで配信してみる実験。
+    """
+    fn = get_object_or_404(File, pk=pk)
+    return FileResponse(fn.src, content_type='application/pdf')

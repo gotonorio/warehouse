@@ -14,7 +14,7 @@
 </section>
 {% endblock %}
 
-{# 親カテゴリに属するカテゴリ毎にループを回して、各カテゴリごとにファイルをtableで表示させる。 #}
+{# 親カテゴリに属するカテゴリ毎にループを回して、各カテゴリごとにファイルをtableで表示する。 #}
 {% block content %}
 {% for category in category_list %}
   <div class="content">
@@ -33,7 +33,8 @@
         {% if file.download %}
           <td class="has-text-left"><a href="{{file.src.url}}" download>{{file.title}}</a></td>
         {% else %}
-          <td class="has-text-left"><a href="{{file.src.url}}" target="_blank">{{file.title}}</a></td>
+          <!--<td class="has-text-left"><a href="{{file.src.url}}" target="_blank">{{file.title}}</a></td>-->
+          <td class="has-text-left"><a href="{% url 'library:file_view' file.pk %}">{{file.title}}</a></td>
         {% endif %}
         {% if forloop.counter < comment_limit %}
           <td class="has-text-left">{{file.comment|escape|linebreaksbr|urlize}}</td>

@@ -52,4 +52,5 @@ urlpatterns = [
          views.BigCategoryView.as_view(), name='bigcategory'),
     # 検索結果表示
     path('search/', views.SearchlistView.as_view(), name='search'),
+    path('file_view/<int:pk>', views.pdf_view, name='file_view'),
 ]
