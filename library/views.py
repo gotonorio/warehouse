@@ -317,4 +317,7 @@ def pdf_view(request, pk):
     djangoで配信してみる実験。
     """
     fn = get_object_or_404(File, pk=pk)
-    return FileResponse(fn.src, content_type='application/pdf')
+    if fn.download:
+        return FileResponse(fn.src, as_attachment=True)
+    else:
+        return FileResponse(fn.src)
