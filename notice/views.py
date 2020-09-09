@@ -32,7 +32,7 @@ class NewsListView(PermissionRequiredMixin, generic.ListView):
 
 
 class NewsCreateView(PermissionRequiredMixin, generic.CreateView):
-    """カテゴリの作成."""
+    """ お知らせの作成 """
 
     model = News
     form_class = NewsForm
@@ -44,7 +44,7 @@ class NewsCreateView(PermissionRequiredMixin, generic.CreateView):
 
 
 class NewsUpdateView(PermissionRequiredMixin, generic.UpdateView):
-    """カテゴリの更新."""
+    """ お知らせの更新 """
 
     model = News
     # デフォルトテンプレート名は「news_form.html」となる。（createviewと共通）
@@ -57,7 +57,7 @@ class NewsUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
 
 class NewsDeleteView(PermissionRequiredMixin, generic.DeleteView):
-    """カテゴリの削除."""
+    """ お知らせの削除 """
 
     model = News
     # 必要な権限
