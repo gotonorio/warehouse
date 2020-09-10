@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
+{% load mytag %}
 
 <!-- navbar base.html -->
 
 {% block header %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/a11y-dark.min.css">
+<link href="{% static 'blog.css' %}" rel="stylesheet">
 <section class="hero is-dark">
   <div class="hero-body">
     <div class="container has-text-centered">
       <h1 class="title"> ソフィア・ガーデンズ川崎 </h1>
       <h4 class="subtitle"> 管理組合 ホームページ </h4>
-      <!--<p>IEやEdgeで表示不具合の場合、chromeを使ってください。</p>-->
     </div>
   </div>
 </section>
@@ -18,13 +20,13 @@
 
 {% block content %}
 {% for news in news_list %}
-<div class="card">
+<div class="card content">
   <header class="card-header">
     <p class="card-header-title has-background-dark has-text-white is-size-5">{{news.title}}</p>
   </header>
-  <p>{{ news.created_at|date }}</p>
-  <div class="card-content">
-    <p>{{news.comment|safe|linebreaksbr}}</p>
+  <p>{{ news.created_at | date }}</p>
+  <div class="card-content markdown table ">
+    {{news.comment | markdown_to_html}}
   </div>
 </div>
 <br>

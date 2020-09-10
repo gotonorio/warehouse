@@ -155,6 +155,12 @@ LOGOUT_REDIRECT_URL = 'notice:news_card'
 # ブラウザを閉じたらログアウトさせる。
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+# マークダウンの拡張
+MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.extra',
+    'markdown.extensions.codehilite',
+]
+
 # viewクラスでselectする時のlimit値を設定する。
 SELECT_LIMIT_NUM = 100
 # コメントを表示する件数。タイトル表示は20個、コメントも20タイトル分表示。
