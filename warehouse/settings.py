@@ -142,9 +142,9 @@ FILE_UPLOAD_PERMISSIONS = 0o755
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
 
 # collectstaticで集める静的ファイルの場所を指定する。
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+#STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR, "static"),
+#)
 AUTH_USER_MODEL = 'register.User'
 NUMBER_GROUPING = 3
 
