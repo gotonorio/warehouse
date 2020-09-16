@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 ###############
 # user setting
 ###############
-VERSION_NO = '2.0.0'
+VERSION_NO = '2020-09-10'
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

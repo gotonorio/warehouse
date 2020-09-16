@@ -31,6 +31,7 @@ main {
   scrollクラスでtable要素を囲む。
 */
 table{
+  font-family: monospace;
   width:100%;
 }
 .scroll{

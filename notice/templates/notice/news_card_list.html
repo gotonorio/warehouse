@@ -25,7 +25,7 @@
     <p class="card-header-title has-background-dark has-text-white is-size-5">{{news.title}}</p>
   </header>
   <p>{{ news.created_at | date }}</p>
-  <div class="card-content markdown table ">
+  <div class="card-content markdown table is-bordered">
     {{news.comment | markdown_to_html}}
   </div>
 </div>

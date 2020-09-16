@@ -17,6 +17,7 @@ class NewsForm(forms.ModelForm):
             }),
             'comment': forms.Textarea(attrs={
                 'class': "textarea is-size-6 ",
+                'placeholder': "markdown記法に対応しています。"
             }),
             'display_news': forms.CheckboxInput(attrs={
                 'class': "is-size-6",
