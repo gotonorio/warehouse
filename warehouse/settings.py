@@ -141,10 +141,6 @@ MEDIA_URL = "/media/"
 FILE_UPLOAD_PERMISSIONS = 0o755
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
 
-# collectstaticで集める静的ファイルの場所を指定する。
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, "static"),
-# )
 AUTH_USER_MODEL = 'register.User'
 NUMBER_GROUPING = 3
 
@@ -174,6 +170,10 @@ except ImportError:
 
 # For debugging
 if DEBUG:
+    # 開発環境における静的ファイルの場所を指定する。
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, "static"),
+    )
     # will output to your console
     logging.basicConfig(
         level=logging.DEBUG,
