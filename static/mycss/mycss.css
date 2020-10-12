@@ -11,9 +11,9 @@ html {
   my_footerを使う場合、本体をmargin-bottomでfooterエリアを確保しなければならない。
 */
 main {
-    font-family: BlinkMacSystemFont,"Helvetica Neue",HiraginoSans-W4,"Yu Gothic Medium",Meiryo,sans-serif;
-    font-size: 95%;
-    font-weight: medium;
+    /* https://ics.media/entry/200317/ */
+    font-family: "Helvetica Neue",Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif;
+    /*font-weight: 400;*/
     margin-bottom: 40px; /* フッタの下側マージンの高さ */
 }
 /* footerだとBulmaのfooterを上書きしてしまう */
@@ -31,7 +31,7 @@ main {
   scrollクラスでtable要素を囲む。
 */
 table{
-  font-family: monospace;
+  /*font-family: Osaka;*/
   width:100%;
 }
 .scroll{
