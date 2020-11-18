@@ -10,7 +10,7 @@ class FileForm(forms.ModelForm):
     """
     class Meta:
         model = File
-        fields = ("title", "category", "comment", "table_of_contents",
+        fields = ("title", "category", "table_of_contents", "key_word",
                   "src", "rank", "created_at", "alive", "download")
         # field毎に異なるclassを設定する場合には、この方法を取る。
         widgets = {
@@ -20,10 +20,10 @@ class FileForm(forms.ModelForm):
             'category': forms.Select(attrs={
                 'class': "select is-size-6",
             }),
-            'comment': forms.Textarea(attrs={
+            'table_of_contents': forms.Textarea(attrs={
                 'class': "textarea is-size-6",
             }),
-            'table_of_contents': forms.Textarea(attrs={
+            'key_word': forms.Textarea(attrs={
                 'class': "textarea is-size-6",
             }),
             'src': forms.ClearableFileInput(attrs={

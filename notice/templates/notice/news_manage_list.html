@@ -23,6 +23,7 @@
     <thead>
       <tr>
         <th class="has-text-centered">タイトル</th>
+        <th class="has-text-centered">表示</th>
         <th class="has-text-centered">内容</th>
         <th class="has-text-centered">#</th>
       </tr>
@@ -30,7 +31,8 @@
     <tbody>
       {% for news in news_list %}
       <tr>
-        <td class="nowrap has-text-left">{{ news.title }}</td>
+        <td class="nowrap has-text-left">{{ news.title}}</td>
+        <td class="has-text-center">{{ news.display_news }}</td>
         <td>{{ news.comment }}</td>
         <td class="nowrap">
           <a href="{% url 'notice:news_update' news.pk %}" class="button ">更新</a>
