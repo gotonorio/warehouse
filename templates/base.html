@@ -29,10 +29,14 @@
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">メインメニュー</a>
           <div class="navbar-dropdown">
-            <a href="{% url 'notice:news_card' %}" class="dropdown-item is-size-6">お知らせ</a>
-            <a href="{% url 'information:information' %}" class="dropdown-item is-size-6">連絡先/情報<a>
+            <a class="dropdown-item" href="https://accounting.sophiagardens.org" target="_blank">会計資料</a>
+            <a class="dropdown-item" href="https://facility.sophiagardens.org" target="_blank">設備台帳</a>
+            <a class="dropdown-item" href="https://repairplan.sophiagardens.org" target="_blank">長期修繕計画</a>
+            <a class="dropdown-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
             <hr class="navbar-divider">
-            <a href="{% static 'pamphlet.pdf' %}" class="dropdown-item is-size-6" target="_blank">パンフレット<a>
+            <a href="{% url 'information:information' %}" class="dropdown-item">連絡先/情報<a>
+            <hr class="navbar-divider">
+            <a href="{% static 'pamphlet.pdf' %}" class="dropdown-item" target="_blank">パンフレット<a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
@@ -41,9 +45,6 @@
             <a href="{% url 'library:rijikai_minutes' %}" class="dropdown-item is-size-6">理事会議事録</a>
           </div>
         </div>
-        <a class="navbar-item" href="https://accounting.sophiagardens.org" target="_blank">会計資料</a>
-        <a class="navbar-item" href="https://facility.sophiagardens.org" target="_blank">設備台帳</a>
-        <a class="navbar-item" href="https://repairplan.sophiagardens.org" target="_blank">長期修繕計画</a>
       </div>
 
       <div class="navbar-end">
