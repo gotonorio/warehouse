@@ -1,12 +1,10 @@
 # import logging
 
-# from django.conf import settings
 from django.contrib.auth.mixins import PermissionRequiredMixin
-# from django.db.models import Q  # filterでor検索するために必要。
-# from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import generic
-# from library.models import BigCategory, Category, File
+
 from notice.forms import NewsForm
 from notice.models import News
 
@@ -54,6 +52,15 @@ class NewsUpdateView(PermissionRequiredMixin, generic.UpdateView):
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     success_url = reverse_lazy('notice:news_card')
+
+    def form_valid(self, form):
+        # commitを停止する。
+        self.object = form.save(commit=False)
+        # created_atをセット。
+        self.object.created_at = timezone.datetime.now()
+        # データを保存。
+        self.object.save()
+        return super().form_valid(form)
 
 
 class NewsDeleteView(PermissionRequiredMixin, generic.DeleteView):
