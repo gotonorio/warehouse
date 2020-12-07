@@ -32,7 +32,7 @@
       <tr>
         <td class="has-text-left"><a href="{% url 'library:file_view' file.pk %}">{{file.title}}</a></td>
         {% if forloop.counter < comment_limit %}
-          <td class="has-text-left">{{file.comment|escape|linebreaksbr|urlize}}</td>
+          <td class="has-text-left">{{file.table_of_contents|escape|linebreaksbr|urlize}}</td>
         {% else %}
           <td></td>
         {% endif %}
