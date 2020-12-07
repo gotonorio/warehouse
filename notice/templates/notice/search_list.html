@@ -26,7 +26,7 @@
     {% for file in file_list %}
     <tr>
       <td class="text-left"><a href="{{file.src.url}}" target="_blank">{{file.title}}</a></td>
-      <td class="text-left">{{file.comment|linebreaksbr|urlize}}</td>
+      <td class="text-left">{{file.table_of_contents|linebreaksbr|urlize}}</td>
     </tr>
     {% endfor %}
   </tbody>
