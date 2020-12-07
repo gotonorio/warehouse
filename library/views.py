@@ -272,7 +272,7 @@ class BigCategoryView(generic.TemplateView):
 class SearchlistView(LoginRequiredMixin, generic.ListView):
     """ 検索結果表示用View
      検索ボタンで抽出されたFileオブジェクトを一覧表示する。
-     検索対象は「table_of_contents」「key_word」
+     検索対象は「summary」「key_word」
     """
     model = File
     template_name = "notice/search_list.html"
@@ -284,7 +284,7 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
         if keyword:
             queryset = queryset.filter(
                 Q(title__icontains=keyword) | Q(key_word__icontains=keyword)
-                | Q(table_of_contents__icontains=keyword)
+                | Q(summary=keyword)
             )
         return queryset
 
