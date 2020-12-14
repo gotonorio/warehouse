@@ -30,7 +30,8 @@
     <tbody>
       {% for file in category %}
       <tr>
-        <td class="has-text-left"><a href="{% url 'library:file_view' file.pk %}">{{file.title}}</a></td>
+        <td class="has-text-left"><a href="{{file.src.url}}">{{file.title}}</a></td>
+        <!--<td class="has-text-left"><a href="{% url 'library:file_view' file.pk %}">{{file.title}}</a></td>-->
         {% if forloop.counter < comment_limit %}
           <td class="has-text-left">{{file.summary|escape|linebreaksbr|urlize}}</td>
         {% else %}

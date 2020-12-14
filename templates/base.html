@@ -43,6 +43,10 @@
           <a class="navbar-link">保管庫</a>
           <div class="navbar-dropdown">
             <a href="{% url 'library:rijikai_minutes' %}" class="dropdown-item is-size-6">理事会議事録</a>
+            <a href="{% url 'library:rijikai_data' %}" class="dropdown-item is-size-6">理事会資料</a>
+            <hr class="navbar-divider">
+            <a href="{% url 'library:soukai_rejime' %}#" class="dropdown-item is-size-6">総会議案書</a>
+            <a href="#" class="dropdown-item is-size-6">総会議事録</a>
           </div>
         </div>
         <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">光ケーブル工事予定</a>

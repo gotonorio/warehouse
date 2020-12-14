@@ -23,13 +23,13 @@ class FileIndexView(PermissionRequiredMixin, generic.ListView):
     paginate_by = 50
 
     def get_queryset(self):
-        return File.objects.order_by('-created_at', 'category')
+        return File.objects.order_by('category', '-created_at')
 
 
-def indirect_link(request, pk):
-    """ 間接リンク。実際のURLへリダイレクト """
-    file = get_object_or_404(File, pk=pk)
-    return redirect(file.src.url)
+# def indirect_link(request, pk):
+#     """ 間接リンク。実際のURLへリダイレクト """
+#     file = get_object_or_404(File, pk=pk)
+#     return redirect(file.src.url)
 
 
 class FileCategoryView(PermissionRequiredMixin, generic.ListView):
@@ -124,7 +124,7 @@ class CategoryIndexView(PermissionRequiredMixin, generic.ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        return Category.objects.order_by('parent')
+        return Category.objects.order_by('parent__rank')
 
 
 class CategoryBigView(PermissionRequiredMixin, generic.ListView):
@@ -196,7 +196,7 @@ class BigCategoryIndexView(PermissionRequiredMixin, generic.ListView):
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     queryset = BigCategory.objects.order_by('rank')
-    paginate_by = 10
+    paginate_by = 20
 
 
 class BigCategoryCreateView(PermissionRequiredMixin, generic.CreateView):
@@ -232,10 +232,9 @@ class BigCategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
 
 
 class BigCategoryView(generic.TemplateView):
-    """ 全体メニューで選択された「BigCategory」に属するファイルを「Category」毎
-    に表示する。表示数は100に制限する。（増えたらまた考える）
+    """ メニューで選択された「BigCategory」に属するファイルを「Category」毎
+    に表示する。表示数は50に制限する。（増えたら settings.py で変更してね）
     """
-    # template_name = "notice/main_category.html"
     template_name = "library/main_category.html"
 
     def get_context_data(self, **kwargs):
@@ -246,8 +245,7 @@ class BigCategoryView(generic.TemplateView):
         # ログインしている場合は表示。していない場合はrestrict=Trueのカテゴリは非表示とする。
         if user_id is None:
             category_obj = Category.objects.filter(
-                parent=big_category, restrict=False).order_by('-rank',
-                                                              '-created_at')
+                parent=big_category, restrict=False).order_by('-rank', '-created_at')
         else:
             category_obj = Category.objects.filter(
                 parent=big_category).order_by('-rank', '-created_at')
@@ -298,18 +296,50 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
 
 class RijikaiMinutesView(LoginRequiredMixin, generic.ListView):
     """ 理事会議事録ファイルの一覧表
-    左サイドのBigCategoryメニューからの表示は20件に制限している。
+    左サイドのBigCategoryメニューからの表示は50件に制限している。
     ここでは全ファイルを表示する。
     """
     model = File
     template_name = "library/rijikai_minutes_list.html"
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-    paginate_by = 20
+    paginate_by = 40
 
     def get_queryset(self):
-        """ カテゴリ名「理事会議事録」でfilter. """
-        return File.objects.filter(category__name='理事会議事録').order_by('-rank')
+        """ カテゴリパス名「rijikai」でfilter. """
+        return File.objects.filter(category__path_name='rijikai').order_by('-rank')
+
+
+class RijikaiDataListView(LoginRequiredMixin, generic.ListView):
+    """ 理事会資料ファイルの一覧表
+    左サイドのBigCategoryメニューからの表示は50件に制限している。
+    ここでは全ファイルを表示する。
+    """
+    model = File
+    template_name = "library/rijikai_data_list.html"
+    # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
+    raise_exception = True
+    paginate_by = 40
+
+    def get_queryset(self):
+        """ カテゴリパス名「rijikai_data」でfilter. """
+        return File.objects.filter(category__path_name='rijikai_data').order_by('-rank')
+
+
+class SoukaiRejimeListView(LoginRequiredMixin, generic.ListView):
+    """ 総会議事録ファイルの一覧表
+    左サイドのBigCategoryメニューからの表示は50件に制限している。
+    ここでは全ファイルを表示する。
+    """
+    model = File
+    template_name = "library/soukai_rejime_list.html"
+    # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
+    raise_exception = True
+    paginate_by = 40
+
+    def get_queryset(self):
+        """ カテゴリパス名「soukai_rejime」でfilter. """
+        return File.objects.filter(category__path_name='soukai_rejime').order_by('-rank')
 
 
 def pdf_view(request, pk):
