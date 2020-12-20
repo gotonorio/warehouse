@@ -27,7 +27,7 @@
     <div id="navbarMypage" class="navbar-menu">
       <div class="navbar-start">
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">メインメニュー</a>
+          <a class="navbar-link is-size-6">メインメニュー</a>
           <div class="navbar-dropdown">
             <a class="dropdown-item" href="https://accounting.sophiagardens.org" target="_blank">会計資料</a>
             <a class="dropdown-item" href="https://facility.sophiagardens.org" target="_blank">設備台帳</a>
@@ -42,11 +42,11 @@
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">保管庫</a>
           <div class="navbar-dropdown">
-            <a href="{% url 'library:rijikai_minutes' %}" class="dropdown-item is-size-6">理事会議事録</a>
-            <a href="{% url 'library:rijikai_data' %}" class="dropdown-item is-size-6">理事会資料</a>
+            <a class="dropdown-item" href="{% url 'library:rijikai_minutes' %}">理事会議事録</a>
+            <a class="dropdown-item" href="{% url 'library:rijikai_data' %}">理事会資料</a>
             <hr class="navbar-divider">
-            <a href="{% url 'library:soukai_rejime' %}#" class="dropdown-item is-size-6">総会議案書</a>
-            <a href="#" class="dropdown-item is-size-6">総会議事録</a>
+            <a class="dropdown-item" href="{% url 'library:soukai_rejime' %}#">総会議案書</a>
+            <a class="dropdown-item" href="#">総会議事録</a>
           </div>
         </div>
         <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">光ケーブル工事予定</a>
@@ -55,15 +55,15 @@
       <div class="navbar-end">
         {% if perms.notice.add_news or perms.library.add_file %}
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">管理者用</a>
+            <a class="navbar-link is-size-6">管理者用</a>
             <div class="navbar-dropdown">
               {% if perms.notice.add_news %}
-                <a class="dropdown-item is-size-6" href="{% url 'notice:news_list' %}">お知らせ管理</a>
+                <a class="dropdown-item" href="{% url 'notice:news_list' %}">お知らせ管理</a>
               {% endif %}
               {% if perms.library.add_file %}
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item is-size-6" href="{% url 'library:file_index' %}">文書ファイル登録・修正</a>
-                <a class="dropdown-item is-size-6" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
+                <a class="dropdown-item" href="{% url 'library:file_index' %}">文書ファイル登録・修正</a>
+                <a class="dropdown-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
               {% endif %}
             </div>
           </div>
