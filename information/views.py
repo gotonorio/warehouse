@@ -29,7 +29,7 @@ class InformationCreateView(PermissionRequiredMixin, generic.CreateView):
     model = Information
     form_class = InformationForm
     # 必要な権限
-    permission_required = ("file_uploader.add_file")
+    permission_required = ("notice.add_news")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     success_url = reverse_lazy('information:info_list')
@@ -42,7 +42,7 @@ class InformationUpdateView(PermissionRequiredMixin, generic.UpdateView):
     # デフォルトテンプレート名は「news_form.html」となる。（createviewと共通）
     form_class = InformationForm
     # 必要な権限
-    permission_required = ("file_uploader.add_file")
+    permission_required = ("notice.add_news")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     success_url = reverse_lazy('information:info_list')
@@ -56,7 +56,7 @@ class InformationDeleteView(PermissionRequiredMixin, generic.DeleteView):
      """
     model = Information
     # 必要な権限
-    permission_required = ("file_uploader.add_file")
+    permission_required = ("notice.add_news")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     success_url = reverse_lazy('information:info_list')

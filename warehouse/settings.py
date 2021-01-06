@@ -70,6 +70,9 @@ TEMPLATES = [
                 'warehouse.context_processors.menu',
                 'warehouse.context_processors.version_no',
             ],
+            'libraries': {
+                'mytag': 'notice.templatetags.mytag',
+            },
         },
     },
 ]

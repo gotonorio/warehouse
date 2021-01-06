@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load mytag %}
 
 {% block navbar %}
 <!-- navbar -->
@@ -20,7 +21,7 @@
   <p>
     <h4>{{ item.title }}</h4>
     <p>{{item.created_at|date}}</p>
-    {{ item.information| safe }}
+    {{ item.information| markdown_to_html }}
   </p>
   <br>
   {% endfor %}
