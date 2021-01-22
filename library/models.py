@@ -85,6 +85,8 @@ class File(models.Model):
 post_deleteで送信される引数：sender(model class)、
                 instannce(deleted instance)、using(**kwargs)
 """
+
+
 @receiver(post_delete, sender=File)
 def delete_media_file(sender, instance, **kwargs):
     instance.src.delete(False)
