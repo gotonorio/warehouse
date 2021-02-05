@@ -23,7 +23,7 @@ class FileIndexView(PermissionRequiredMixin, generic.ListView):
     paginate_by = 50
 
     def get_queryset(self):
-        return File.objects.order_by('category', '-created_at')
+        return File.objects.order_by('category', 'rank')
 
 
 # def indirect_link(request, pk):
