@@ -12,7 +12,8 @@ html {
 */
 main {
     /* https://ics.media/entry/200317/ */
-    font-family: "Helvetica Neue",Arial,"ヒラギノ角ゴシック W3","Hiragino Sans",Meiryo,sans-serif;
+    /* font-family: "Helvetica Neue",Arial,"ヒラギノ角ゴシック W3","Hiragino Sans",Meiryo,sans-serif; */
+    font-family: "ヒラギノ角ゴシック W5","Hiragino Sans",Meiryo,sans-serif;
     /*font-weight: 400;*/
     margin-bottom: 40px; /* フッタの下側マージンの高さ */
 }
