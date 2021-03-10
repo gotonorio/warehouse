@@ -13,7 +13,7 @@ html {
 main {
     /* https://ics.media/entry/200317/ */
     /* font-family: "Helvetica Neue",Arial,"ヒラギノ角ゴシック W3","Hiragino Sans",Meiryo,sans-serif; */
-    font-family: "ヒラギノ角ゴシック W5","Hiragino Sans",Meiryo,sans-serif;
+    font-family: "ヒラギノ角ゴシック W3","Hiragino Sans",Meiryo,sans-serif;
     /*font-weight: 400;*/
     margin-bottom: 40px; /* フッタの下側マージンの高さ */
 }
@@ -32,12 +32,12 @@ main {
   scrollクラスでtable要素を囲む。
 */
 table{
-  /*font-family: Osaka;*/
-  width:100%;
+  width: auto;
+  margin: 3px auto;    /* 上下3px 左右auto */
+  white-space: nowrap;
 }
 .scroll{
   overflow: auto;
-  white-space: nowrap;
 }
 .scroll::-webkit-scrollbar{
   height: 5px;
@@ -212,4 +212,27 @@ th {
     width: 1180px;
     margin: auto;
   }
+}
+
+/* 入力フォーム用 style sheet */
+.errorlist {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  color: red;
+}
+div.my_field > span.helptext {
+  font-size: 14px;
+  color: #999;
+}
+div.my_field > input, div.my_field > select-css, div.my_field > button {
+  width: 100%;
+  padding: 6px 12px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: solid 1px #999;
+}
+div.my_field > textarea {
+  border-radius: 10px;
+  border: solid 1px #999;
 }
