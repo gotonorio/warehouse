@@ -4,7 +4,18 @@
 <nav class="navbar is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item">お知らせ管理</a>
-    <a class="navbar-item" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <a href="{% url 'notice:news_card' %}" class="navbar-item">戻る</a>
+    </div>
   </div>
 </nav>
 {% endblock navbar %}
@@ -12,28 +23,28 @@
 <div class="container">
   <br>
   <div class="content has-text-centered">
-    <h3 class="text-center">お知らせ一覧</h3>
+    <h4 class="text-center">お知らせ一覧</h4>
+    <br>
+    <a href="{% url 'notice:news_create' %}" class="button is-primary">新規作成</a>
+    <a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>
   </div>
-  <hr>
-  <a href="{% url 'notice:news_create' %}" class="button is-primary">新規作成</a>
-  <a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>
   <br>
   <br>
-  <table class="table table-sm table-responsive-sm mx-auto">
+  <table class="table">
     <thead>
       <tr>
         <th class="has-text-centered">タイトル</th>
         <th class="has-text-centered">表示</th>
-        <th class="has-text-centered">内容</th>
+        {#<th class="has-text-centered">内容</th>#}
         <th class="has-text-centered">#</th>
       </tr>
     </thead>
     <tbody>
       {% for news in news_list %}
       <tr>
-        <td class="nowrap has-text-left">{{ news.title}}</td>
+        <td class="has-text-left">{{ news.title}}</td>
         <td class="has-text-center">{{ news.display_news }}</td>
-        <td>{{ news.comment }}</td>
+        {#<td>{{ news.comment }}</td>#}
         <td class="nowrap">
           <a href="{% url 'notice:news_update' news.pk %}" class="button ">更新</a>
           <a href="{% url 'notice:news_delete' news.pk %}" class="button ">削除</a>

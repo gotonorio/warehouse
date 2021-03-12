@@ -13,8 +13,7 @@ html {
 main {
     /* https://ics.media/entry/200317/ */
     /* font-family: "Helvetica Neue",Arial,"ヒラギノ角ゴシック W3","Hiragino Sans",Meiryo,sans-serif; */
-    font-family: "ヒラギノ角ゴシック W3","Hiragino Sans",Meiryo,sans-serif;
-    /*font-weight: 400;*/
+    font-family: "ヒラギノ角ゴシック W4","Hiragino Sans",Meiryo,sans-serif;
     margin-bottom: 40px; /* フッタの下側マージンの高さ */
 }
 /* footerだとBulmaのfooterを上書きしてしまう */
@@ -33,14 +32,14 @@ main {
 */
 table{
   width: auto;
-  margin: 3px auto;    /* 上下3px 左右auto */
+  margin: 3px auto;
   white-space: nowrap;
 }
 .scroll{
   overflow: auto;
 }
 .scroll::-webkit-scrollbar{
-  height: 5px;
+  height: 8px;
 }
 .scroll::-webkit-scrollbar-track{
   background: #F1F1F1;
@@ -48,66 +47,19 @@ table{
 .scroll::-webkit-scrollbar-thumb {
    background: #BCBCBC;
 }
-/* 
-セル幅を固定して、オーバーする場合はスクロールする。divでclass設定すること。
-<td><div class="cell_scroll">テキスト</div></td>
-*/
-div.cell_min_200 {
-  min-width: 200px;
+
+/* webkit系ブラウザ用のスクロールバー調整 */
+::-webkit-scrollbar{
+  width: 10px;
 }
-div.cell_240 {
-  max-width: 240px;
-  overflow: auto;
+::-webkit-scrollbar-track{
+  background: #fff;
+  border-left: solid 1px #ececec;
 }
-div.cell_400 {
-  max-width: 400px;
-  overflow: auto;
-}
-div.cell_420 {
-  max-width: 420px;
-  overflow: auto;
-}
-/* 入力フォーム用テーブルの設定 */
-.form_table {
-  width: 480px;
-  margin: auto;
-}
-/* https://htmlcss.step-learn.com/contents/c031-table-width-percent.html */
-.tbl_width {
-  table-layout: fixed;
-  width: 100%;
-}
-th.width10 {
-  width: 10%;
-  min-width: 10%;
-}
-th.width20 {
-  width: 20%;
-  min-width: 20%;
-}
-th.width30 {
-  width: 30%;
-  min-width: 30%;
-}
-th.width40 {
-  width: 40%;
-  min-width: 40%;
-}
-th.width50 {
-  width: 50%;
-  min-width: 50%;
-}
-th.width60 {
-  width: 60%;
-  min-width: 60%;
-}
-th.width70 {
-  width: 70%;
-  min-width: 70%;
-}
-th.width80 {
-  width: 80%;
-  min-width: 80%;
+::-webkit-scrollbar-thumb{
+  background: #ccc;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 2px #fff;
 }
 
 a.vmenu {
@@ -123,13 +75,15 @@ a.vmenu:hover {
     color:#666666;
     background-color:#ffdcd7
 }
-/* tableの列を改行禁止にする */
+
+/* tableの列を改行禁止にする 
 td.nowrap {
   white-space: nowrap;
   }
 th {
   white-space: nowrap;
 }
+*/
 
 /* 2019/08/02現在、safariでBulmaのclass = "select"が機能しないため、下記cssを使用。*/
 /* https://coliss.com/articles/build-websites/operation/css/consistent-select-element-styling.html*/
@@ -175,41 +129,12 @@ th {
   font-weight:normal;
 }
 /*
-.nowrap {
-  white-space: nowrap;
-}
-*/
-/*
  https://obel.hatenablog.jp/entry/20160626/1466937585 
  md_containerクラスは画面幅が768px以上になったら、width:748px、margin:autoとなる。
 */
-@media screen and (min-width: 375px) {
-  .ss_container {
-    width: 355px;
-    margin: auto;
-  }
-}
-@media screen and (min-width: 512px) {
-  .sm_container {
-    width: 500px;
-    margin: auto;
-  }
-}
 @media screen and (min-width: 768px) {
   .md_container {
     width: 748px;
-    margin: auto;
-  }
-}
-@media screen and (min-width: 992px) {
-  .lg_container {
-    width: 972px;
-    margin: auto;
-  }
-}
-@media screen and (min-width: 1200px) {
-  .xl_container {
-    width: 1180px;
     margin: auto;
   }
 }
@@ -235,4 +160,9 @@ div.my_field > input, div.my_field > select-css, div.my_field > button {
 div.my_field > textarea {
   border-radius: 10px;
   border: solid 1px #999;
+}
+
+#form_style {
+  width: 320px;
+  margin: auto;
 }

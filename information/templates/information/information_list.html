@@ -15,15 +15,16 @@
   </div>
 </section>
 {% endblock %}
+
 {% block content %}
 <div class="content">
   {% for item in information_list %}
   <p>
     <h4>{{ item.title }}</h4>
     <p>{{item.created_at|date}}</p>
-    {{ item.information| markdown_to_html }}
+    {{item.information| markdown_to_html}}
   </p>
-  <br>
+  <hr>
   {% endfor %}
   {% include 'page.html' %}
   <br>
