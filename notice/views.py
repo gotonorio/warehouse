@@ -14,7 +14,7 @@ class NewsCardView(generic.ListView):
 
     model = News
     template_name = "notice/news_card_list.html"
-    paginate_by = 20
+    paginate_by = 10
     queryset = News.objects.filter(display_news=True).order_by('-created_at')
 
 
