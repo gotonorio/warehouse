@@ -26,15 +26,16 @@ main {
     line-height: 40px; /* ここでテキストを垂直に中央に配置 */
     background-color: #f5f5f5;
 }
-/*
-  https://webcommu.net/phone-table-scroll/
-  scrollクラスでtable要素を囲む。
-*/
+/* tableの中央配置 */
 table{
   width: auto;
   margin: 3px auto;
   white-space: nowrap;
 }
+/*
+  https://webcommu.net/phone-table-scroll/
+  scrollクラスでtable要素を囲む。
+*/
 .scroll{
   overflow: auto;
 }
@@ -76,7 +77,7 @@ a.vmenu:hover {
     background-color:#ffdcd7
 }
 
-/* tableの列を改行禁止にする 
+/* tableの列を改行禁止にする
 td.nowrap {
   white-space: nowrap;
   }
