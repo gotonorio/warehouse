@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top" lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/png" href="{{STATIC_URL}}/static/favicon.ico" />
+  {# css #}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+  <link href="{% static 'mycss/mycss.css' %}" rel="stylesheet">
+  <link href="{% static 'mycss/wh2.css' %}" rel="stylesheet">
+  <title>{% block title %}文書資料{% endblock %}</title>
+</head>
+<body>
+  <!-- navbar -->
+  <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="{% url 'notice:news_card' %}">ホーム</a>
+      {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+      <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarMypage" class="navbar-menu">
+      <div class="navbar-start">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link is-size-6">メインメニュー</a>
+          <div class="navbar-dropdown">
+            <a class="dropdown-item" href="https://accounting.sophiagardens.org" target="_blank">会計資料</a>
+            <a class="dropdown-item" href="https://facility.sophiagardens.org" target="_blank">設備台帳</a>
+            <a class="dropdown-item" href="https://repairplan.sophiagardens.org" target="_blank">長期修繕計画</a>
+            <a class="dropdown-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
+            <hr class="navbar-divider">
+            <a href="{% url 'information:information' %}" class="dropdown-item">連絡先/情報<a>
+            <hr class="navbar-divider">
+            <a href="{% static 'pamphlet.pdf' %}" class="dropdown-item" target="_blank">パンフレット<a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">保管庫</a>
+          <div class="navbar-dropdown">
+            <a class="dropdown-item" href="{% url 'library:rijikai_minutes' %}">理事会議事録</a>
+            <a class="dropdown-item" href="{% url 'library:rijikai_data' %}">理事会資料</a>
+            <hr class="navbar-divider">
+            <a class="dropdown-item" href="{% url 'library:soukai_rejime' %}#">総会議案書</a>
+            <a class="dropdown-item" href="#">総会議事録</a>
+          </div>
+        </div>
+        <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">管理組合カレンダー</a>
+      </div>
+
+      <div class="navbar-end">
+        {% if perms.notice.add_news or perms.library.add_file %}
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link is-size-6">管理者用</a>
+            <div class="navbar-dropdown">
+              {% if perms.notice.add_news %}
+                <a class="dropdown-item" href="{% url 'notice:news_list' %}">お知らせ管理</a>
+              {% endif %}
+              {% if perms.library.add_file %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'library:file_index' %}">文書ファイル登録・修正</a>
+                <a class="dropdown-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        {% if not user.id %}
+          <a class="navbar-item" href="{% url 'register:login' %}">区分所有者ログイン</a>
+        {% else %}
+          <a class="navbar-item" href="{% url 'register:logout' %}">ログアウト</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  <!-- ヘッダー（hero) -->
+  {% block header %}
+  {% endblock %}
+  <br>
+  <!-- contents -->
+  <div class="container is-fluid">
+  <main>
+    <div class="columns">
+      <!-- 左サイド -->
+      <div class="column is-3">
+        <div class="content">
+          <table class="table is-bordered">
+            <thead>
+              <tr class="has-background-dark">
+                <th class="has-text-centered has-text-white">文書資料</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for menu in menu_list %}
+              <tr>
+                <td class="has-text-left">
+                  <a href="{% url 'library:bigcategory' menu.pk %}" class="vmenu">{{menu}}</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p>*：区分所有者専用</p>
+        </div>
+        <p>検索キーワード</p>
+        <form method="GET" action="{% url 'library:search' %}">
+          <input type="search" class="input" placeholder="Search" name="keyword" value={{keyword}}>
+          <button type="submit" class="button is-small" style="display:none"></button>
+        </form>
+      </div>
+      <!-- 本体 -->
+      <div class="column is-9 ">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </main>
+  </div>
+  <!-- フッタ -->
+  <footer class="my_footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <span class="text-muted">
+          &copy; 2016 -
+          <script language="JavaScript" type="text/javascript">
+            document.write(new Date().getFullYear());
+          </script>
+          ソフィア・ガーデンズ川崎 管理組合 gotonorio@gmail.com (Ver-{{VERSION_NO}})
+        </span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+      
+{# 参考： https://bulma.io/documentation/components/navbar/ #}
+{# ToDo ハンバーガアイコン用のjs。staticから読み込むことはできないか？ #}
+<script>
+// navbar-burgerのボタン処理。https://bulma.io/documentation/components/navbar/
+  document.addEventListener('DOMContentLoaded', () => {
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+      // Add a click event on each of them
+      $navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+            // Get the target from the "data-target" attribute
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+        });
+      });
+    }
+  });
+</script>
