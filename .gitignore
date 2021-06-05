@@ -8,7 +8,6 @@ __pycache__/
 media/
 .vscode/
 docker/
-dev_docker/
 .DS_Store
 static/*.png
 local_settings.py
