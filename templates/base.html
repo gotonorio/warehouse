@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="ja">
+<html class="has-navbar-fixed-top" lang="ja">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@
 </head>
 <body>
   <!-- navbar -->
-  <nav class="navbar is-black is-size-6" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-fixed-top is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item" href="{% url 'notice:news_card' %}">ホーム</a>
       {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
