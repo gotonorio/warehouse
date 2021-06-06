@@ -26,7 +26,6 @@
         <span aria-hidden="true"></span>
       </a>
     </div>
-
     <div id="navbarMypage" class="navbar-menu">
       <div class="navbar-start">
         <div class="navbar-item has-dropdown is-hoverable">
@@ -54,7 +53,6 @@
         </div>
         <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">管理組合カレンダー</a>
       </div>
-
       <div class="navbar-end">
         {% if perms.notice.add_news or perms.library.add_file %}
           <div class="navbar-item has-dropdown is-hoverable">
@@ -79,6 +77,7 @@
       </div>
     </div>
   </nav>
+
   <!-- ヘッダー（hero) -->
   {% block header %}
   {% endblock %}
@@ -87,6 +86,11 @@
   <div class="container is-fluid">
   <main>
     <div class="columns">
+      <!-- 本体 -->
+      <div class="column is-9 ">
+        {% block content %}
+        {% endblock %}
+      </div>
       <!-- 左サイド -->
       <div class="column is-3">
         <div class="content">
@@ -113,11 +117,6 @@
           <input type="search" class="input" placeholder="Search" name="keyword" value={{keyword}}>
           <button type="submit" class="button is-small" style="display:none"></button>
         </form>
-      </div>
-      <!-- 本体 -->
-      <div class="column is-9 ">
-        {% block content %}
-        {% endblock %}
       </div>
     </div>
   </main>

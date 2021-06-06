@@ -1,7 +1,27 @@
 {% extends "base_single_page.html" %}
-{% block navbar %}
+
 <!-- navbar -->
+{% block navbar %}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{% url 'notice:news_card' %}">ホーム</a>
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <a href="{% url 'notice:news_card' %}" class="navbar-item">戻る</a>
+    </div>
+  </div>
+</nav>
 {% endblock navbar %}
+
+<!-- content -->
 {% block content %}
 <div class="container">
   <div class="content has-text-centered">

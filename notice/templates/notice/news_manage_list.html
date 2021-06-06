@@ -3,7 +3,7 @@
 {% block navbar %}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item">お知らせ管理</a>
+    <a class="navbar-item">【SG川崎】</a>
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -29,13 +29,11 @@
     <a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>
   </div>
   <br>
-  <br>
-  <table class="table">
+  <table class="table is-narrow">
     <thead>
       <tr>
         <th class="has-text-centered">タイトル</th>
         <th class="has-text-centered">表示</th>
-        {#<th class="has-text-centered">内容</th>#}
         <th class="has-text-centered">#</th>
       </tr>
     </thead>
@@ -44,10 +42,9 @@
       <tr>
         <td class="has-text-left">{{ news.title}}</td>
         <td class="has-text-center">{{ news.display_news }}</td>
-        {#<td>{{ news.comment }}</td>#}
         <td class="nowrap">
-          <a href="{% url 'notice:news_update' news.pk %}" class="button ">更新</a>
-          <a href="{% url 'notice:news_delete' news.pk %}" class="button ">削除</a>
+          <a href="{% url 'notice:news_update' news.pk %}" class="button is-size-7">更新</a>
+          <a href="{% url 'notice:news_delete' news.pk %}" class="button is-size-7">削除</a>
         </td>
       </tr>
       {% endfor %}

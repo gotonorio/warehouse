@@ -2,7 +2,6 @@
 
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
-from django.utils import timezone
 from django.views import generic
 
 from notice.forms import NewsForm
@@ -23,10 +22,10 @@ class NewsListView(PermissionRequiredMixin, generic.ListView):
 
     model = News
     template_name = "notice/news_manage_list.html"
-    paginate_by = 10
+    paginate_by = 50
     # 必要な権限
     permission_required = ("notice.add_news")
-    queryset = News.objects.order_by('-created_at')
+    queryset = News.objects.all().order_by('-created_at')
 
 
 class NewsCreateView(PermissionRequiredMixin, generic.CreateView):
@@ -57,7 +56,7 @@ class NewsUpdateView(PermissionRequiredMixin, generic.UpdateView):
         # commitを停止する。
         self.object = form.save(commit=False)
         # created_atをセット。
-        self.object.created_at = timezone.datetime.now()
+        # self.object.created_at = timezone.datetime.now()
         # データを保存。
         self.object.save()
         return super().form_valid(form)

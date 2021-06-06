@@ -1,11 +1,34 @@
-{% extends "base.html" %}
+{% extends "base_single_page.html" %}
 {% load static %}
 {% load mytag %}
 
-{% block navbar %}
+{% block head %}
+<link href="{% static 'mycss/wh2.css' %}" rel="stylesheet">
+{% endblock head%}
+
 <!-- navbar -->
+{% block navbar %}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{% url 'notice:news_card' %}">ホーム</a>
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <a href="{% url 'notice:news_card' %}" class="navbar-item">戻る</a>
+    </div>
+  </div>
+</nav>
 {% endblock %}
-{% block header %}
+
+<!-- content -->
+{% block content %}
 <section class="hero is-dark">
   <div class="hero-body">
     <div class="container has-text-centered">
@@ -14,19 +37,19 @@
     </div>
   </div>
 </section>
-{% endblock %}
 
-{% block content %}
-<div class="content">
-  {% for item in information_list %}
-  <p>
-    <h4>{{ item.title }}</h4>
-    <p>{{item.created_at|date}}</p>
-    {{item.information| markdown_to_html}}
-  </p>
-  <hr>
-  {% endfor %}
-  {% include 'page.html' %}
-  <br>
+<div class="container is-fluid">
+  <div class="content">
+    {% for item in information_list %}
+    <p>
+      <h4>{{ item.title }}</h4>
+      <p>{{item.created_at|date}}</p>
+      {{item.information| markdown_to_html}}
+    </p>
+    <hr>
+    {% endfor %}
+    {% include 'page.html' %}
+    <br>
+  </div>
 </div>
 {% endblock %}

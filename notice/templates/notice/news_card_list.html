@@ -21,7 +21,7 @@
 {% for news in news_list %}
 <div class="card content">
   <header class="card-header">
-    <p class="card-header-title has-background-dark has-text-white is-size-5">{{news.title}}</p>
+    <p class="card-header-title has-background-dark has-text-white">{{news.title}}</p>
   </header>
   <p>{{ news.created_at | date }}</p>
   <div class="card-content markdown table is-bordered">
