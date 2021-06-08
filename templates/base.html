@@ -15,8 +15,9 @@
   <title>{% block title %}文書資料{% endblock %}</title>
 </head>
 <body>
-  <!-- navbar -->
-  <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  {% block navbar %}
+  {% endblock%}
+  {% comment %} <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item" href="{% url 'notice:news_card' %}">ホーム</a>
       {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
@@ -76,7 +77,7 @@
         {% endif %}
       </div>
     </div>
-  </nav>
+  </nav> {% endcomment %}
 
   <!-- ヘッダー（hero) -->
   {% block header %}
