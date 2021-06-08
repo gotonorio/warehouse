@@ -1,0 +1,80 @@
+{% extends "base_single_page.html" %}
+{% load static %}
+{% load mytag %}
+
+{% block head %}
+<link href="{% static 'mycss/wh2.css' %}" rel="stylesheet">
+{% endblock head%}
+
+<!-- navbar -->
+{% block navbar %}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{% url 'notice:news_card' %}">ホーム</a>
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <a href="{% url 'notice:news_card' %}" class="navbar-item">戻る</a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title"> ソフィア・ガーデンズ川崎 </h1>
+      <h4 class="subtitle">管理組合 メニュー</h4>
+    </div>
+  </div>
+</section>
+
+<div class="container is-fluid">
+<br>
+  <div class="columns">
+    <div class="column">
+      <div class="menubox has-text-centered has-text-weight-semibold is-size-5">
+        <a href="https://accounting.sophiagardens.org" target="_blank">会計資料</a>
+      </div>
+    </div>
+    <div class="column">
+      <div class="menubox has-text-centered has-text-weight-semibold is-size-5">
+        <a href="https://facility.sophiagardens.org" target="_blank">設備台帳</a>
+      </div>
+    </div>
+    <div class="column">
+      <div class="menubox has-text-centered has-text-weight-semibold is-size-5">
+        <a href="https://repairplan.sophiagardens.org" target="_blank">修繕計画</a>
+      </div>
+    </div>
+    {% comment %} <div class="column">
+      <div class="menubox has-text-centered has-text-weight-semibold is-size-5">
+        <a href="https://gijiroku.sophiagardens.org" target="_blank">議事録</a>
+      </div>
+    </div> {% endcomment %}
+  </div>
+  <hr>
+  <div class="columns">
+    <div class="column is-2">
+      <div class="menubox has-text-centered has-text-weight-semibold is-size-5">
+        <a href="{% url 'information:information' %}">連絡先</a>
+      </div>
+    </div>
+    <div class="column is-2">
+      <div class="menubox has-text-centered has-text-weight-semibold is-size-5">
+        <a href="{% static 'pamphlet.pdf' %}" target="_blank">パンフレット</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
