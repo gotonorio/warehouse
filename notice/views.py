@@ -50,7 +50,7 @@ class NewsUpdateView(PermissionRequiredMixin, generic.UpdateView):
     permission_required = ("notice.add_news")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-    success_url = reverse_lazy('notice:news_card')
+    success_url = reverse_lazy('notice:news_list')
 
     def form_valid(self, form):
         # commitを停止する。
@@ -70,4 +70,4 @@ class NewsDeleteView(PermissionRequiredMixin, generic.DeleteView):
     permission_required = ("notice.add_news")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-    success_url = reverse_lazy('notice:news_card')
+    success_url = reverse_lazy('notice:news_list')
