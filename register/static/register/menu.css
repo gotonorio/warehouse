@@ -1,0 +1,28 @@
+
+.menubox {
+  border: solid 1px;
+  margin-top: 2px;
+  margin-left: 10px;
+  padding: 10px;
+  position: relative;
+  background-color:#f0e68c;
+  border-radius: 0.5em;
+}
+
+.free_menubox {
+  border: solid 1px;
+  margin-top: 2px;
+  margin-left: 10px;
+  padding: 10px;
+  position: relative;
+  background-color:#dcdcdc;
+  border-radius: 0.5em;
+}
+hr {
+  border-style: none;
+  border-top: 1px solid black;
+}
+
+a.black_color {
+  color : black;
+  }
