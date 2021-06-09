@@ -11,4 +11,10 @@ table{
   padding: 10px;
   position: relative;
   background-color:#FFFFEE;
+  border-radius: 0.5em;
+}
+
+hr {
+  border-style: none;
+  border-top: 2px solid blue;
 }
