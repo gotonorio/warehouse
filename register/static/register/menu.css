@@ -25,4 +25,5 @@ hr {
 
 a.black_color {
   color : black;
+  display: block;
   }
