@@ -1,5 +1,5 @@
 
-.menubox {
+.free_menubox {
   border: solid 1px;
   margin-top: 2px;
   margin-left: 10px;
@@ -9,13 +9,13 @@
   border-radius: 0.5em;
 }
 
-.free_menubox {
+.menubox {
   border: solid 1px;
   margin-top: 2px;
   margin-left: 10px;
   padding: 10px;
   position: relative;
-  background-color:#dcdcdc;
+  background-color:#000033;
   border-radius: 0.5em;
 }
 hr {
@@ -27,3 +27,16 @@ a.black_color {
   color : black;
   display: block;
   }
+
+a.white_color {
+  color : white;
+  display: block;
+  }
+
+.sectionbox {
+  border: none;
+  margin-top: 2px;
+  margin-left: 10px;
+  padding: 20px;
+  position: relative;
+}
