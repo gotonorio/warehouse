@@ -1,8 +1,10 @@
+import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, TemplateView
+from django.shortcuts import render
+from library.models import File
 
 from .forms import LoginForm
-from django.shortcuts import render
 
 
 class Login(LoginView):
@@ -16,6 +18,13 @@ class Logout(LoginRequiredMixin, LogoutView):
     template_name = 'register/logout.html'
 
 
-# メニュー画面
-def warehouse_menu(request):
-    return render(request, 'register/menu.html')
+class MenuView(TemplateView):
+    """ メニュー画面 """
+    template_name = 'register/menu.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        qs = File.objects.filter(title='基本使用規則')
+        for kisoku in qs:
+            context['kisoku'] = kisoku
+        return context  
