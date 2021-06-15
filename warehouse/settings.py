@@ -133,7 +133,7 @@ STATIC_URL = '/static/'
 # user setting
 ###############
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-VERSION_NO = '2021-06-09'
+VERSION_NO = '2021-06-15'
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -162,7 +162,7 @@ MARKDOWN_EXTENSIONS = [
 ]
 
 # viewクラスでselectする時のlimit値を設定する。
-SELECT_LIMIT_NUM = 50
+SELECT_LIMIT_NUM = 100
 # コメントを表示する件数。タイトル表示は20個、コメントも20タイトル分表示。
 COMMENT_LIMIT = 20
 

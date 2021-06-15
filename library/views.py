@@ -14,7 +14,7 @@ from library.models import BigCategory, Category, File
 
 
 class FileIndexView(PermissionRequiredMixin, generic.ListView):
-    """ ファイル一覧 """
+    """ 管理者用 ファイル一覧 """
     model = File
     # 必要な権限
     permission_required = ("library.add_file")
@@ -33,7 +33,7 @@ class FileIndexView(PermissionRequiredMixin, generic.ListView):
 
 
 class FileCategoryView(PermissionRequiredMixin, generic.ListView):
-    """ カテゴリ別のファイル一覧 """
+    """ 管理者用 カテゴリ別のファイル一覧 """
     model = File
     # 必要な権限
     permission_required = ("library.add_file")
@@ -54,7 +54,7 @@ class FileCategoryView(PermissionRequiredMixin, generic.ListView):
 
 
 class FileCreateView(PermissionRequiredMixin, generic.CreateView):
-    """ ファイルの作成. """
+    """ 管理者用 ファイルの作成. """
     model = File
     form_class = FileForm
     # 必要な権限
@@ -82,7 +82,7 @@ class FileCreateView(PermissionRequiredMixin, generic.CreateView):
 
 
 class FileUpdateView(PermissionRequiredMixin, generic.UpdateView):
-    """ ファイルの更新. """
+    """ 管理者用 ファイルの更新. """
     model = File
     form_class = FileForm
     # 必要な権限
@@ -104,7 +104,7 @@ class FileUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
 
 class FileDeleteView(PermissionRequiredMixin, generic.DeleteView):
-    """ ファイルの削除. """
+    """ 管理者用 ファイルの削除. """
     template_name = 'library/file_confirm_delete.html'
     model = File
     # 必要な権限
@@ -115,7 +115,7 @@ class FileDeleteView(PermissionRequiredMixin, generic.DeleteView):
 
 
 class CategoryIndexView(PermissionRequiredMixin, generic.ListView):
-    """ カテゴリの一覧. """
+    """ 管理者用 カテゴリの一覧. """
     model = Category
     # 必要な権限
     permission_required = ("library.add_file")
@@ -128,7 +128,7 @@ class CategoryIndexView(PermissionRequiredMixin, generic.ListView):
 
 
 class CategoryBigView(PermissionRequiredMixin, generic.ListView):
-    """ 親カテゴリ別のカテゴリ一覧. """
+    """ 管理者用 親カテゴリ別のカテゴリ一覧. """
     model = Category
     # 必要な権限
     permission_required = ("library.add_file")
@@ -150,7 +150,7 @@ class CategoryBigView(PermissionRequiredMixin, generic.ListView):
 
 
 class CategoryCreateView(PermissionRequiredMixin, generic.CreateView):
-    """ カテゴリの作成. """
+    """ 管理者用 カテゴリの作成. """
     model = Category
     # 必要な権限
     permission_required = ("library.add_file")
@@ -167,7 +167,7 @@ class CategoryCreateView(PermissionRequiredMixin, generic.CreateView):
 
 
 class CategoryUpdateView(PermissionRequiredMixin, generic.UpdateView):
-    """ カテゴリの更新. """
+    """ 管理者用 カテゴリの更新. """
     model = Category
     form_class = CategoryForm
     # 必要な権限
@@ -178,7 +178,7 @@ class CategoryUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
 
 class CategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
-    """ カテゴリの削除. """
+    """ 管理者用 カテゴリの削除. """
     model = Category
     # 必要な権限
     permission_required = ("library.add_file")
@@ -189,7 +189,9 @@ class CategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
 
 
 class BigCategoryIndexView(PermissionRequiredMixin, generic.ListView):
-    """ 親カテゴリの一覧. """
+    """ 管理者用 親カテゴリの一覧
+    templateは モデル名_list.html
+    """
     model = BigCategory
     # 必要な権限
     permission_required = ("library.add_file")
@@ -233,7 +235,7 @@ class BigCategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
 
 class BigCategoryView(generic.TemplateView):
     """ メニューで選択された「BigCategory」に属するファイルを「Category」毎
-    に表示する。表示数は50に制限する。（増えたら settings.py で変更してね）
+    に表示する。表示数は100に制限する。（増えたら settings.py で変更してね）
     """
     template_name = "library/main_category.html"
 
@@ -255,7 +257,8 @@ class BigCategoryView(generic.TemplateView):
         for i in category_obj:
             file_obj = File.objects.filter(
                 category=i.pk).filter(
-                    alive=True).order_by('-rank', '-created_at')[:limit]
+                    alive=True).order_by('-rank', '-created_at')
+                    # alive=True).order_by('-rank', '-created_at')[:limit]
             file_list = []
             for j in file_obj:
                 file_list.append(j)

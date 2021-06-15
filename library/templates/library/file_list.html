@@ -30,16 +30,16 @@
   <br>
   <div class="content has-text-centered">
     <h3>ファイル一覧</h3>
+    {% if category_pk %}
+      <!-- カテゴリ一覧からカテゴリ別のファイル一覧で表示 -->
+      <a href="{% url 'library:file_create' category_pk %}" class="button is-primary">更新アップロード</a>
+    {% else %}
+      <a href="{% url 'library:file_create' %}" class="button is-primary">新規アップロード</a>
+    {% endif %}
+    <!--<a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>-->
+    <a class="button is-primary" href="javascript:void(0);" onclick="window.history.back();">前に戻る</a>
   </div>
-  {% if category_pk %}
-    <!-- カテゴリ一覧からカテゴリ別のファイル一覧で表示 -->
-    <a href="{% url 'library:file_create' category_pk %}" class="button is-primary">更新アップロード</a>
-  {% else %}
-    <a href="{% url 'library:file_create' %}" class="button is-primary">新規アップロード</a>
-  {% endif %}
-  <!--<a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>-->
-  <a class="button is-primary" href="javascript:void(0);" onclick="window.history.back();">前に戻る</a>
-  <br><br>
+  <br>
   <table class="table is-narrow is-bordered is-striped">
     <thead>
       <tr>
