@@ -73,20 +73,18 @@ class File(models.Model):
 
 
 """
-# Fileオブジェクトのインスタンスが削除されたら、ファイル自体も削除する。
-# https://docs.djangoproject.com/ja/2.1/ref/signals/
-# http://note.crohaco.net/2018/django-signals/
-# https://qiita.com/key/items/73744c3396b08bc0debd
+Fileオブジェクトのインスタンスが削除されたら、ファイル自体も削除する。
+https://docs.djangoproject.com/ja/3.2/topics/signals/
+http://note.crohaco.net/2018/django-signals/
+https://qiita.com/key/items/73744c3396b08bc0debd
 
+デコレータ：@receiver（シグナルとハンドラを関連付ける）
 シグナル：post_delete（インスタンスが削除されると発火する）
         pre_deleteの方が良いのかも。
 ハンドラ：delete_media_file()（シグナルを受けて実ファイルを削除する）
-デコレータ：@receiver（シグナルとハンドラを関連付ける）
 post_deleteで送信される引数：sender(model class)、
                 instannce(deleted instance)、using(**kwargs)
 """
-
-
 @receiver(post_delete, sender=File)
 def delete_media_file(sender, instance, **kwargs):
     instance.src.delete(False)
