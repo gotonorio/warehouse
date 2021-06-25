@@ -76,7 +76,6 @@ class File(models.Model):
 Fileオブジェクトのインスタンスが削除されたら、ファイル自体も削除する。
 https://docs.djangoproject.com/ja/3.2/topics/signals/
 http://note.crohaco.net/2018/django-signals/
-https://qiita.com/key/items/73744c3396b08bc0debd
 
 デコレータ：@receiver（シグナルとハンドラを関連付ける）
 シグナル：post_delete（インスタンスが削除されると発火する）
