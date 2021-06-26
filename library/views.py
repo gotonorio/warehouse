@@ -252,7 +252,7 @@ class BigCategoryView(generic.TemplateView):
             category_obj = Category.objects.filter(
                 parent=big_category).order_by('parent__rank', '-rank')
         # settings.pyでSELECT構文のLIMIT値を設定してある。
-        limit = settings.SELECT_LIMIT_NUM
+        # limit = settings.SELECT_LIMIT_NUM
         category_list = []
         for i in category_obj:
             file_obj = File.objects.filter(
