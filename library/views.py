@@ -121,7 +121,7 @@ class CategoryIndexView(PermissionRequiredMixin, generic.ListView):
     permission_required = ("library.add_file")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-    paginate_by = 20
+    # paginate_by = 20
 
     def get_queryset(self):
         return Category.objects.order_by('parent__rank')
@@ -197,7 +197,7 @@ class BigCategoryIndexView(PermissionRequiredMixin, generic.ListView):
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     queryset = BigCategory.objects.order_by('rank')
-    paginate_by = 20
+    # paginate_by = 20
 
 
 class BigCategoryCreateView(PermissionRequiredMixin, generic.CreateView):
@@ -256,7 +256,7 @@ class BigCategoryView(generic.TemplateView):
             file_obj = File.objects.filter(
                 category=i.pk).filter(
                     alive=True).order_by('-rank', '-created_at')
-                    # alive=True).order_by('-rank', '-created_at')[:limit]
+            # alive=True).order_by('-rank', '-created_at')[:limit]
             file_list = []
             for j in file_obj:
                 file_list.append(j)
