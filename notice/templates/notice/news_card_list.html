@@ -39,7 +39,7 @@
             {% endif %}
             {% if perms.library.add_file %}
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'library:file_index' %}">文書ファイル登録・修正</a>
+              <a class="dropdown-item" href="{% url 'library:big_category_index' %}">文書ファイル登録・修正</a>
               <a class="dropdown-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
             {% endif %}
           </div>
