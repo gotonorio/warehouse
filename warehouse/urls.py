@@ -27,7 +27,6 @@ urlpatterns = [
 ]
 
 # 開発環境で静的ファイルをアップロードするための追加設定。
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)

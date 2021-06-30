@@ -15,31 +15,32 @@ class FileForm(forms.ModelForm):
         # field毎に異なるclassを設定する場合には、この方法を取る。
         widgets = {
             'title': forms.TextInput(attrs={
-                'class': "input is-size-6",
+                'class': "input",
             }),
             'category': forms.Select(attrs={
-                'class': "select is-size-6",
+                'class': "select-css",
             }),
             'summary': forms.Textarea(attrs={
-                'class': "textarea is-size-6",
+                'class': "textarea",
             }),
             'key_word': forms.Textarea(attrs={
-                'class': "textarea is-size-6",
+                'class': "textarea",
             }),
             'src': forms.ClearableFileInput(attrs={
-                'class': "file is-size-6",
+                # 'class': "file",
+                'class': "input",
             }),
             'rank': forms.TextInput(attrs={
-                'class': "input is-size-6",
+                'class': "input",
             }),
-            'created_at': forms.DateTimeInput(attrs={
-                'class': 'datetimeinput is-size-6',
+            'created_at': forms.DateInput(attrs={
+                'class': 'input',
             }),
             'alive': forms.CheckboxInput(attrs={
-                'class': "checkboxinput is-size-4",
+                'class': "checkboxinput",
             }),
             'download': forms.CheckboxInput(attrs={
-                'class': "checkboxinput is-size-4",
+                'class': "checkboxinput",
             }),
         }
 
@@ -52,25 +53,25 @@ class CategoryForm(forms.ModelForm):
                   'rank', 'created_at', 'restrict', 'alive')
         widgets = {
             'name': forms.TextInput(attrs={
-                'class': "input is-size-6",
+                'class': "input",
             }),
             'path_name': forms.TextInput(attrs={
-                'class': "input is-size-6",
+                'class': "input",
             }),
             'parent': forms.Select(attrs={
-                'class': "select is-size-6",
+                'class': "select-css",
             }),
             'rank': forms.TextInput(attrs={
-                'class': "input is-size-6",
+                'class': "input",
             }),
-            'created_at': forms.DateTimeInput(attrs={
-                'class': "datetimeinput is-size-6",
+            'created_at': forms.DateInput(attrs={
+                'class': "input",
             }),
             'restrict': forms.CheckboxInput(attrs={
-                'class': "checkboxinput is-size-4",
+                'class': "checkboxinput",
             }),
             'alive': forms.CheckboxInput(attrs={
-                'class': "checkboxinput is-size-4",
+                'class': "checkboxinput",
             }),
         }
 
@@ -82,15 +83,15 @@ class BigCategoryForm(forms.ModelForm):
         fields = ('name', 'rank', 'created_at', 'alive')
         widgets = {
             'name': forms.TextInput(attrs={
-                'class': "input is-size-6",
+                'class': "input",
             }),
             'rank': forms.TextInput(attrs={
-                'class': "input is-size-6",
+                'class': "input",
             }),
-            'created_at': forms.DateTimeInput(attrs={
-                'class': "datetimeinput is-size-6",
+            'created_at': forms.DateInput(attrs={
+                'class': "input",
             }),
             'alive': forms.CheckboxInput(attrs={
-                'class': "checkboxinput is-size-4",
+                'class': "checkboxinput",
             }),
         }

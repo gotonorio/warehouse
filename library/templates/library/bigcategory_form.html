@@ -18,14 +18,41 @@
       <a class="navbar-item" href="{% url 'library:category_index' %}">カテゴリ一覧</a>
       <a class="navbar-item" href="{% url 'library:big_category_index' %}">親カテゴリ一覧</a>
     </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
+    </div>
   </div>
 </nav>
 {% endblock navbar %}
 {% block content %}
-<div class="sm_container">
+<div class="container is-fluid">
+  <br>
   <div class="content has-text-centered">
+    <h4>親カテゴリの登録/修正</h4>
+  </div>
+  <form method='POST' enctype='multipart/form-data' id='form_style'>
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <div class='field'>
+        <div class='control'>
+          <div class='label'>{{ field.label_tag }}</div>
+          <div class='my_field'>{{ field }}</div>
+          {% if field.help_text %}
+            <span class='helptext'>{{ field.help_text }}</span>
+          {% endif %}
+          {{ field.errors }}
+        </div>
+      </div>
+    {% endfor %}
+    {% csrf_token %}
     <br>
-    <form action="" method="POST" enctype='multipart/form-data'>
+    <div class='content has-text-centered my_button'>
+      <button type='submit' class='button is-primary'>読込み</button>
+      <a class='button is-danger' href='javascript:void(0);' onclick='window.history.back();'>キャンセル</a>
+    </div>
+  </form>
+
+    {% comment %} <form action="" method="POST" enctype='multipart/form-data'>
       <table class="table is-narrow is-responsible">
       {{form}}
       </table>
@@ -35,8 +62,6 @@
         <button type="submit" class="button is-primary" value="send_more" name="action">送信してもう1つ追加</button>
         <a class="button is-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
       </div>
-    </form>
-  </div>
-  <br>
+    </form> {% endcomment %}
 </div>
 {% endblock %}

@@ -164,6 +164,7 @@ div.my_field > textarea {
 }
 
 #form_style {
-  width: 320px;
+  width: 480px;
+  /* width: auto; */
   margin: auto;
 }

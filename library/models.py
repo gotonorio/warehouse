@@ -38,8 +38,8 @@ class Category(models.Model):
 
 
 def get_upload_to(instance, filename):
-    """ upload_toを動的に指定する
-    https://docs.djangoproject.com/ja/2.1/ref/models/fields/
+    """ upload_toを動的(カテゴリのpath毎)に指定する
+    https://docs.djangoproject.com/ja/3.2/ref/models/fields/
     ここで、ファイルをuploadするパスを設定する。
     media/カテゴリのpath/filename
     """

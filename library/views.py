@@ -139,8 +139,7 @@ class CategoryBigView(PermissionRequiredMixin, generic.ListView):
     def get_queryset(self):
         """ カテゴリでfilter. """
         big_pk = self.kwargs['big_pk']
-        return Category.objects.filter(
-            parent__pk=big_pk, alive=True).order_by('-rank', '-created_at')
+        return Category.objects.filter(parent__pk=big_pk).order_by('-rank', '-created_at')
 
     def get_context_data(self, *args, **kwargs):
         """ 親カテゴリのpkをテンプレートへ渡す. """
@@ -245,12 +244,11 @@ class BigCategoryView(generic.TemplateView):
         # user_idは、ログインしていないとNoneとなる。
         user_id = self.request.user.id
         # ログインしている場合は表示。していない場合はrestrict=Trueのカテゴリは非表示とする。
+        category_obj = Category.objects.filter(parent=big_category, alive=True)
         if user_id is None:
-            category_obj = Category.objects.filter(
-                parent=big_category, restrict=False).order_by('parent__rank', '-rank')
+            category_obj = category_obj.filter(restrict=False).order_by('parent__rank', '-rank')
         else:
-            category_obj = Category.objects.filter(
-                parent=big_category).order_by('parent__rank', '-rank')
+            category_obj = category_obj.order_by('parent__rank', '-rank')
         # settings.pyでSELECT構文のLIMIT値を設定してある。
         # limit = settings.SELECT_LIMIT_NUM
         category_list = []
