@@ -1,7 +1,6 @@
-import logging
+# import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, TemplateView
-from django.shortcuts import render
 from library.models import File
 
 from .forms import LoginForm
@@ -27,4 +26,4 @@ class MenuView(TemplateView):
         qs = File.objects.filter(title='基本使用規則')
         for kisoku in qs:
             context['kisoku'] = kisoku
-        return context  
+        return context
