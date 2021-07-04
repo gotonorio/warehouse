@@ -72,6 +72,7 @@ class File(models.Model):
         return os.path.basename(self.src.name)
 
 # django-cleanupモジュールを使うことにしたため不要。
+# https://blog.narito.ninja/detail/186
 #
 # @receiver(post_delete, sender=File)
 # def delete_media_file(sender, instance, **kwargs):
