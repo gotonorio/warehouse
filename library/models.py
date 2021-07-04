@@ -1,8 +1,8 @@
 import os
 
 from django.db import models
-from django.db.models.signals import post_delete
-from django.dispatch import receiver
+# from django.db.models.signals import post_delete
+# from django.dispatch import receiver
 from django.utils import timezone
 
 
@@ -71,18 +71,19 @@ class File(models.Model):
         """ ファイル名を返す """
         return os.path.basename(self.src.name)
 
-
-@receiver(post_delete, sender=File)
-def delete_media_file(sender, instance, **kwargs):
-    """
-    Fileオブジェクトのインスタンスが削除されたら、ファイル自体も削除する。
-    https://docs.djangoproject.com/ja/3.2/topics/signals/
-    http://note.crohaco.net/2018/django-signals/
-    デコレータ：@receiver（シグナルとハンドラを関連付ける）
-    シグナル：post_delete（インスタンスが削除されると発火する）
-            pre_deleteの方が良いのかも。
-    ハンドラ：delete_media_file()（シグナルを受けて実ファイルを削除する）
-    post_deleteで送信される引数：sender(model class)、
-                    instannce(deleted instance)、using(**kwargs)
-    """
-    instance.src.delete(False)
+# django-cleanupモジュールを使うことにしたため不要。
+#
+# @receiver(post_delete, sender=File)
+# def delete_media_file(sender, instance, **kwargs):
+#     """
+#     Fileオブジェクトのインスタンスが削除されたら、ファイル自体も削除する。
+#     https://docs.djangoproject.com/ja/3.2/topics/signals/
+#     http://note.crohaco.net/2018/django-signals/
+#     デコレータ：@receiver（シグナルとハンドラを関連付ける）
+#     シグナル：post_delete（インスタンスが削除されると発火する）
+#             pre_deleteの方が良いのかも。
+#     ハンドラ：delete_media_file()（シグナルを受けて実ファイルを削除する）
+#     post_deleteで送信される引数：sender(model class)、
+#                     instannce(deleted instance)、using(**kwargs)
+#     """
+#     instance.src.delete(False)
