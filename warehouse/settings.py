@@ -134,7 +134,7 @@ STATIC_URL = '/static/'
 # user setting
 ###############
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-VERSION_NO = '2021-06-15'
+VERSION_NO = '2021-07-18'
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
