@@ -1,3 +1,4 @@
+/* warehouseではテーブル表示を画面に納めるため、normalを指定。 */
 table{
   width: auto;
   margin: 3px;
