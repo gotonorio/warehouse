@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '5sy@y2ual*=7x#1@i*i&(u-e6d331kqr5to4)vv-@!rvuc9wrc'
+# SECRET_KEY = '5sy@y2ual*=7x#1@i*i&(u-e6d331kqr5to4)vv-@!rvuc9wrc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -168,6 +168,11 @@ SELECT_LIMIT_NUM = 100
 COMMENT_LIMIT = 20
 
 # settings.pyの末尾
+try:
+    from .private_settings import *
+except ImportError:
+    pass
+
 try:
     from .local_settings import *
 except ImportError:
