@@ -5,11 +5,6 @@
       <a class="pagination-previous" href="?page={{ page_obj.previous_page_number }}">前へ</a>
   {% endif %}
 
-  <!-- 次へ の部分 -->
-  {% if page_obj.has_next %}
-      <a class="pagination-next" href="?page={{ page_obj.next_page_number }}">次へ</a>
-  {% endif %}
-
 <ul class="pagination-list">
   <!-- 数字の部分 -->
   {% for num in page_obj.paginator.page_range %}
@@ -20,4 +15,10 @@
       {% endif %}
   {% endfor %}
 </ul>
+
+  <!-- 次へ の部分 -->
+  {% if page_obj.has_next %}
+      <a class="pagination-next" href="?page={{ page_obj.next_page_number }}">次へ</a>
+  {% endif %}
+
 </nav>
