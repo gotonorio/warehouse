@@ -1,10 +1,12 @@
-# import logging
-from django.http import FileResponse
+import logging
 
 from django.conf import settings
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
+from django.contrib.auth.models import Permission
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
+from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -241,13 +243,19 @@ class BigCategoryView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         big_category = get_object_or_404(BigCategory, pk=self.kwargs['pk'])
-        # user_idは、ログインしていないとNoneとなる。
-        user_id = self.request.user.id
+        # user.idは、ログインしていないとNoneとなる。
+        user = self.request.user
         # ログインしている場合は表示。していない場合はrestrict=Trueのカテゴリは非表示とする。
         category_obj = Category.objects.filter(parent=big_category, alive=True)
-        if user_id is None:
+        if user.id is None:
             category_obj = category_obj.filter(restrict=False).order_by('parent__rank', '-rank')
+            # raise 403
+            if len(category_obj) < 1:
+                raise PermissionDenied()
         else:
+            if settings.DEBUG:
+                perm_tuple = [(x.name) for x in Permission.objects.filter(user=user)]
+                logging.debug(perm_tuple)
             category_obj = category_obj.order_by('parent__rank', '-rank')
         # settings.pyでSELECT構文のLIMIT値を設定してある。
         # limit = settings.SELECT_LIMIT_NUM
