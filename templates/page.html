@@ -1,11 +1,13 @@
+{% comment %} {% load my_templatetags %} {% endcomment %}
 {% load mytag %}
+<div class="container is-fluid">
 <nav class="pagination is-centered" role="navigation" aria-label="pagination">
   <!-- 前へ の部分 -->
   {% if page_obj.has_previous %}
-      <a class="pagination-previous" href="?page={{ page_obj.previous_page_number }}">前へ</a>
+      <a class="pagination-previous is-size-7" href="?page={{ page_obj.previous_page_number }}">前へ</a>
   {% endif %}
 
-<ul class="pagination-list">
+<ul class="pagination-list is-size-7">
   <!-- 数字の部分 -->
   {% for num in page_obj.paginator.page_range %}
       {% if page_obj.number == num %}
@@ -18,7 +20,7 @@
 
   <!-- 次へ の部分 -->
   {% if page_obj.has_next %}
-      <a class="pagination-next" href="?page={{ page_obj.next_page_number }}">次へ</a>
+      <a class="pagination-next is-size-7" href="?page={{ page_obj.next_page_number }}">次へ</a>
   {% endif %}
-
 </nav>
+</div>
