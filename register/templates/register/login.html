@@ -3,13 +3,13 @@
 ログイン
 {% endblock %}
 {% block content %}
-<div class="ss_container is-fluid ">
+<div class="container is-fluid ">
   <br>
   <div class="content has-text-centered">
     <h4>区分所有者 ログイン</h4>
-    <br>
   </div>
-  <form method='POST' enctype='multipart/form-data' id='form_style'>
+  <br>
+  <form method='POST' class='login_container' enctype='multipart/form-data'>
     {{ form.non_field_errors }}
     {% for field in form %}
       <div class='field'>

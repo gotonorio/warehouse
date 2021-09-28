@@ -1,4 +1,4 @@
-/* mycss ver.1.0.0 */
+/* mycss ver.1.0.1 */
 
 /* 固定フッタスタイル */
 html {
@@ -29,19 +29,17 @@ table{
   margin: 3px auto;
   white-space: nowrap;
 }
-/* webkit系ブラウザ用のスクロールバー調整 */
-::-webkit-scrollbar{
-  width: 10px;
-}
-::-webkit-scrollbar-track{
-  background: #fff;
-  border-left: solid 1px #ececec;
-}
-::-webkit-scrollbar-thumb{
-  background: #ccc;
-  border-radius: 10px;
-  box-shadow: inset 0 0 0 2px #fff;
-}
+/*
+ tableの列を改行禁止にする。
+ スマホでは役に立たないのでコメントアウト。
+ */
+/* td.nowrap {
+  white-space: nowrap;
+  }
+th {
+  white-space: nowrap;
+} */
+
 a.vmenu {
     text-decoration: none; 
     color:#000000; /* リンク要素のデフォルトの青を黒に */
@@ -55,14 +53,7 @@ a.vmenu:hover {
     color:#666666;
     background-color:#ffdcd7
 }
-/* tableの列を改行禁止にする
-td.nowrap {
-  white-space: nowrap;
-  }
-th {
-  white-space: nowrap;
-}
-*/
+
 /* 2019/08/02現在、safariでBulmaのclass = "select"が機能しないため、下記cssを使用。*/
 /* https://coliss.com/articles/build-websites/operation/css/consistent-select-element-styling.html*/
 .select-css {
@@ -106,12 +97,30 @@ th {
   font-weight:normal;
 }
 /*
- https://obel.hatenablog.jp/entry/20160626/1466937585 
- md_containerクラスは画面幅が768px以上になったら、width:748px、margin:autoとなる。
+ ログイン画面用
+ 320px以上ではwidthを画面の80%にする
+*/
+@media screen and (min-width: 320px) {
+  .login_container {
+    width: 80%;
+    margin: auto;
+  }
+}
+/*
+ 768px以上では強制的に320px幅とする
 */
 @media screen and (min-width: 768px) {
-  .md_container {
-    /* width: 748px; */
+  .login_container {
+    width: 320px;
+    margin: auto;
+  }
+}
+/*
+ グラフ表示用
+ https://obel.hatenablog.jp/entry/20160626/1466937585 
+*/
+@media screen and (min-width: 768px) {
+  .graph_container {
     width: 80%;
     margin: auto;
   }
@@ -142,4 +151,18 @@ div.my_field input, div.my_field > select-css, div.my_field > button {
 div.my_field > textarea {
   border-radius: 10px;
   border: solid 1px #999;
+}
+
+/* webkit系ブラウザ用のスクロールバー調整 */
+::-webkit-scrollbar{
+  width: 10px;
+}
+::-webkit-scrollbar-track{
+  background: #fff;
+  border-left: solid 1px #ececec;
+}
+::-webkit-scrollbar-thumb{
+  background: #ccc;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 2px #fff;
 }
