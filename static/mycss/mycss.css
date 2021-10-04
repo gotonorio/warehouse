@@ -117,6 +117,7 @@ a.vmenu:hover {
 }
 /*
  グラフ表示用
+ 768px以上では強制的に80%にする。
  https://obel.hatenablog.jp/entry/20160626/1466937585 
 */
 @media screen and (min-width: 768px) {

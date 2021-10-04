@@ -22,3 +22,13 @@ a.white_color {
   padding: 20px;
   position: relative;
 }
+/*
+ ファイル登録画面用
+ 768px以上では強制的に60%にする。
+*/
+@media screen and (min-width: 768px) {
+  .form_container {
+    width: 60%;
+    margin: auto;
+  }
+}
