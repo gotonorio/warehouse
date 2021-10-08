@@ -28,7 +28,7 @@
 {% block content %}
 <div class="container with_mobile">
   <br>
-  <div class="content has-text-centered">
+  <div class="content">
     <h3>カテゴリ一覧</h3>
     {% if big_pk %}
       <a href="{% url 'library:category_create' big_pk %}" class="button is-primary">新規作成</a>
@@ -67,7 +67,7 @@
             削除
           </a>
           <a href="{% url 'library:file_category' category.pk %}" class="button has-background-grey-lighter is-small">
-            カテゴリのファイル一覧
+            ファイル一覧
           </a>
         </td>
       </tr>
@@ -75,10 +75,6 @@
     </tbody>
   </table>
   <!--</div>-->
-  <br>
-  <div class="text-center">
-    {% include "page.html" %}
-  </div>
   <br>
 </div>
 {% endblock %}

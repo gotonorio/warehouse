@@ -28,14 +28,14 @@
 {% block content %}
 <div class="container with_mobile">
   <br>
-  <div class="content has-text-centered">
+  <div class="content">
     <h3>親カテゴリ一覧</h3>
     <a href="{% url 'library:big_category_create' %}" class="button is-primary">新規作成</a>
     <a class="button is-primary" href="javascript:void(0);" onclick="window.history.back();">前に戻る</a>
   </div>
   <br>
   <div class="table-container">
-    <table class="table is-narrow">
+    <table class="table is-narrow is-bordered is-responsible">
       <thead>
         <tr>
           <th class="has-text-centered">親カテゴリ名</th>

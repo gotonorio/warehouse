@@ -26,9 +26,9 @@
 {% endblock navbar %}
 
 {% block content %}
-<div class="container ">
+<div class="container with_mobile">
   <br>
-  <div class="content has-text-centered">
+  <div class="content">
     <h3>ファイル一覧</h3>
     {% if category_pk %}
       <!-- カテゴリ一覧からカテゴリ別のファイル一覧で表示 -->
@@ -70,10 +70,6 @@
       {% endfor %}
     </tbody>
   </table>
-  <br>
-  <div class="text-center">
-    {% include "page.html" %}
-  </div>
   <br>
 </div>
 {% endblock %}

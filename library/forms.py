@@ -36,11 +36,11 @@ class FileForm(forms.ModelForm):
             'created_at': forms.DateInput(attrs={
                 'class': 'input',
             }),
-            'alive': forms.CheckboxInput(attrs={
-                'class': "checkboxinput",
+            'alive': forms.NullBooleanSelect(attrs={
+                'class': "select-css",
             }),
-            'download': forms.CheckboxInput(attrs={
-                'class': "checkboxinput",
+            'download': forms.NullBooleanSelect(attrs={
+                'class': "select-css",
             }),
         }
 
