@@ -36,19 +36,19 @@
     </div>
   </div>
 </section>
-
+<br>
 <div class="container with_mobile">
-  <div class="content">
-    {% for item in information_list %}
-    <p>
-      <h4>{{ item.title }}</h4>
-      <p>{{item.created_at|date}}</p>
+  {% for item in information_list %}
+  <div class="content is_infomation">
+    <h4>{{ item.title }}</h4>
+    {{item.created_at|date}}
+    <div class="markdown table is-bordered is-narrow">
       {{item.information| markdown_to_html}}
-    </p>
-    <hr>
-    {% endfor %}
-    {% include 'page.html' %}
-    <br>
+    </div>
   </div>
+  <hr>
+  {% endfor %}
+  {% include 'page.html' %}
+  <br>
 </div>
 {% endblock %}
