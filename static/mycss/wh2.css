@@ -1,10 +1,15 @@
 /* warehouseではテーブル表示を画面に納めるため、normalを指定。 */
-table{
+/* tbl_normal{
   width: auto;
-  /* margin: 3px; */
   padding: 3px;
   white-space: normal;
-}
+} */
+/* tableの中央配置およびセル内改行を禁止のために上書きする */
+/* tbl_nowrap{
+  width: auto;
+  padding: 3px;
+  white-space: nowrap;
+} */
 
 /* markdownで表の外枠表示 */
 .markdown table {
@@ -28,14 +33,6 @@ a.white_color {
   color : white;
   display: block;
   }
-
-.sectionbox {
-  border: none;
-  margin-top: 2px;
-  margin-left: 10px;
-  padding: 20px;
-  position: relative;
-}
 
 /*
  ファイル登録画面用

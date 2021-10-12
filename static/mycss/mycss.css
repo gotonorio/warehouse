@@ -133,11 +133,11 @@ div.my_field > textarea {
 }
 
 /* tableの中央配置およびセル内改行を禁止のために上書きする */
-table{
+/* table{
   width: auto;
   margin: 4px auto;
   white-space: nowrap;
-}
+} */
 
 /* ログイン画面用 */
 .login_container {
