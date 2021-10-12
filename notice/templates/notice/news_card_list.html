@@ -64,7 +64,7 @@
     <p class="card-header-title has-background-dark has-text-white">{{news.title}}</p>
   </header>
   <p>{{ news.created_at | date }}</p>
-  <div class="card-content markdown table is-bordered">
+  <div class="card-content table is-bordered">
     {{news.comment | markdown_to_html}}
   </div>
 </div>

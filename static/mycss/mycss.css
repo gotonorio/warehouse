@@ -132,13 +132,6 @@ div.my_field > textarea {
   box-shadow: inset 0 0 0 2px #fff;
 }
 
-/* tableの中央配置およびセル内改行を禁止のために上書きする */
-/* table{
-  width: auto;
-  margin: 4px auto;
-  white-space: nowrap;
-} */
-
 /* ログイン画面用 */
 .login_container {
   width: 320px;
@@ -170,7 +163,6 @@ div.my_field > textarea {
     width: 100%;
   }
 }
-
 /*
  グラフ表示用
  https://obel.hatenablog.jp/entry/20160626/1466937585 

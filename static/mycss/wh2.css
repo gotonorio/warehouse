@@ -1,15 +1,3 @@
-/* warehouseではテーブル表示を画面に納めるため、normalを指定。 */
-/* tbl_normal{
-  width: auto;
-  padding: 3px;
-  white-space: normal;
-} */
-/* tableの中央配置およびセル内改行を禁止のために上書きする */
-/* tbl_nowrap{
-  width: auto;
-  padding: 3px;
-  white-space: nowrap;
-} */
 a.black_color {
   color : black;
   display: block;
@@ -27,24 +15,6 @@ a.white_color {
     width: 60%;
     margin: auto;
   }
-}
-
-/* iPad(768px)まではmarginを20pxにする */
-.markdown {
-  /* overflow-x: auto; */
-  margin:10px;
-}
-/* 767px以下ではmargin-leftを4pxにする */
-@media screen and (max-width: 767px) {
-  .markdown {
-    /* overflow-x: auto; */
-    margin-left:0px;
-  }
-}
-
-/* markdownで表の外枠表示 */
-.markdown table {
-  border: dotted 1px;
 }
 
 /* infomation_list.htmlでセクション毎に枠表示する */
