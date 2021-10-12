@@ -10,30 +10,14 @@
   padding: 3px;
   white-space: nowrap;
 } */
-
-/* markdownで表の外枠表示 */
-.markdown table {
-  border: dotted 1px;
-}
-
-.is_infomation {
-  border: solid 1px;
-  margin-top: 2px;
-  margin-left: 10px;
-  padding: 10px;
-  position: relative;
-}
-
 a.black_color {
   color : black;
   display: block;
   }
-
 a.white_color {
   color : white;
   display: block;
   }
-
 /*
  ファイル登録画面用
  768px以上では強制的に60%にする。
@@ -47,13 +31,27 @@ a.white_color {
 
 /* iPad(768px)まではmarginを20pxにする */
 .markdown {
-  overflow-x: auto;
+  /* overflow-x: auto; */
   margin:10px;
 }
 /* 767px以下ではmargin-leftを4pxにする */
 @media screen and (max-width: 767px) {
   .markdown {
-    overflow-x: auto;
+    /* overflow-x: auto; */
     margin-left:0px;
   }
+}
+
+/* markdownで表の外枠表示 */
+.markdown table {
+  border: dotted 1px;
+}
+
+/* infomation_list.htmlでセクション毎に枠表示する */
+.is_infomation {
+  border: solid 1px;
+  margin-top: 2px;
+  margin-left: 10px;
+  padding: 10px;
+  position: relative;
 }
