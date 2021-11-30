@@ -73,7 +73,7 @@ class FileCreateView(PermissionRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         file = form.save()
-        action = self.request.POST['action']
+        action = self.request.POST.get['action']
 
         # 保存してもう一つ追加ボタンのとき
         if action == 'send_more':
@@ -95,7 +95,7 @@ class FileUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
     def form_valid(self, form):
         file = form.save()
-        action = self.request.POST['action']
+        action = self.request.POST.get['action']
 
         # 保存してもう一つ追加ボタンのとき
         if action == 'send_more':
