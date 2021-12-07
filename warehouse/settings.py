@@ -133,7 +133,7 @@ STATIC_URL = '/static/'
 # user setting
 ###############
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-VERSION_NO = '2021-10-12'
+VERSION_NO = '2021-12-07'
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -142,8 +142,9 @@ MEDIA_URL = "/media/"
 # アップロードファイルのpermissionとサイズを設定
 # https://qiita.com/y-oota/items/8d6d0068abca8e26ab04
 # https://docs.djangoproject.com/en/2.2/ref/settings/#file-upload-max-memory-size
+# nginxも調整する。
 FILE_UPLOAD_PERMISSIONS = 0o755
-FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
+FILE_UPLOAD_MAX_MEMORY_SIZE = 33554432
 
 AUTH_USER_MODEL = 'register.User'
 NUMBER_GROUPING = 3
