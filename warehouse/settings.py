@@ -142,9 +142,9 @@ MEDIA_URL = "/media/"
 # アップロードファイルのpermissionとサイズを設定
 # https://qiita.com/y-oota/items/8d6d0068abca8e26ab04
 # https://docs.djangoproject.com/en/2.2/ref/settings/#file-upload-max-memory-size
-# nginxも調整する。
+# nginxの調整だけでよい.
 FILE_UPLOAD_PERMISSIONS = 0o755
-FILE_UPLOAD_MAX_MEMORY_SIZE = 33554432
+# FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
 
 AUTH_USER_MODEL = 'register.User'
 NUMBER_GROUPING = 3
