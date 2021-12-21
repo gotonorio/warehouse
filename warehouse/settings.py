@@ -129,9 +129,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-###############
+# ------------------------------------------------------------------
 # user setting
-###############
+# ------------------------------------------------------------------
+# For Django4
+CSRF_TRUSTED_ORIGINS = ['https://warehouse.sophiagardens.org']
+
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 VERSION_NO = '2021-12-07'
 # ファイルアップロードアプリuploder用
