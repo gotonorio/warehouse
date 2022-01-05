@@ -3,6 +3,7 @@
 {% load mytag %}
 
 {% block head %}
+  <link href="{% static 'mycss/my_markdown.css' %}" rel="stylesheet">
 {% endblock head%}
 
 <!-- navbar -->
@@ -41,8 +42,10 @@
   {% for item in information_list %}
   <div class="content is_infomation">
     <h4>{{ item.title }}</h4>
-    {{item.created_at|date}} <br><br>
-    <div class="table is-bordered is-narrow">
+    {{item.created_at|date}}
+    <br>
+    <br>
+    <div class="markdown table is-narrow is-bordered">
       {{item.information| markdown_to_html}}
     </div>
   </div>

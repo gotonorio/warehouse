@@ -2,6 +2,10 @@
 {% load static %}
 {% load mytag %}
 
+{% block head %}
+  <link href="{% static 'mycss/my_markdown.css' %}" rel="stylesheet">
+{% endblock head%}
+
 <!-- navbar -->
 {% block navbar %}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
@@ -64,7 +68,7 @@
     <p class="card-header-title has-background-dark has-text-white">{{news.title}}</p>
   </header>
   <p>{{ news.created_at | date }}</p>
-  <div class="card-content table is-bordered">
+  <div class="card-content markdown table is-bordered">
     {{news.comment | markdown_to_html}}
   </div>
 </div>
