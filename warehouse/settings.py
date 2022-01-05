@@ -136,7 +136,7 @@ STATIC_URL = '/static/'
 CSRF_TRUSTED_ORIGINS = ['https://warehouse.sophiagardens.org']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-VERSION_NO = '2021-12-07'
+VERSION_NO = '2022-01-05'
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
