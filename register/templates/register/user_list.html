@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-{% load humanize %} {# 3桁区切りのため追加 #}
+{% extends "base_single_page.html" %}
 {% load static %} {# {% static  を使うため必要 #}
 
 {% block title %}
@@ -21,7 +20,7 @@
 
   <div id="navbarMainMenu" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="{% url 'register:mypage' %}">戻る</a>
+      <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
     </div>
   </div>
 </nav>
@@ -38,17 +37,15 @@
         <tr>
           <th class="has-text-centered">group</th>
           <th class="has-text-centered">user</th>
-          <th class="has-text-centered">room_no</th>
           <th class="has-text-centered">email</th>
           <th class="has-text-centered">有効</th>
         </tr>
       </thead>
       <tbody>
-        {% for list in myuser_list %}
+        {% for list in user_list %}
         <tr>
           <td class="has-text-left">{{ list.groups.get }}</td>
           <td class="has-text-left"><a href="{% url 'register:user_update' list.pk %}">{{ list.username}}</a></td>
-          <td class="has-text-right">{{ list.room_no}}</td>
           <td class="has-text-centered ">{{ list.email}}</td>
           {% if list.is_active == False %}
             <td class="has-text-centered has-text-danger">{{ list.is_active}}</td>

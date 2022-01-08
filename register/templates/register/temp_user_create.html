@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_single_page.html" %}
 {% block content %}
 <div class="container is-fluid ">
   <br>
@@ -15,7 +15,7 @@
       </table>
       <hr>
       <button type="submit" name='next' value='{{next}}' class="button is-danger">仮登録</button>
-      <a class="button is-dark" href="{% url 'register:mypage' %}">戻る</a>
+      <a class="button is-dark" href="{% url 'notice:news_card' %}">戻る</a>
     </form>
   </div>
 </div>

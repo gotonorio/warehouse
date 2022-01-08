@@ -24,6 +24,10 @@
       <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
     </div>
     <div class="navbar-end">
+      <a class="navbar-item" href="{% url 'register:signup' %}">仮登録</a>
+      {% if user.is_superuser %}
+        <a class="navbar-item" href="{% url 'register:user_list' %}">ユーザ管理</a>
+      {% endif %}
       {% if perms.notice.add_news or perms.library.add_file %}
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link is-size-6">管理者用</a>

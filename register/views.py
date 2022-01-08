@@ -14,7 +14,7 @@ from .forms import (LoginForm, PasswordUpdateForm, TempUserCreateForm,
                     UserUpdateForm)
 
 # https://djangobrothers.com/blogs/referencing_the_user_model/
-MyUser = get_user_model()
+User = get_user_model()
 
 
 class Login(LoginView):
@@ -71,13 +71,14 @@ class TempUserDoneView(generic.TemplateView):
 class UserListView(PermissionRequiredMixin, generic.ListView):
     """ 管理者が使用するユーザリストの一覧表示。
     templatesファイルはデフォルト（user_list.html）を使用。
-    渡されるobjectもデフォルトの「user_list」。
+    superuserは表示しない。
     """
-    model = MyUser
+    model = User
     permission_required = ("register.add_myuser",)
 
     def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs).order_by('groups', 'is_active')
+        qs = super().get_queryset(**kwargs)
+        qs = qs.filter(is_superuser=False).order_by('groups', 'is_active')
         return qs
 
 
@@ -97,18 +98,18 @@ class OnlyYouMixin(UserPassesTestMixin):
 
 class UserPasswordUpdate(OnlyYouMixin, PasswordChangeView):
     """ ログインしたユーザが自分でパスワードを変更するためのVIEW。"""
-    model = MyUser
+    model = User
     form_class = PasswordUpdateForm
     template_name = 'register/password_update_form.html'
 
     def get_success_url(self):
         # return resolve_url('register:pwd_update', pk=self.kwargs['pk'])
-        return resolve_url('register:mypage')
+        return resolve_url('notice:news_card')
 
 
 class UserManagementView(PermissionRequiredMixin, generic.UpdateView):
     """ 管理者がユーザの「有効性」を操作するためのVIEW。 """
-    model = MyUser
+    model = User
     form_class = UserUpdateForm
     template_name = 'register/user_update_form.html'
     permission_required = ("register.add_myuser",)
@@ -132,7 +133,7 @@ class UserManagementView(PermissionRequiredMixin, generic.UpdateView):
         """ ユーザ修正画面で現在値をformに表示させる  """
         context = super().get_context_data(**kwargs)
         pk = self.object.pk
-        user = MyUser.objects.get(pk=pk)
+        user = User.objects.get(pk=pk)
         groups = user.groups.all()
         logging.debug(groups[0])
         user_update_form = UserUpdateForm(initial={

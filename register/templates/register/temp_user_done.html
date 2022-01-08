@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_single_page.html" %}
 {% load static %} {# {% staticを使うため必要 #}
 
 {% block title %}
@@ -20,7 +20,7 @@ Accept
   </div>
   <div id="navbarMainMenu" class="navbar-menu">
     <div class="navbar-end">
-      <a class="navbar-item" href="{% url 'register:mypage' %}">ホームに戻る</a>
+      <a class="navbar-item" href="{% url 'notice:news_card' %}">ホームに戻る</a>
     </div>
   </div>
 </nav>
