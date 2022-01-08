@@ -1,4 +1,4 @@
-import logging
+# import logging
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import (LoginRequiredMixin,
@@ -135,7 +135,7 @@ class UserManagementView(PermissionRequiredMixin, generic.UpdateView):
         pk = self.object.pk
         user = User.objects.get(pk=pk)
         groups = user.groups.all()
-        logging.debug(groups[0])
+        # logging.debug(groups[0])
         user_update_form = UserUpdateForm(initial={
             'username': user.username,
             'email': user.email,
