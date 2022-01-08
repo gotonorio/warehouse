@@ -11,8 +11,6 @@
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="{% url 'notice:news_card' %}">【SG川崎】</a>
-      <a class="navbar-item" href="{% url 'register:menu' %}">メニュー</a>
-      <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
     {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
       <span aria-hidden="true"></span>
@@ -22,6 +20,8 @@
   </div>
   <div id="navbarMypage" class="navbar-menu">
     <div class="navbar-start">
+      <a class="navbar-item" href="{% url 'register:menu' %}">メニュー</a>
+      <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
     </div>
     <div class="navbar-end">
       {% if perms.notice.add_news or perms.library.add_file %}
