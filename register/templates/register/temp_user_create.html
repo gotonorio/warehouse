@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container is-fluid ">
+  <br>
+  <p>
+  ここは{{BUILDING_NAME}}管理組合の委員会メンバー専用です。<br>
+  仮登録した後、認証して本登録となります。本登録完了したらメールでお知らせします。
+  <hr>
+  </p>
+  <div class="content has-text-centered">
+    <form method='post' action="">
+      {% csrf_token %}
+      <table class="table is-responsible" >
+        {{form}}
+      </table>
+      <hr>
+      <button type="submit" name='next' value='{{next}}' class="button is-danger">仮登録</button>
+      <a class="button is-dark" href="{% url 'register:mypage' %}">戻る</a>
+    </form>
+  </div>
+</div>
+{% endblock %}
