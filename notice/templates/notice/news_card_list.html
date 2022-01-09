@@ -24,7 +24,9 @@
       <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
     </div>
     <div class="navbar-end">
-      <a class="navbar-item" href="{% url 'register:signup' %}">仮登録</a>
+      {% if user.username == 'sophiag' %}
+        <a class="navbar-item" href="{% url 'register:signup' %}">仮登録</a>
+      {% endif %}
       {% if user.is_superuser %}
         <a class="navbar-item" href="{% url 'register:user_list' %}">ユーザ管理</a>
       {% endif %}
