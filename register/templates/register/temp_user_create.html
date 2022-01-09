@@ -1,22 +1,32 @@
 {% extends "base_single_page.html" %}
+
 {% block content %}
 <div class="container is-fluid ">
   <br>
-  <p>
-  ここは{{BUILDING_NAME}}管理組合の委員会メンバー専用です。<br>
-  仮登録した後、認証して本登録となります。本登録完了したらメールでお知らせします。
-  <hr>
-  </p>
   <div class="content has-text-centered">
-    <form method='post' action="">
-      {% csrf_token %}
-      <table class="table is-responsible" >
-        {{form}}
-      </table>
-      <hr>
-      <button type="submit" name='next' value='{{next}}' class="button is-danger">仮登録</button>
-      <a class="button is-dark" href="{% url 'notice:news_card' %}">戻る</a>
-    </form>
+    <p>
+    ここはソフィア・ガーデンズ川崎管理組合の委員会メンバー専用です。<br>
+    仮登録した後、認証して本登録となります。本登録完了したらメールでお知らせします。
+    <hr>
+    </p>
   </div>
+  <form method='POST' enctype='multipart/form-data' id="form_style">
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <div class='field'>
+        <div class='control'>
+          <div class='label'>{{ field.label_tag }}</div>
+          <div class='my_field'>{{ field }}</div>
+          {{ field.errors }}
+        </div>
+      </div>
+    {% endfor %}
+    {% csrf_token %}
+    <br>
+    <div class='content has-text-centered my_button'>
+      <button type='submit' class='button is-link'>登録</button>
+      <a class='button is-danger' href='javascript:void(0);' onclick='window.history.back();'>キャンセル</a>
+    </div>
+  </form>
 </div>
 {% endblock %}
