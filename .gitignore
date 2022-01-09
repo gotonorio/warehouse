@@ -13,3 +13,4 @@ private_settings.py
 static/*.png
 .DS_Store
 .gitignore
+README.md
