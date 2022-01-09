@@ -1,13 +1,9 @@
 ##### admin管理画面
 
 1. admin画面で以下のgroupを作成しておく。
-    - guest（permission無し）  
+    - guest  
     - data_manager  
-        - information|Can add information  
-        - library|Can add file  
-        - notice|Can add news  
     - news_manager  
-        - notice|Can add bews  
 1. admin画面で居住者用として「sophiag」ユーザを作成する。  
     - 「group」をguestとする。  
 
