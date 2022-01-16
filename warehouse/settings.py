@@ -133,7 +133,7 @@ STATIC_URL = '/static/'
 # user setting
 # ------------------------------------------------------------------
 # For Django4
-CSRF_TRUSTED_ORIGINS = ['https://warehouse.sophiagardens.org']
+CSRF_TRUSTED_ORIGINS = ['https://*.sophiagardens.org']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 VERSION_NO = '2022-01-16'
