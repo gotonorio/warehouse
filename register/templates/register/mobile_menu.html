@@ -1,0 +1,96 @@
+{% extends "base_single_page.html" %}
+{% load static %}
+{% load mytag %}
+
+{% block head %}
+<link href="{% static 'register/menu.css' %}" rel="stylesheet">
+{% endblock head%}
+
+<!-- navbar -->
+{% block navbar %}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{% url 'notice:news_card' %}">ホーム</a>
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="content has-text-centered">
+      <h4 class="title"> ソフィア・ガーデンズ川崎 </h4>
+      <h5 class="subtitle">管理組合 メニュー</h5>
+    </div>
+  </div>
+</section>
+
+<br>
+<div class="container with_mobile">
+<section class="sectionbox">
+  <div class="is-size-5 has-text-weight-bold">
+  <p>インフォメーション</p>
+  </div>
+  <br>
+  <div class="columns">
+    <div class="column is-2">
+      <div class="menubox has-text-centered">
+        <a href="{{kisoku.src.url}}" class="white_color">基本使用規則</a>
+      </div>
+    </div>
+    <div class="column is-2">
+      <div class="menubox has-text-centered">
+        <a href="{% url 'information:information' %}" class="white_color">マンション情報</a>
+      </div>
+    </div>
+    <div class="column is-2">
+      <div class="menubox has-text-centered">
+        <a href="{% static 'pamphlet.pdf' %}" target="_blank" class="white_color">パンフレット</a>
+      </div>
+    </div>
+  </div>
+</section>
+<hr>
+<section class="sectionbox">
+  <div class="is-size-5 has-text-weight-bold">
+  <p>管理組合専用</p>
+  </div>
+  <br>
+  <div class="columns">
+    <div class="column is-2">
+      <div class="menubox has-text-centered">
+        <a href="https://accounting.sophiagardens.org" target="_blank" class="white_color">会計資料</a>
+      </div>
+    </div>
+    <div class="column is-2">
+      <div class="menubox has-text-centered">
+        <a href="https://facility.sophiagardens.org" target="_blank" class="white_color">設備台帳</a>
+      </div>
+    </div>
+    <div class="column is-2">
+      <div class="menubox has-text-centered">
+        <a href="https://repairplan.sophiagardens.org" target="_blank" class="white_color">修繕計画</a>
+      </div>
+    </div>
+    {% comment %} <div class="column is-2">
+      <div class="menubox has-text-centered">
+        <a href="https://gijiroku.sophiagardens.org" target="_blank" class="white_color">議事録</a>
+      </div>
+    </div> {% endcomment %}
+  </div>
+</section>
+</div>
+{% endblock %}

@@ -30,7 +30,15 @@ class Logout(LoginRequiredMixin, LogoutView):
 
 class MenuView(generic.TemplateView):
     """ メニュー画面 """
-    template_name = 'register/menu.html'
+    template_name = 'register/pc_menu.html'
+
+    def get_template_names(self):
+        """ templateファイルを切り替える """
+        if self.request.user_agent_flag == 'mobile':
+            template_name = "register/mobile_menu.html"
+        else:
+            template_name = "register/pc_menu.html"
+        return [template_name]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
