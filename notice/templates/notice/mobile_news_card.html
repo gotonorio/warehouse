@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mytag %}
+
+{% block head %}
+  <link href="{% static 'mycss/my_markdown.css' %}" rel="stylesheet">
+{% endblock head%}
+
+<!-- navbar -->
+{% block navbar %}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{% url 'register:menu' %}">メニュー</a>
+    <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
+    <a class="navbar-item" href="https://keijiban.sophiagardens.org" target="_blank">掲示板</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarMypage" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      {% if user.username == 'sophiag' %}
+        <a class="navbar-item" href="{% url 'register:signup' %}">仮登録</a>
+      {% endif %}
+      {% if user.is_superuser %}
+        <a class="navbar-item" href="{% url 'register:user_list' %}">ユーザ管理</a>
+      {% endif %}
+      {% if perms.notice.add_news or perms.library.add_file %}
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link is-size-6">管理者用</a>
+          <div class="navbar-dropdown">
+            {% if perms.notice.add_news %}
+              <a class="dropdown-item" href="{% url 'notice:news_list' %}">お知らせ管理</a>
+            {% endif %}
+            {% if perms.library.add_file %}
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'library:big_category_index' %}">文書ファイル登録・修正</a>
+              <a class="dropdown-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+      {% if not user.id %}
+        <a class="navbar-item" href="{% url 'register:login' %}">区分所有者ログイン</a>
+      {% else %}
+        <a class="navbar-item" href="{% url 'register:logout' %}">ログアウト</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+
+{% block header %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/a11y-dark.min.css">
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="content has-text-centered">
+      <h4 class="title">ソフィア・ガーデンズ川崎</h4>
+      <h5 class="subtitle">管理組合 ホームページ</h5>
+    </div>
+  </div>
+</section>
+{% endblock header %}
+
+{% block content %}
+{% for news in news_list %}
+<div class="card content">
+  <header class="card-header">
+    <p class="card-header-title has-background-dark has-text-white">{{news.title}}</p>
+  </header>
+  <p>{{ news.created_at | date }}</p>
+  <div class="card-content markdown table is-bordered">
+    {{news.comment | markdown_to_html}}
+  </div>
+</div>
+<br>
+{% endfor %}
+{% include 'page.html' %}
+{% endblock %}
