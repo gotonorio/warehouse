@@ -38,20 +38,20 @@
   </div>
 </section>
 <br>
-<div class="container with_mobile">
+<div class="container is-fluid">
   {% for item in information_list %}
-  <div class="content is_infomation">
-    <h4>{{ item.title }}</h4>
-    {{item.created_at|date}}
-    <br>
-    <br>
-    <div class="markdown table is-narrow is-bordered">
-      {{item.information| markdown_to_html}}
+    <div class="card content">
+      <header class="card-header">
+        <p class="card-header-title has-background-grey has-text-white">
+          {{item.title}}
+        </p>
+      </header>
+      {{item.created_at|date}}
+      <div class="card-content markdown table is-bordered is-narrow">
+        {{item.information| markdown_to_html}}
+      </div>
     </div>
-  </div>
-  <hr>
   {% endfor %}
-  {% include 'page.html' %}
   <br>
 </div>
 {% endblock %}
