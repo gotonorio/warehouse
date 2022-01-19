@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'warehouse.middleware.UAmiddleware',
 ]
 
 ROOT_URLCONF = 'warehouse.urls'
@@ -136,7 +137,7 @@ STATIC_URL = '/static/'
 CSRF_TRUSTED_ORIGINS = ['https://*.sophiagardens.org']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-VERSION_NO = '2022-01-16'
+VERSION_NO = '2022-01-19'
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

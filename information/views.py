@@ -6,13 +6,26 @@ from information.forms import InformationForm
 from information.models import Information
 
 
-class InformationView(generic.ListView):
+class InformationView(generic.TemplateView):
     """ 情報一覧。 表示・非表示を考慮する """
 
     model = Information
-    template_name = "information/information_list.html"
-    queryset = Information.objects.filter(
-        display_info=True).order_by('-created_at')
+
+    def get_template_names(self):
+        """ templateファイルを切り替える """
+        logging.debug(self.request.user_agent_flag)
+        if self.request.user_agent_flag == 'mobile':
+            template_name = "information/mobile_information.html"
+        else:
+            template_name = "information/pc_information.html"
+        return [template_name]
+
+    def get_context_data(self, **kwargs):
+        """ 最新の日付データをタイトルとして表示する """
+        context = super().get_context_data(**kwargs)
+        qs = Information.objects.filter(display_info=True).order_by('-created_at')
+        context['information_list'] = qs
+        return context
 
 
 class InfoListView(generic.ListView):
