@@ -26,7 +26,8 @@ class FileForm(forms.ModelForm):
             'key_word': forms.Textarea(attrs={
                 'class': "textarea",
             }),
-            'src': forms.ClearableFileInput(attrs={
+            # 'src': forms.ClearableFileInput(attrs={
+            'src': forms.FileInput(attrs={
                 # 'class': "file",
                 'class': "input",
             }),
