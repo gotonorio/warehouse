@@ -17,6 +17,7 @@ class OverView(models.Model):
     building_area = models.FloatField(verbose_name='建築面積')
     building_coverage_ratio = models.FloatField(verbose_name='建ぺい率')
     total_floor_area = models.FloatField(verbose_name='延べ床面積')
+    volume_target_area = models.FloatField(verbose_name='容積対象面積', blank=True, null=True)
     standard_floor_height = models.CharField(verbose_name='基準階階高', max_length=32)
     max_height = models.FloatField(verbose_name='最高高さ')
     constraction = models.CharField(verbose_name='施工会社', max_length=32, blank=True, null=True)

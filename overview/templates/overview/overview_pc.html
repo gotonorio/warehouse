@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block header %}
 {% endblock header %}
@@ -63,21 +64,26 @@
         </tr>
 
         <tr>
-          <td class="has-text-left" rowspan="5">面積等</td>
+          <td class="has-text-left" rowspan="6">面積等</td>
           <td class="has-text-left">敷地面積</td>
-          <td class="has-text-left">{{ov.site_area}} m2</td>
+          <td class="has-text-left">{{ov.site_area|intcomma}} m2</td>
           <td class="has-text-left">容積率</td>
           <td class="has-text-left">{{ov.floor_area_ratio}} %</td>
         </tr>
         <tr>
           <td class="has-text-left">建築面積</td>
-          <td class="has-text-left">{{ov.building_area}} m2</td>
+          <td class="has-text-left">{{ov.building_area|intcomma}} m2</td>
           <td class="has-text-left">建ぺい率</td>
           <td class="has-text-left">{{ov.building_coverage_ratio}} %</td>
         </tr>
         <tr>
           <td class="has-text-left">延べ床面積</td>
-          <td class="has-text-left">{{ov.total_floor_area}} m2</td>
+          <td class="has-text-left">{{ov.total_floor_area|intcomma}} m2</td>
+          <td colspan="2"></td>
+        </tr>
+        <tr>
+          <td class="has-text-left">容積対象面積</td>
+          <td class="has-text-left">{{ov.volume_target_area|intcomma}} m2</td>
           <td colspan="2"></td>
         </tr>
         <tr>

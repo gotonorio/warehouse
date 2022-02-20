@@ -1,5 +1,6 @@
 {% extends 'base_single_page.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block header %}
 {% endblock header %}
@@ -90,7 +91,19 @@
           <td class="has-text-left has-background-grey-lighter">敷地面積</td>
         </tr>
         <tr>
-          <td class="has-text-centered">{{ov.building_area}} m2</td>
+          <td class="has-text-centered">{{ov.site_area|intcomma}} m2</td>
+        </tr>
+        <tr>
+          <td class="has-text-left has-background-grey-lighter">容積率</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered">{{ov.floor_area_ratio}} %</td>
+        </tr>
+        <tr>
+          <td class="has-text-left has-background-grey-lighter">建築面積</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered">{{ov.building_area|intcomma}} m2</td>
         </tr>
         <tr>
           <td class="has-text-left has-background-grey-lighter">建ぺい率</td>
@@ -102,7 +115,13 @@
           <td class="has-text-left has-background-grey-lighter">延べ床面積</td>
         </tr>
         <tr>
-          <td class="has-text-centered">{{ov.total_floor_area}} m2</td>
+          <td class="has-text-centered">{{ov.total_floor_area|intcomma}} m2</td>
+        </tr>
+        <tr>
+          <td class="has-text-left has-background-grey-lighter">容積対象面積</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered">{{ov.volume_target_area|intcomma}} m2</td>
         </tr>
         <tr>
           <td class="has-text-left has-background-grey-lighter">基準階階高</td>
