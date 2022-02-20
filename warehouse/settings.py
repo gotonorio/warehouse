@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'notice.apps.NoticeConfig',
     'information.apps.InformationConfig',
     'django_cleanup.apps.CleanupConfig',
+    'overview.apps.OverviewConfig',
 ]
 
 MIDDLEWARE = [
