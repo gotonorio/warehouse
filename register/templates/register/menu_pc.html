@@ -31,9 +31,9 @@
 {% block content %}
 <section class="hero is-dark">
   <div class="hero-body">
-    <div class="content has-text-centered">
-      <h4 class="title"> ソフィア・ガーデンズ川崎 </h4>
-      <h5 class="subtitle">管理組合 メニュー</h5>
+    <div class="container has-text-centered">
+      <h1 class="title"> ソフィア・ガーデンズ川崎 </h1>
+      <h4 class="subtitle">管理組合 メニュー</h4>
     </div>
   </div>
 </section>
@@ -48,12 +48,7 @@
   <div class="columns">
     <div class="column is-2">
       <div class="menubox has-text-centered">
-        <a href="{{kisoku.src.url}}" class="white_color">基本使用規則</a>
-      </div>
-    </div>
-    <div class="column is-2">
-      <div class="menubox has-text-centered">
-        <a href="{% url 'information:information' %}" class="white_color">マンション情報</a>
+        <a href="{% url 'overview:overview' %}" class="white_color">マンション概要</a>
       </div>
     </div>
     <div class="column is-2">
@@ -83,6 +78,11 @@
     <div class="column is-2">
       <div class="menubox has-text-centered">
         <a href="https://repairplan.sophiagardens.org" target="_blank" class="white_color">修繕計画</a>
+      </div>
+    </div>
+    <div class="column is-3">
+      <div class="menubox has-text-centered">
+        <a href="{% url 'information:information' %}" class="white_color">インフォメーション</a>
       </div>
     </div>
     {% comment %} <div class="column is-2">
