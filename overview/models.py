@@ -55,10 +55,9 @@ class RoomType(models.Model):
 
 class Room(models.Model):
     """ 住戸データ """
-    room_no = models.IntegerField(verbose_name='部屋番号')
+    room_no = models.IntegerField(verbose_name='部屋番号', unique=True)
     room_type = models.ForeignKey(RoomType, verbose_name='住戸タイプ',  on_delete=models.PROTECT)
-    owner = models.CharField(verbose_name='区分所有者', max_length=64)
-    owner = models.CharField(verbose_name='区分所有者', max_length=64)
+    owner = models.CharField(verbose_name='区分所有者', max_length=64, blank=True, null=True)
     tenant = models.CharField(verbose_name='賃借人', max_length=64, blank=True, null=True)
     parking_fee = models.IntegerField(verbose_name='駐車場使用料', default=0)
     bicycle_fee = models.IntegerField(verbose_name='駐輪場使用料', default=0)

@@ -7,5 +7,6 @@ app_name = "overview"
 
 urlpatterns = [
     path('overview', views.Overview.as_view(), name='overview'),
-    path('update/<int:pk>', data_views.OverviewUpdateView.as_view(), name='overview_update'),
+    path('overview/update/<int:pk>', data_views.OverviewUpdateView.as_view(), name='overview_update'),
+    path('room/create', data_views.SectionOwnerCreateView.as_view(), name='create_room'),
 ]
