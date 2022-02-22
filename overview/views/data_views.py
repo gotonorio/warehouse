@@ -32,3 +32,14 @@ class RoomCreateView(PermissionRequiredMixin, generic.CreateView):
     permission_required = ("library.add_file")
     # 保存が成功した場合に遷移するurl
     success_url = reverse_lazy('overview:create_room')
+
+
+class RoomUpdateView(PermissionRequiredMixin, generic.UpdateView):
+    """ 住戸データのアップデート """
+    model = Room
+    form_class = RoomForm
+    template_name = "overview/room_form.html"
+    # 必要な権限
+    permission_required = ("library.add_file")
+    # 保存が成功した場合に遷移するurl
+    success_url = reverse_lazy('overview:room_list')

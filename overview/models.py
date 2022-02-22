@@ -47,7 +47,7 @@ class RoomType(models.Model):
     kanrihi = models.IntegerField(verbose_name='管理費')
     shuuzenhi = models.IntegerField(verbose_name='修繕積立金')
     ryokuchi = models.IntegerField(verbose_name='緑地維持管理費')
-    niwa = models.IntegerField(verbose_name='専用庭使用料', blank=True, null=True)
+    niwa = models.IntegerField(verbose_name='専用庭使用料', default=0)
 
     def __str__(self):
         return self.type_name

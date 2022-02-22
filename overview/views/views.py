@@ -1,5 +1,6 @@
 from django.views import generic
 from overview.models import OverView, Room
+from django.db.models import F
 
 
 class Overview(generic.TemplateView):
@@ -27,8 +28,19 @@ class RoomView(generic.TemplateView):
     model = Room
     template_name = "overview/room_list.html"
 
+    # 管理費等の合計をpython関数で求める。
+    def calc_total(self, sql):
+        total = 0
+        for d in sql:
+            total += (d.room_type.kanrihi + d.room_type.shuuzenhi + d.room_type.ryokuchi + d.room_type.niwa)
+        return total
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         qs = Room.objects.all().order_by('room_no')
+        qs = qs.annotate(
+            total=F('room_type__kanrihi')+F('room_type__shuuzenhi')+F('room_type__ryokuchi')+F('room_type__niwa'))
+        total = self.calc_total(qs)
         context['roomlist'] = qs
+        context['total'] = total
         return context

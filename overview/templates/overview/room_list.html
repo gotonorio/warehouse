@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_single_page.html' %}
 {% load static %}
 {% load humanize %}
 
@@ -28,9 +28,9 @@
 {% endblock navbar %}
 
 {% block content %}
-<br>
 <div class="container is-fluid">
   <div class="content has-text-centered">
+    <br>
     <h4>住戸データ</h4>
   </div>
   <div class="table-container">
@@ -41,23 +41,39 @@
           <th class="has-text-centered">住戸タイプ</th>
           <th class="has-text-centered">区分所有者名</th>
           <th class="has-text-centered">賃借人名</th>
-          <th class="has-text-centered">町内会</th>
+          <th class="has-text-centered">町内会費</th>
+          <th class="has-text-centered">管理費等</th>
+          <th class="has-text-centered">駐車場費</th>
+          <th class="has-text-centered">駐輪場費</th>
+          <th class="has-text-centered">バイク費</th>
+          <th class="has-text-centered">合計</th>
         </tr>
       </thead>
       <tbody>
-        {% for data in roomlist %}
+        {% for d in roomlist %}
         <tr>
-          <td class="has-text-centered">{{data.room_no}}</td>
-          <td class="has-text-centered">{{data.room_type}}</td>
-          <td class="has-text-right nowrap">{{data.owner}}</td>
-          <td class="has-text-centered nowrap">{{data.tenant|default_if_none:"--"}}</td>
-          {% if not data.chounaikai %}
+          <td class="has-text-centered"><a href="{% url 'overview:room_update' d.pk %}">{{d.room_no}}</a></td>
+          <td class="has-text-centered">{{d.room_type}}</td>
+          <td class="has-text-left nowrap">{{d.owner}}</td>
+          <td class="has-text-centered nowrap">{{d.tenant|default_if_none:"--"}}</td>
+          {% if not d.chounaikai %}
             <td class="has-text-centered">--</td>
           {% else %}
-            <td class="has-text-centered">○</td>
+            <td class="has-text-centered">270</td>
           {% endif %}
+          <td class="has-text-right">{{d.total|intcomma}}</td>
+          <td class="has-text-right">{{d.parking_fee|intcomma}}</td>
+          <td class="has-text-right">{{d.bicycle_fee|intcomma}}</td>
+          <td class="has-text-right">{{d.bike_fee|intcomma}}</td>
+          <td class="has-text-right">{{d.total|add:d.parking_fee|add:d.bicycle_fee|add:d.bike_fee|add:270|intcomma}}</td>
         </tr>
         {% endfor %}
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="has-text-right">{{total|intcomma}}</td>
       </tbody>
     </table>
   </div>
