@@ -23,12 +23,12 @@ class OverviewUpdateView(PermissionRequiredMixin, generic.UpdateView):
         return context
 
 
-class SectionOwnerCreateView(PermissionRequiredMixin, generic.CreateView):
-    """ 区分所有者の登録 """
+class RoomCreateView(PermissionRequiredMixin, generic.CreateView):
+    """ 住戸データの登録 """
     model = Room
     form_class = RoomForm
     template_name = "overview/room_form.html"
     # 必要な権限
     permission_required = ("library.add_file")
     # 保存が成功した場合に遷移するurl
-    success_url = reverse_lazy('overview:overview')
+    success_url = reverse_lazy('overview:create_room')

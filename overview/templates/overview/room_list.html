@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block header %}
+{% endblock header %}
+
+{% block navbar %}
+{# https://bulma.io/documentation/components/navbar/ #}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">【SG川崎】</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+
+{% block content %}
+<br>
+<div class="container is-fluid">
+  <div class="content has-text-centered">
+    <h4>住戸データ</h4>
+  </div>
+  <div class="table-container">
+    <table class="table table_center_nowrap is-narrow is-striped">
+      <thead>
+        <tr>
+          <th class="has-text-centered">住戸番号</th>
+          <th class="has-text-centered">住戸タイプ</th>
+          <th class="has-text-centered">区分所有者名</th>
+          <th class="has-text-centered">賃借人名</th>
+          <th class="has-text-centered">町内会</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in roomlist %}
+        <tr>
+          <td class="has-text-centered">{{data.room_no}}</td>
+          <td class="has-text-centered">{{data.room_type}}</td>
+          <td class="has-text-right nowrap">{{data.owner}}</td>
+          <td class="has-text-centered nowrap">{{data.tenant|default_if_none:"--"}}</td>
+          {% if not data.chounaikai %}
+            <td class="has-text-centered">--</td>
+          {% else %}
+            <td class="has-text-centered">○</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <br>
+</div>
+{% endblock %}

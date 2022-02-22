@@ -1,5 +1,5 @@
 from django.views import generic
-from overview.models import OverView
+from overview.models import OverView, Room
 
 
 class Overview(generic.TemplateView):
@@ -19,4 +19,16 @@ class Overview(generic.TemplateView):
         context = super().get_context_data(**kwargs)
         qs_dict = OverView.objects.all().values()
         context['ov'] = qs_dict[0]
+        return context
+
+
+class RoomView(generic.TemplateView):
+    """ 住戸データ """
+    model = Room
+    template_name = "overview/room_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        qs = Room.objects.all().order_by('room_no')
+        context['roomlist'] = qs
         return context
