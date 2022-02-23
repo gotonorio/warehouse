@@ -1,6 +1,6 @@
-from django.views import generic
-from overview.models import OverView, Room
 from django.db.models import F
+from django.views import generic
+from overview.models import OverView, Room, RoomType
 
 
 class Overview(generic.TemplateView):
@@ -43,4 +43,18 @@ class RoomView(generic.TemplateView):
         total = self.calc_total(qs)
         context['roomlist'] = qs
         context['total'] = total
+        return context
+
+
+class RoomTypeView(generic.TemplateView):
+    """ 住戸タイプデータ """
+    model = RoomType
+    template_name = "overview/roomtype_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        qs = RoomType.objects.all()
+        qs = qs.annotate(
+            total=F('kanrihi')+F('shuuzenhi')+F('ryokuchi')+F('niwa'))
+        context['roomtypelist'] = qs
         return context
