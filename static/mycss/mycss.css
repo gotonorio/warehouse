@@ -103,7 +103,7 @@ div.my_field > span.helptext {
   color: #999;
 }
 div.my_field input, div.my_field > select-css, div.my_field > button {
-  width: 100%;
+  /* width: 100%; */
   padding: 6px 12px;
   box-sizing: border-box;
   border-radius: 4px;
