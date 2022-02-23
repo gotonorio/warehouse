@@ -1,57 +1,38 @@
-# import logging
-
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import (LoginRequiredMixin,
-                                        PermissionRequiredMixin,
-                                        UserPassesTestMixin)
-from django.contrib.auth.models import Group
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
-from django.shortcuts import redirect, resolve_url
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.views import PasswordChangeView
 from django.views import generic
-from library.models import File
+from django.contrib.auth.models import Group
+from django.shortcuts import redirect, resolve_url
+from django.urls import reverse_lazy
 
-from .forms import (LoginForm, PasswordUpdateForm, TempUserCreateForm,
-                    UserUpdateForm)
+from register.forms import (PasswordUpdateForm, TempUserCreateForm, UserUpdateForm)
 
-# https://djangobrothers.com/blogs/referencing_the_user_model/
+
 User = get_user_model()
 
 
-class Login(LoginView):
-    """ログインページ"""
-    form_class = LoginForm
-    template_name = 'register/login.html'
+class UserListView(PermissionRequiredMixin, generic.ListView):
+    """ 管理者が使用するユーザリストの一覧表示。
+    templatesファイルはデフォルト（user_list.html）を使用。
+    渡されるobjectもデフォルトの「user_list」。
+    """
+    model = User
+    permission_required = ("register.add_user",)
+    template_name = 'register/user/user_list.html'
 
-
-class Logout(LoginRequiredMixin, LogoutView):
-    """ログアウトページ"""
-    template_name = 'register/logout.html'
-
-
-class MenuView(generic.TemplateView):
-    """ メニュー画面 """
-
-    def get_template_names(self):
-        """ templateファイルを切り替える """
-        if self.request.user_agent_flag == 'mobile':
-            template_name = "register/menu_mobile.html"
-        else:
-            template_name = "register/menu_pc.html"
-        return [template_name]
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        qs = File.objects.filter(title='基本使用規則')
-        for kisoku in qs:
-            context['kisoku'] = kisoku
-        return context
+    def get_queryset(self, **kwargs):
+        qs = super().get_queryset(**kwargs).order_by('is_active')
+        qs = qs.exclude(is_superuser=True).order_by('-groups', 'is_active')
+        return qs
 
 
 class TempUserCreateView(generic.CreateView):
     """ 未登録ユーザーが仮登録するためのVIEW。
     ユーザには「add_post」と「view_post」のパーミションを付加する。
     """
-    template_name = 'register/temp_user_create.html'
+    template_name = 'register/user/temp_user_create_form.html'
     form_class = TempUserCreateForm
 
     def form_valid(self, form):
@@ -61,39 +42,20 @@ class TempUserCreateView(generic.CreateView):
         user = form.save(commit=False)
         user.is_active = False
         user.save()
-        # signalによってgroupを追加してpermissionを付加してみる。
-        # permission = Permission.objects.get(codename='add_post')
-        # user.user_permissions.add(permission)
-        # permission = Permission.objects.get(codename='view_post')
-        # user.user_permissions.add(permission)
 
         return redirect('register:temp_user_done')
 
 
 class TempUserDoneView(generic.TemplateView):
     """ 仮登録完了後、メールを待つように表示するだけのVIEW。 """
-    template_name = 'register/temp_user_done.html'
-
-
-class UserListView(PermissionRequiredMixin, generic.ListView):
-    """ 管理者が使用するユーザリストの一覧表示。
-    templatesファイルはデフォルト（user_list.html）を使用。
-    superuserは表示しない。
-    """
-    model = User
-    permission_required = ("register.add_myuser",)
-
-    def get_queryset(self, **kwargs):
-        qs = super().get_queryset(**kwargs)
-        qs = qs.filter(is_superuser=False).order_by('groups', 'is_active')
-        return qs
+    template_name = 'register/user/temp_user_done.html'
 
 
 class OnlyYouMixin(UserPassesTestMixin):
     """ パスワードの変更処理用
     自分自身だけでなく、ユーザ登録情報によって制限することができる。
     https://qiita.com/chanyou0311/items/31a4380d11c904563c86
-    https://docs.djangoproject.com/ja/2.2/topics/auth/default/
+    https://docs.djangoproject.com/ja/3.2/topics/auth/default/
     """
     raise_exception = True
 
@@ -107,19 +69,19 @@ class UserPasswordUpdate(OnlyYouMixin, PasswordChangeView):
     """ ログインしたユーザが自分でパスワードを変更するためのVIEW。"""
     model = User
     form_class = PasswordUpdateForm
-    template_name = 'register/password_update_form.html'
+    template_name = 'register/user/password_update_form.html'
 
     def get_success_url(self):
         # return resolve_url('register:pwd_update', pk=self.kwargs['pk'])
-        return resolve_url('notice:news_card')
+        return resolve_url('bbs:file_list')
 
 
 class UserManagementView(PermissionRequiredMixin, generic.UpdateView):
     """ 管理者がユーザの「有効性」を操作するためのVIEW。 """
     model = User
     form_class = UserUpdateForm
-    template_name = 'register/user_update_form.html'
-    permission_required = ("register.add_myuser",)
+    template_name = 'register/user/user_update_form.html'
+    permission_required = ("register.add_user",)
 
     def get_success_url(self):
         return resolve_url('register:user_list')
@@ -142,12 +104,30 @@ class UserManagementView(PermissionRequiredMixin, generic.UpdateView):
         pk = self.object.pk
         user = User.objects.get(pk=pk)
         groups = user.groups.all()
-        # logging.debug(groups[0])
+        if groups.exists():
+            group_name = groups[0]
+        else:
+            group_name = ''
+
         user_update_form = UserUpdateForm(initial={
             'username': user.username,
             'email': user.email,
             'is_active': user.is_active,
-            'group': groups[0]
+            'group': group_name
         })
         context['form'] = user_update_form
         return context
+
+
+class DeleteUserView(PermissionRequiredMixin, generic.DeleteView):
+    """ 削除View """
+    model = User
+    template_name = 'register/user/user_confirm_delete.html'
+    # 削除が成功した場合に遷移するurl
+    success_url = reverse_lazy('register:user_list')
+    # # 削除してよいか確認するためのtemplate
+    # template_name = "register/user/user_confirm_delete.html"
+    # 必要な権限（データ登録できる権限は共通）
+    permission_required = ("register.add_user",)
+    # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
+    raise_exception = True
