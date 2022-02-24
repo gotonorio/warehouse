@@ -41,11 +41,12 @@
             {% endif %}
             {% if perms.library.add_file %}
               <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'overview:room_list' %}">住戸データ表示</a>
+              <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{% url 'library:big_category_index' %}">文書ファイル登録・修正</a>
               <a class="dropdown-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
               <a class="dropdown-item" href="{% url 'overview:create_room' %}">住戸データ登録・修正</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'overview:room_list' %}">住戸データ</a>
+              <a class="dropdown-item" href="{% url 'overview:overview_list' %}">マンション概要・修正</a>
             {% endif %}
           </div>
         </div>

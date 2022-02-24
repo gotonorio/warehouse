@@ -5,6 +5,11 @@ from overview.forms import OverviewForm, RoomForm
 from overview.models import OverView, Room
 
 
+class OverviewUpdateListView(PermissionRequiredMixin, generic.ListView):
+    model = OverView
+    permission_required = ("library.add_file")
+
+
 class OverviewUpdateView(PermissionRequiredMixin, generic.UpdateView):
     """ マンション概要データアップデートView
     - 概要は変化しないので、管理画面で初期データを登録する。
