@@ -58,3 +58,11 @@ class RoomForm(forms.ModelForm):
             'bike_fee': forms.NumberInput(attrs={'class': 'input'}),
             'chounaika': forms.CheckboxInput(attrs={'class': 'checkbox'})
         }
+
+
+class CSVImportForm(forms.Form):
+    """ 部屋番号, 駐車場使用料 """
+    file = forms.FileField(
+        label='CSVファイル',
+        help_text='※ CSVファイルはヘッダー無しです。'
+        )

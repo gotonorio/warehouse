@@ -15,4 +15,5 @@ urlpatterns = [
     path('overview/update/<int:pk>', data_views.OverviewUpdateView.as_view(), name='overview_update'),
     path('room/create', data_views.RoomCreateView.as_view(), name='create_room'),
     path('room/update/<int:pk>', data_views.RoomUpdateView.as_view(), name='room_update'),
+    path('room/import', data_views.ImportParkingfee.as_view(), name='import_parkingfee'),
 ]
