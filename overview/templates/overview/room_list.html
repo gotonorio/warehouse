@@ -9,7 +9,7 @@
 {# https://bulma.io/documentation/components/navbar/ #}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item">【SG川崎】</a>
+    <a class="navbar-item" href="{% url 'notice:news_card' %}">【SG川崎】</a>
     {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
@@ -21,17 +21,17 @@
     <div class="navbar-start">
     </div>
     <div class="navbar-end">
-      <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
+      <a class='navbar-item' href='javascript:void(0);' onclick='window.history.back();'>戻る</a>
     </div>
   </div>
 </nav>
 {% endblock navbar %}
 
 {% block content %}
-<div class="container is-fluid">
+<div class="container">
   <div class="content has-text-centered">
     <br>
-    <h4>住戸データ</h4>
+    <h4>住戸別の管理費等</h4>
   </div>
   <div class="table-container">
     <table class="table table_center_nowrap is-narrow is-striped">
@@ -39,8 +39,10 @@
         <tr>
           <th class="has-text-centered">住戸番号</th>
           <th class="has-text-centered">住戸タイプ</th>
-          <th class="has-text-centered">区分所有者名</th>
-          <th class="has-text-centered">賃借人名</th>
+          {% if perms.overview.add_room %}
+            <th class="has-text-centered">区分所有者名</th>
+            <th class="has-text-centered">賃借人名</th>
+          {% endif %}
           <th class="has-text-centered">町内会費</th>
           <th class="has-text-centered">管理費等</th>
           <th class="has-text-centered">駐車場費</th>
@@ -54,8 +56,10 @@
         <tr>
           <td class="has-text-centered"><a href="{% url 'overview:room_update' d.pk %}">{{d.room_no}}</a></td>
           <td class="has-text-centered">{{d.room_type}}</td>
-          <td class="has-text-left nowrap">{{d.owner}}</td>
-          <td class="has-text-centered nowrap">{{d.tenant|default_if_none:"--"}}</td>
+          {% if perms.overview.add_room %}
+            <td class="has-text-left nowrap">{{d.owner}}</td>
+            <td class="has-text-centered nowrap">{{d.tenant|default_if_none:"--"}}</td>
+          {% endif %}
           {% if not d.chounaikai %}
             <td class="has-text-centered">--</td>
           {% else %}
@@ -70,8 +74,10 @@
         {% endfor %}
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        {% if perms.overview.add_room %}
+          <td></td>
+          <td></td>
+        {% endif %}
         <td></td>
         <td class="has-text-right">{{total|intcomma}}</td>
       </tbody>

@@ -19,9 +19,9 @@ class NewsCardView(generic.TemplateView):
     def get_template_names(self):
         """ templateファイルを切り替える """
         if self.request.user_agent_flag == 'mobile':
-            template_name = "notice/mobile_news_card.html"
+            template_name = "notice/news_card_mobile.html"
         else:
-            template_name = "notice/pc_news_card.html"
+            template_name = "notice/news_card_pc.html"
         return [template_name]
 
     def get_context_data(self, **kwargs):

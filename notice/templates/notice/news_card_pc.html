@@ -10,7 +10,7 @@
 {% block navbar %}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="{% url 'notice:news_card' %}">【SG川崎】</a>
+    <div class="navbar-item">【{{user}}】</div>
     {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
       <span aria-hidden="true"></span>
@@ -40,11 +40,9 @@
               <a class="dropdown-item" href="{% url 'notice:news_list' %}">お知らせ管理</a>
             {% endif %}
             {% if perms.library.add_file %}
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'overview:room_list' %}">住戸データ表示</a>
-              <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{% url 'library:big_category_index' %}">文書ファイル登録・修正</a>
               <a class="dropdown-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
+              <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{% url 'overview:create_room' %}">住戸データ登録・修正</a>
               <a class="dropdown-item" href="{% url 'overview:overview_list' %}">マンション概要・修正</a>
             {% endif %}

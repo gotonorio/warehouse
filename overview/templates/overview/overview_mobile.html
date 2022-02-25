@@ -9,6 +9,10 @@
 {# https://bulma.io/documentation/components/navbar/ #}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
+      <a class="navbar-item" href="{% url 'overview:roomtype_list' %}">管理費等</a>
+      {% if perms.overview.view_room %}
+        <a class="navbar-item" href="{% url 'overview:room_list' %}">住戸データ表示</a>
+      {% endif %}
     <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
     {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">

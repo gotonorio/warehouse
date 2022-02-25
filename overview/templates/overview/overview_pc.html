@@ -19,7 +19,10 @@
   </div>
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="{% url 'overview:roomtype_list' %}">住戸データ</a>
+      <a class="navbar-item" href="{% url 'overview:roomtype_list' %}">管理費等</a>
+      {% if perms.overview.view_room %}
+        <a class="navbar-item" href="{% url 'overview:room_list' %}">住戸データ表示</a>
+      {% endif %}
     </div>
     <div class="navbar-end">
       <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
