@@ -31,18 +31,21 @@ class RoomView(generic.TemplateView):
     # 管理費等の合計をpython関数で求める。
     def calc_total(self, sql):
         total = 0
+        total_parking = 0
         for d in sql:
             total += (d.room_type.kanrihi + d.room_type.shuuzenhi + d.room_type.ryokuchi + d.room_type.niwa)
-        return total
+            total_parking += d.parking_fee
+        return total, total_parking
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         qs = Room.objects.all().order_by('room_no')
         qs = qs.annotate(
             total=F('room_type__kanrihi')+F('room_type__shuuzenhi')+F('room_type__ryokuchi')+F('room_type__niwa'))
-        total = self.calc_total(qs)
+        total, total_parking = self.calc_total(qs)
         context['roomlist'] = qs
         context['total'] = total
+        context['total_parking'] = total_parking
         return context
 
 

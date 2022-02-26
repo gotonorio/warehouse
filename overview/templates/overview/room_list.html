@@ -54,10 +54,10 @@
       <tbody>
         {% for d in roomlist %}
         <tr>
-          <td class="has-text-centered"><a href="{% url 'overview:room_update' d.pk %}">{{d.room_no}}</a></td>
+          <td class="has-text-centered">{{d.room_no}}</td>
           <td class="has-text-centered">{{d.room_type}}</td>
           {% if perms.overview.add_room %}
-            <td class="has-text-left nowrap">{{d.owner}}</td>
+            <td class="has-text-left nowrap"><a href="{% url 'overview:room_update' d.pk %}">{{d.owner}}</a></td>
             <td class="has-text-centered nowrap">{{d.tenant|default_if_none:"--"}}</td>
           {% endif %}
           {% if not d.chounaikai %}
@@ -80,6 +80,10 @@
         {% endif %}
         <td></td>
         <td class="has-text-right">{{total|intcomma}}</td>
+        <td class="has-text-right">{{total_parking|intcomma}}</td>
+        <td></td>
+        <td></td>
+        <td class="has-text-right">{{total|add:total_parking|intcomma}}</td>
       </tbody>
     </table>
   </div>

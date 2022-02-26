@@ -36,9 +36,6 @@
 <div class="container is-fluid">
   <div class="content has-text-centered">
     <h4>{{ov.name}} マンション概要</h4>
-    {% if perms.library.add_file %}
-      <a href="{% url 'overview:overview_update' pk=ov.id %}">修正</a>
-    {% endif %}
     <table class="table is-narrow is-responsible is-bordered">
       <tbody>
         <tr>

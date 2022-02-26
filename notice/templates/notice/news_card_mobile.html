@@ -38,11 +38,6 @@
             {% if perms.notice.add_news %}
               <a class="dropdown-item" href="{% url 'notice:news_list' %}">お知らせ管理</a>
             {% endif %}
-            {% if perms.library.add_file %}
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'library:big_category_index' %}">文書ファイル登録・修正</a>
-              <a class="dropdown-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
-            {% endif %}
           </div>
         </div>
       {% endif %}

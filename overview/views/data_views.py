@@ -78,7 +78,10 @@ class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
             row.save()
 
     def form_valid(self, form):
-        """ 駐車場使用料をアップデートする。ヘッダーは無し """
+        """ 駐車場使用料をアップデートする。
+        - CSVファイルはヘッダー無し。
+        - 同じ部屋番号で複数台使用を考慮。.
+        """
         pklist = self.pk_list()
         # 最初に全住戸の駐車場費をクリア。
         self.clear_parkingfee()
@@ -89,6 +92,6 @@ class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
         for row in parking:
             pk = pklist[int(row[0])]
             room = Room.objects.get(id=pk)
-            room.parking_fee = int(row[1].replace(',', ''))
+            room.parking_fee += int(row[1].replace(',', ''))
             room.save()
         return super().form_valid(form)

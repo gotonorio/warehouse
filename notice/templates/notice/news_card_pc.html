@@ -42,6 +42,8 @@
             {% if perms.library.add_file %}
               <a class="dropdown-item" href="{% url 'library:big_category_index' %}">文書ファイル登録・修正</a>
               <a class="dropdown-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
+            {% endif %}
+            {% if perms.overview.add_room %}
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{% url 'overview:create_room' %}">住戸データ登録・修正</a>
               <a class="dropdown-item" href="{% url 'overview:overview_list' %}">マンション概要・修正</a>
