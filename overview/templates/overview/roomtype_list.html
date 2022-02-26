@@ -39,6 +39,7 @@
       <thead>
         <tr>
           <th class="has-text-centered">住戸<br>タイプ</th>
+          <th class="has-text-centered">住戸数</th>
           <th class="has-text-centered">専有面積<br>(m2)</th>
           <th class="has-text-centered">管理費<br>(円/月)</th>
           <th class="has-text-centered">修繕積立費<br>(円/月)</th>
@@ -51,6 +52,7 @@
         {% for d in roomtypelist %}
         <tr>
           <td class="has-text-centered">{{d.type_name}}</td>
+          <td class="has-text-right">{{d.number_unit}}</td>
           <td class="has-text-centered nowrap">{{d.area|floatformat:2}}</td>
           <td class="has-text-right">{{d.kanrihi|intcomma}}</td>
           <td class="has-text-right">{{d.shuuzenhi|intcomma}}</td>

@@ -48,6 +48,7 @@ class RoomType(models.Model):
     shuuzenhi = models.IntegerField(verbose_name='修繕積立金')
     ryokuchi = models.IntegerField(verbose_name='緑地維持管理費')
     niwa = models.IntegerField(verbose_name='専用庭使用料', default=0)
+    number_unit = models.IntegerField(verbose_name='住戸数', default=0)
 
     def __str__(self):
         return self.type_name

@@ -57,7 +57,6 @@ class RoomTypeView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         qs = RoomType.objects.all()
-        qs = qs.annotate(
-            total=F('kanrihi')+F('shuuzenhi')+F('ryokuchi')+F('niwa'))
+        qs = qs.annotate(total=F('kanrihi')+F('shuuzenhi')+F('ryokuchi')+F('niwa'))
         context['roomtypelist'] = qs
         return context
