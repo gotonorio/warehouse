@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db.models import F
 from django.views import generic
 from overview.models import OverView, Room, RoomType
@@ -32,20 +33,25 @@ class RoomView(generic.TemplateView):
     def calc_total(self, sql):
         total = 0
         total_parking = 0
+        total_membershipfee = 0
         for d in sql:
             total += (d.room_type.kanrihi + d.room_type.shuuzenhi + d.room_type.ryokuchi + d.room_type.niwa)
             total_parking += d.parking_fee
-        return total, total_parking
+            if d.chounaikai:
+                total_membershipfee += settings.MEMBERSHIP_FEE
+        return total, total_parking, total_membershipfee
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         qs = Room.objects.all().order_by('room_no')
         qs = qs.annotate(
             total=F('room_type__kanrihi')+F('room_type__shuuzenhi')+F('room_type__ryokuchi')+F('room_type__niwa'))
-        total, total_parking = self.calc_total(qs)
+        total, total_parking, total_membershipfee = self.calc_total(qs)
         context['roomlist'] = qs
         context['total'] = total
         context['total_parking'] = total_parking
+        context['total_membershipfee'] = total_membershipfee
+        context['membership_fee'] = settings.MEMBERSHIP_FEE
         return context
 
 

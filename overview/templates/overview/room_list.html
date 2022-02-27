@@ -61,9 +61,9 @@
             <td class="has-text-centered nowrap">{{d.tenant|default_if_none:"--"}}</td>
           {% endif %}
           {% if not d.chounaikai %}
-            <td class="has-text-centered">--</td>
+            <td class="has-text-right">0</td>
           {% else %}
-            <td class="has-text-centered">270</td>
+            <td class="has-text-right">{{membership_fee}}</td>
           {% endif %}
           <td class="has-text-right">{{d.total|intcomma}}</td>
           <td class="has-text-right">{{d.parking_fee|intcomma}}</td>
@@ -78,7 +78,7 @@
           <td></td>
           <td></td>
         {% endif %}
-        <td></td>
+        <td class="has-text-right">{{total_membershipfee|intcomma}}</td>
         <td class="has-text-right">{{total|intcomma}}</td>
         <td class="has-text-right">{{total_parking|intcomma}}</td>
         <td></td>
