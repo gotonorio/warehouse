@@ -19,6 +19,10 @@ class OverviewForm(forms.ModelForm):
             'specified_building_coverage_ratio',
             'height_limit',
             'required_parking',
+            'private_water_equipment',
+            'public_water_equipment',
+            'trunk_room',
+            'delivery_box',
             )
         widgets = {
             'flat_parking': forms.NumberInput(attrs={'class': 'input'}),
@@ -31,6 +35,10 @@ class OverviewForm(forms.ModelForm):
             'specified_building_coverage_ratio': forms.NumberInput(attrs={'class': 'input'}),
             'height_limit': forms.TextInput(attrs={'class': 'input'}),
             'required_parking': forms.TextInput(attrs={'class': 'input'}),
+            'private_water_equipment': forms.TextInput(attrs={'class': 'input'}),
+            'public_water_equipment': forms.TextInput(attrs={'class': 'input'}),
+            'trunk_room': forms.TextInput(attrs={'class': 'input'}),
+            'delivery_box': forms.TextInput(attrs={'class': 'input'}),
         }
 
 
