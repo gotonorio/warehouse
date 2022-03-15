@@ -22,7 +22,7 @@ class FileIndexView(PermissionRequiredMixin, generic.ListView):
     permission_required = ("library.add_file")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = False  # ログイン画面に飛ばす。
-    paginate_by = 50
+    # paginate_by = 50
 
     def get_queryset(self):
         return File.objects.order_by('category', 'rank')
@@ -41,7 +41,7 @@ class FileCategoryView(PermissionRequiredMixin, generic.ListView):
     permission_required = ("library.add_file")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-    paginate_by = 20
+    # paginate_by = 20
 
     def get_queryset(self):
         """ カテゴリでfilter. """
@@ -136,7 +136,7 @@ class CategoryBigView(PermissionRequiredMixin, generic.ListView):
     permission_required = ("library.add_file")
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-    paginate_by = 20
+    # paginate_by = 20
 
     def get_queryset(self):
         """ カテゴリでfilter. """
@@ -283,7 +283,7 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
     """
     model = File
     template_name = "notice/search_list.html"
-    paginate_by = 10
+    # paginate_by = 10
 
     def get_queryset(self):
         queryset = File.objects.order_by('-created_at')
@@ -312,7 +312,7 @@ class RijikaiMinutesView(LoginRequiredMixin, generic.ListView):
     template_name = "library/rijikai_minutes_list.html"
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-    paginate_by = 40
+    # paginate_by = 40
 
     def get_queryset(self):
         """ カテゴリパス名「rijikai」でfilter. """
@@ -328,7 +328,7 @@ class RijikaiDataListView(LoginRequiredMixin, generic.ListView):
     template_name = "library/rijikai_data_list.html"
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-    paginate_by = 40
+    # paginate_by = 40
 
     def get_queryset(self):
         """ カテゴリパス名「rijikai_data」でfilter. """
@@ -344,7 +344,7 @@ class SoukaiRejimeListView(LoginRequiredMixin, generic.ListView):
     template_name = "library/soukai_rejime_list.html"
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-    paginate_by = 40
+    # paginate_by = 40
 
     def get_queryset(self):
         """ カテゴリパス名「soukai_rejime」でfilter. """

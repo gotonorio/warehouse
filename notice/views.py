@@ -37,7 +37,7 @@ class NewsListView(PermissionRequiredMixin, generic.ListView):
 
     model = News
     template_name = "notice/news_manage_list.html"
-    paginate_by = 50
+    # paginate_by = 50
     # 必要な権限
     permission_required = ("notice.add_news")
     queryset = News.objects.all().order_by('-created_at')
