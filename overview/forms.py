@@ -55,6 +55,8 @@ class RoomForm(forms.ModelForm):
             'bicycle_fee',
             'bike_fee',
             'chounaikai',
+            'mishuu_fee',
+            'comment',
         )
         widgets = {
             'room_no': forms.NumberInput(attrs={'class': 'input'}),
@@ -64,7 +66,9 @@ class RoomForm(forms.ModelForm):
             'parking_fee': forms.NumberInput(attrs={'class': 'input'}),
             'bicycle_fee': forms.NumberInput(attrs={'class': 'input'}),
             'bike_fee': forms.NumberInput(attrs={'class': 'input'}),
-            'chounaika': forms.CheckboxInput(attrs={'class': 'checkbox'})
+            'chounaika': forms.CheckboxInput(attrs={'class': 'checkbox'}),
+            'mishuu_fee': forms.NumberInput(attrs={'class': 'input'}),
+            'comment': forms.TextInput(attrs={'class': 'input'}),
         }
 
 

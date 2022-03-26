@@ -64,6 +64,8 @@ class Room(models.Model):
     bicycle_fee = models.IntegerField(verbose_name='駐輪場使用料', default=0)
     bike_fee = models.IntegerField(verbose_name='バイク置場使用料', default=0)
     chounaikai = models.BooleanField(verbose_name='町内会費', default=False)
+    mishuu_fee = models.IntegerField(verbose_name='滞納費', default=0)
+    comment = models.CharField(verbose_name='備考', max_length=128, blank=True, null=True)
 
     def __str__(self):
         return self.owner

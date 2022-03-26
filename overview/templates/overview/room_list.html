@@ -49,6 +49,10 @@
           <th class="has-text-centered">駐輪場費</th>
           <th class="has-text-centered">バイク費</th>
           <th class="has-text-centered">合計</th>
+          {% if perms.overview.add_room %}
+            <th class="has-text-centered">滞納費</th>
+            <th class="has-text-centered">備考</th>
+          {% endif %}
         </tr>
       </thead>
       <tbody>
@@ -70,6 +74,10 @@
           <td class="has-text-right">{{d.bicycle_fee|intcomma}}</td>
           <td class="has-text-right">{{d.bike_fee|intcomma}}</td>
           <td class="has-text-right">{{d.total|add:d.parking_fee|add:d.bicycle_fee|add:d.bike_fee|add:270|intcomma}}</td>
+          {% if perms.overview.add_room %}
+            <td class="has-text-right">{{d.mishuu_fee|intcomma}}</td>
+            <td class="has-text-left">{{d.comment|default_if_none:''}}</td>
+          {% endif %}
         </tr>
         {% endfor %}
         <td></td>
