@@ -17,7 +17,7 @@
     <div class="navbar-start">
     </div>
     <div class="navbar-end">
-      <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
+      <a class="navbar-item" href="{% url 'overview:overview' %}">戻る</a>
     </div>
   </div>
 </nav>
@@ -87,7 +87,7 @@
         <div class='label'>{{form.zip_code.label_tag}}</div>
         <div class='my_field'>{{form.zip_code}}</div>
         <span class='helptext'>{{form.zip_code.help_text }}</span>
-        {{ form.zip_code.errors }}
+        {{form.zip_code.errors}}
       </div>
       <div class='field'>
         <div class='label'>{{form.prefecture.label_tag}}</div>
@@ -109,15 +109,13 @@
         <div class='label'>{{form.tel_number.label_tag}}</div>
         <div class='my_field'>{{form.tel_number}}</div>
         <span class='helptext'>{{form.tel_number.help_text }}</span>
-        {{ form.tel_number.errors }}
+        {{form.tel_number.errors}}
       </div>
-
-  <br>
-  <div class='content has-text-centered my_button'>
-    <button type='submit' class='button is-primary'>読込み</button>
-    <a class='button is-danger' href='javascript:void(0);' onclick='window.history.back();'>キャンセル</a>
-  </div>
-
+      <br>
+      <div class='content has-text-centered my_button'>
+        <button type='submit' class='button is-primary'>読込み</button>
+        <a class='button is-danger' href='javascript:void(0);' onclick='window.history.back();'>キャンセル</a>
+      </div>
     </div>
   </div>
   </form>
