@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 
 
@@ -66,6 +67,14 @@ class Room(models.Model):
     chounaikai = models.BooleanField(verbose_name='町内会費', default=False)
     mishuu_fee = models.IntegerField(verbose_name='滞納費', default=0)
     comment = models.CharField(verbose_name='備考', max_length=128, blank=True, null=True)
+    """ 住所データ """
+    zip_code = models.CharField(verbose_name='郵便番号', max_length=7, blank=True)
+    prefecture = models.CharField(verbose_name='都道府県', max_length=32, blank=True)
+    municipality = models.CharField(verbose_name='市区町村', max_length=128, blank=True)
+    house_number = models.CharField(verbose_name='番地', max_length=64, blank=True)
+    building = models.CharField(verbose_name='建物名', max_length=64, blank=True)
+    tel_number_regex = RegexValidator(regex=r'^[0-9]+$', message=("電話番号はハイフン(-)無しです。"))
+    tel_number = models.CharField(validators=[tel_number_regex], max_length=15, verbose_name='電話番号', blank=True)
 
     def __str__(self):
         return self.owner

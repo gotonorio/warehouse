@@ -57,6 +57,12 @@ class RoomForm(forms.ModelForm):
             'chounaikai',
             'mishuu_fee',
             'comment',
+            'zip_code',
+            'prefecture',
+            'municipality',
+            'house_number',
+            'building',
+            'tel_number',
         )
         widgets = {
             'room_no': forms.NumberInput(attrs={'class': 'input'}),
@@ -69,7 +75,29 @@ class RoomForm(forms.ModelForm):
             'chounaika': forms.CheckboxInput(attrs={'class': 'checkbox'}),
             'mishuu_fee': forms.NumberInput(attrs={'class': 'input'}),
             'comment': forms.TextInput(attrs={'class': 'input'}),
+            'zip_code': forms.TextInput(attrs={'class': 'input'}),
+            'prefecture': forms.TextInput(attrs={'class': 'input'}),
+            'municipality': forms.TextInput(attrs={'class': 'input'}),
+            'house_number': forms.TextInput(attrs={'class': 'input'}),
+            'building': forms.TextInput(attrs={'class': 'input'}),
+            'tel_number': forms.TextInput(attrs={'class': 'input'}),
         }
+        help_texts = {
+            'zip_code': '※ 郵便番号はハイフン(-)無しです。',
+            'tel_number': '※ 電話番号はハイフン(-)無しです。',
+        }
+
+    def clean_zip_code(self):
+        zip_code = self.cleaned_data.get('zip_code')
+        if '-' in zip_code:
+            self.add_error('zip_code', '郵便番号にハイフン(-)を含めないでください。')
+        return zip_code
+
+    def clean_tel_number(self):
+        tel_number = self.cleaned_data.get('tel_number')
+        if '-' in tel_number:
+            self.add_error('tel_number', '電話番号にハイフン(-)を含めないでください。')
+        return tel_number
 
 
 class CSVImportForm(forms.Form):
