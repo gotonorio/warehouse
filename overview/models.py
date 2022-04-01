@@ -74,7 +74,7 @@ class Room(models.Model):
     house_number = models.CharField(verbose_name='番地', max_length=64, blank=True)
     building = models.CharField(verbose_name='建物名', max_length=64, blank=True)
     tel_number_regex = RegexValidator(regex=r'^[0-9]+$', message=("電話番号はハイフン(-)無しです。"))
-    tel_number = models.CharField(validators=[tel_number_regex], max_length=15, verbose_name='電話番号', blank=True)
+    tel_number = models.CharField(validators=[tel_number_regex], max_length=16, verbose_name='電話番号', blank=True)
 
     def __str__(self):
         return self.owner
