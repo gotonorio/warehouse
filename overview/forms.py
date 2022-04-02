@@ -65,8 +65,8 @@ class RoomForm(forms.ModelForm):
             'tel_number',
         )
         widgets = {
-            'room_no': forms.NumberInput(attrs={'class': 'input'}),
-            'room_type': forms.Select(attrs={'class': 'select-css'}),
+            'room_no': forms.NumberInput(attrs={'class': 'input', 'readonly': 'readonly'}),
+            'room_type': forms.Select(attrs={'class': 'select-css', 'disabled': 'disable'}),
             'owner': forms.TextInput(attrs={'class': 'input'}),
             'tenant': forms.TextInput(attrs={'class': 'input'}),
             'parking_fee': forms.NumberInput(attrs={'class': 'input'}),

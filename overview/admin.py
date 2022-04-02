@@ -9,11 +9,11 @@ class OverViewAdmin(admin.ModelAdmin):
 
 
 class RoomTypeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('type_name', 'area')
 
 
 class RoomAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('room_no', 'owner', 'tenant')
 
 
 admin.site.register(OverView, OverViewAdmin)
