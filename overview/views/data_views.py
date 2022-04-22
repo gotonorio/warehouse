@@ -33,7 +33,9 @@ class OverviewUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
 
 class RoomCreateView(PermissionRequiredMixin, generic.CreateView):
-    """ 住戸データの登録 """
+    """ 住戸データの登録
+    最初に1回しか使わないので、管理画面だけで良いかもしれない。
+    """
     model = Room
     form_class = RoomForm
     template_name = "overview/room_form.html"

@@ -66,7 +66,8 @@ class RoomForm(forms.ModelForm):
         )
         widgets = {
             'room_no': forms.NumberInput(attrs={'class': 'input', 'readonly': 'readonly'}),
-            'room_type': forms.Select(attrs={'class': 'select-css', 'disabled': 'disable'}),
+            # 'room_type': forms.Select(attrs={'class': 'select-css', 'disabled': 'disable'}),
+            'room_type': forms.Select(attrs={'class': 'input', 'readonly': 'readonly'}),
             'owner': forms.TextInput(attrs={'class': 'input'}),
             'tenant': forms.TextInput(attrs={'class': 'input'}),
             'parking_fee': forms.NumberInput(attrs={'class': 'input'}),
@@ -89,14 +90,16 @@ class RoomForm(forms.ModelForm):
 
     def clean_zip_code(self):
         zip_code = self.cleaned_data.get('zip_code')
-        if '-' in zip_code:
-            self.add_error('zip_code', '郵便番号にハイフン(-)を含めないでください。')
+        if zip_code:
+            if '-' in zip_code:
+                self.add_error('zip_code', '郵便番号にハイフン(-)を含めないでください。')
         return zip_code
 
     def clean_tel_number(self):
         tel_number = self.cleaned_data.get('tel_number')
-        if '-' in tel_number:
-            self.add_error('tel_number', '電話番号にハイフン(-)を含めないでください。')
+        if tel_number:
+            if '-' in tel_number:
+                self.add_error('tel_number', '電話番号にハイフン(-)を含めないでください。')
         return tel_number
 
 
