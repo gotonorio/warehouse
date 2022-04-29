@@ -23,15 +23,17 @@
 
 <!-- content -->
 {% block content %}
-<div class="container">
-  <div class="content has-text-centered">
+<div class="container is-fluid">
+  <div class="content">
+    <br>
     <h3 class="text-center">情報ファイル一覧</h3>
   </div>
-  <hr>
+  <div class="container">
   <a href="{% url 'information:info_add' %}" class="button is-primary">新規作成</a>
   <a href="{% url 'notice:news_card' %}" class="button is-primary">戻る</a>
-  <br>
-  <table class="table ">
+  <br><br>
+  </div>
+  <table class="table is-narrow is-bordered is-striped">
     <thead>
       <tr>
         <th class="has-text-centered">タイトル</th>
@@ -45,8 +47,8 @@
         <td class="has-text-left nowrap">{{ info.title }}</td>
         <td class="has-text-left">{{ info.comment }}</td>
         <td class="has-text-left nowrap">
-          <a href="{% url 'information:info_update' info.pk %}" class="button is-small">更新</a>
-          <a href="{% url 'information:info_delete' info.pk %}" class="button is-small">削除</a>
+          <a href="{% url 'information:info_update' info.pk %}" class="button has-background-grey-lighter is-small">更新</a>
+          <a href="{% url 'information:info_delete' info.pk %}" class="button has-background-grey-lighter is-small">削除</a>
         </td>
       </tr>
       {% endfor %}
