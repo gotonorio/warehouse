@@ -31,26 +31,28 @@ class RoomView(generic.TemplateView):
 
     # 管理費等の合計をpython関数で求める。
     def calc_total(self, sql):
-        total = 0
-        total_parking = 0
-        total_membershipfee = 0
+        total = {'total': 0, 'parking': 0, 'bicycle': 0, 'bike': 0, 'membershipfee': 0}
         for d in sql:
-            total += (d.room_type.kanrihi + d.room_type.shuuzenhi + d.room_type.ryokuchi + d.room_type.niwa)
-            total_parking += d.parking_fee
+            total['total'] += (d.room_type.kanrihi + d.room_type.shuuzenhi + d.room_type.ryokuchi + d.room_type.niwa)
+            total['parking'] += d.parking_fee
             if d.chounaikai:
-                total_membershipfee += settings.MEMBERSHIP_FEE
-        return total, total_parking, total_membershipfee
+                total['membershipfee'] += settings.MEMBERSHIP_FEE
+            total['bicycle'] += d.bicycle_fee
+            total['bike'] += d.bike_fee
+        return total
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         qs = Room.objects.all().order_by('room_no')
         qs = qs.annotate(
             total=F('room_type__kanrihi')+F('room_type__shuuzenhi')+F('room_type__ryokuchi')+F('room_type__niwa'))
-        total, total_parking, total_membershipfee = self.calc_total(qs)
+        total = self.calc_total(qs)
         context['roomlist'] = qs
-        context['total'] = total
-        context['total_parking'] = total_parking
-        context['total_membershipfee'] = total_membershipfee
+        context['total'] = total['total']
+        context['total_parking'] = total['parking']
+        context['total_bicycle'] = total['bicycle']
+        context['total_bike'] = total['bike']
+        context['total_membershipfee'] = total['membershipfee']
         context['membership_fee'] = settings.MEMBERSHIP_FEE
         return context
 

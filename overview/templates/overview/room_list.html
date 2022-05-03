@@ -49,10 +49,8 @@
           <th class="has-text-centered">駐輪場費</th>
           <th class="has-text-centered">バイク費</th>
           <th class="has-text-centered">合計</th>
-          {% if perms.overview.add_room %}
-            <th class="has-text-centered">滞納費</th>
-            <th class="has-text-centered">備考</th>
-          {% endif %}
+          <th class="has-text-centered">更新日</th>
+          <th class="has-text-centered">備考</th>
         </tr>
       </thead>
       <tbody>
@@ -74,10 +72,8 @@
           <td class="has-text-right">{{d.bicycle_fee|intcomma}}</td>
           <td class="has-text-right">{{d.bike_fee|intcomma}}</td>
           <td class="has-text-right">{{d.total|add:d.parking_fee|add:d.bicycle_fee|add:d.bike_fee|add:270|intcomma}}</td>
-          {% if perms.overview.add_room %}
-            <td class="has-text-right">{{d.mishuu_fee|intcomma}}</td>
-            <td class="has-text-left">{{d.comment|default_if_none:''}}</td>
-          {% endif %}
+          <td class="has-text-right">{{d.created_date|date:'Y年Ej日'}}</td>
+          <td class="has-text-left">{{d.comment|default_if_none:''}}</td>
         </tr>
         {% endfor %}
         <td></td>
@@ -89,9 +85,9 @@
         <td class="has-text-right">{{total_membershipfee|intcomma}}</td>
         <td class="has-text-right">{{total|intcomma}}</td>
         <td class="has-text-right">{{total_parking|intcomma}}</td>
-        <td></td>
-        <td></td>
-        <td class="has-text-right">{{total|add:total_parking|add:total_membershipfee|intcomma}}</td>
+        <td class="has-text-right">{{total_bicycle|intcomma}}</td>
+        <td class="has-text-right">{{total_bike|intcomma}}</td>
+        <td class="has-text-right">{{total|add:total_parking|add:total_bicycle|add:total_bike|add:total_membershipfee|intcomma}}</td>
       </tbody>
     </table>
   </div>

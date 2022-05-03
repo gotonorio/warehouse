@@ -1,5 +1,6 @@
 from django.core.validators import RegexValidator
 from django.db import models
+from django.utils import timezone
 
 
 class OverView(models.Model):
@@ -57,6 +58,7 @@ class RoomType(models.Model):
 
 class Room(models.Model):
     """ 住戸データ """
+    created_date = models.DateTimeField(verbose_name='更新日', default=timezone.now)
     room_no = models.IntegerField(verbose_name='部屋番号', unique=True)
     room_type = models.ForeignKey(RoomType, verbose_name='住戸タイプ',  on_delete=models.PROTECT)
     owner = models.CharField(verbose_name='区分所有者', max_length=64, blank=True, null=True)
