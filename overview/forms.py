@@ -45,7 +45,10 @@ class OverviewForm(forms.ModelForm):
 
 
 class RoomForm(forms.ModelForm):
-    """ 区分所有者データの作成sakusei """
+    """ 区分所有者データの作成
+    - mishuu_feeは使用停止
+    - created_dateは自動設定
+    """
     class Meta:
         model = Room
         fields = (
@@ -57,8 +60,6 @@ class RoomForm(forms.ModelForm):
             'bicycle_fee',
             'bike_fee',
             'chounaikai',
-            # 'mishuu_fee',
-            'created_date',
             'comment',
             'zip_code',
             'prefecture',

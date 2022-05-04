@@ -4,8 +4,9 @@ import logging
 
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import generic
-from overview.forms import OverviewForm, RoomForm, CSVImportForm
+from overview.forms import CSVImportForm, OverviewForm, RoomForm
 from overview.models import OverView, Room
 
 
@@ -34,7 +35,7 @@ class OverviewUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
 class RoomCreateView(PermissionRequiredMixin, generic.CreateView):
     """ 住戸データの登録
-    最初に1回しか使わないので、管理画面だけで良いかもしれない。
+    最初に1回しか使わないので、管理画面で初期登録を行うため使用しない。
     """
     model = Room
     form_class = RoomForm
@@ -54,6 +55,16 @@ class RoomUpdateView(PermissionRequiredMixin, generic.UpdateView):
     permission_required = ("library.add_file")
     # 保存が成功した場合に遷移するurl
     success_url = reverse_lazy('overview:room_list')
+
+    def form_valid(self, form):
+        # commitを停止する。
+        self.object = form.save(commit=False)
+        # created_dateをセット。
+        self.object.created_date = timezone.datetime.now()
+        # データを保存。
+        self.object.save()
+        logging.debug('OK')
+        return super().form_valid(form)
 
 
 class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
