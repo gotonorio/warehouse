@@ -290,9 +290,9 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
         keyword = self.request.GET.get('keyword')
         if keyword:
             queryset = queryset.filter(
-                Q(title__icontains=keyword) | Q(key_word__icontains=keyword)
-                | Q(summary=keyword)
+                Q(title__icontains=keyword) | Q(key_word__icontains=keyword) | Q(summary__icontains=keyword)
             )
+            queryset = queryset.distinct()
         return queryset
 
     # 検索ボックスに検索ワードを表示し続けるための処理。
