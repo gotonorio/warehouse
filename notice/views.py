@@ -12,9 +12,6 @@ class NewsCardView(generic.TemplateView):
     """お知らせのcardによる一覧。 表示・非表示を考慮する。"""
 
     model = News
-    # template_name = "notice/news_card_list.html"
-    # paginate_by = 10
-    # queryset = News.objects.filter(display_news=True).order_by('-created_at')
 
     def get_template_names(self):
         """ templateファイルを切り替える """

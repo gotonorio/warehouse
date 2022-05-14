@@ -186,7 +186,6 @@ class CategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     success_url = reverse_lazy('library:category_index')
-# Create your views here.
 
 
 class BigCategoryIndexView(PermissionRequiredMixin, generic.ListView):
