@@ -55,7 +55,7 @@ def user_logged_out_callback(sender, request, user, **kwargs):
 def user_is_manager(request, user):
     """ userが「管理者」どうかの判定(adminuserは除外) """
     rtn = False
-    manager_group = ['news_manager', 'data_manager', 'master']
+    manager_group = ['news_manager', 'data_manager', 'director', 'chairman']
     qs = request.user.groups.values_list('name', flat=True)
     if qs and list(qs)[0] in manager_group:
         rtn = True
