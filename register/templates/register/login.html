@@ -2,6 +2,28 @@
 {% block title %}
 ログイン
 {% endblock %}
+
+{% block navbar %}
+<nav class="navbar is-fixed-top is-black" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">【ソフィア・ガーデンズ川崎】</a>
+    {# ハンバーガアイコンのため #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMainMenu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarMainMenu" class="navbar-menu">
+    <div class="navbar-end">
+      {% if tmp_user_flg == True %}
+        <a class="navbar-item" href="{% url 'register:signup' %}">仮登録</a>
+      {% endif  %}
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+
 {% block content %}
 <div class="container with_mobile ">
   <br>

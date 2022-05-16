@@ -63,7 +63,6 @@ class RoomUpdateView(PermissionRequiredMixin, generic.UpdateView):
         self.object.created_date = timezone.datetime.now()
         # データを保存。
         self.object.save()
-        logging.debug('OK')
         return super().form_valid(form)
 
 

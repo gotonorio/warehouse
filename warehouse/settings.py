@@ -201,8 +201,8 @@ else:
     STATIC_ROOT = '/code/static'
     # will output to logging file
     logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.INFO,
         format='%(asctime)s %(levelname)s %(message)s',
-        filename='/my_log_file.log',
+        filename='logs/my_log_file.log',
         filemode='a'
     )

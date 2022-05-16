@@ -37,7 +37,7 @@ class TempUserCreateView(generic.CreateView):
 
     def form_valid(self, form):
         """ 仮登録ではis_activeフラグを立てず、管理者が承認することで
-        is_active＝Trueとする。また登録するユーザには権限を付加する。
+        is_active=Trueとする。また登録するユーザには権限を付加する。
         """
         user = form.save(commit=False)
         user.is_active = False

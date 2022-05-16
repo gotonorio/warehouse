@@ -1,4 +1,5 @@
 import logging
+from django.utils import timezone
 
 from django.conf import settings
 from django.contrib.auth.mixins import (LoginRequiredMixin,
@@ -74,6 +75,9 @@ class FileCreateView(PermissionRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         file = form.save()
         action = self.request.POST['action']
+        # file登録のログを記録する。
+        file_name = form.cleaned_data['src']
+        logging.info('create {}:{}:{}'.format(timezone.now(), self.request.user, file_name))
 
         # 保存してもう一つ追加ボタンのとき
         if action == 'send_more':
@@ -96,6 +100,9 @@ class FileUpdateView(PermissionRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         file = form.save()
         action = self.request.POST['action']
+        # fileアップデートのログを記録する。
+        file_name = form.cleaned_data['src']
+        logging.info('update {}:{}:{}'.format(timezone.now(), self.request.user, file_name))
 
         # 保存してもう一つ追加ボタンのとき
         if action == 'send_more':
@@ -114,6 +121,12 @@ class FileDeleteView(PermissionRequiredMixin, generic.DeleteView):
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     success_url = reverse_lazy('library:file_index')
+
+    # 4.0以降delete()をオーバライドするのではなく、form_valid()をオーバライドするようだ。
+    # https://docs.djangoproject.com/ja/4.0/ref/class-based-views/generic-editing/#deleteview
+    def form_valid(self, form):
+        logging.info('delete {}:{}:{}'.format(timezone.now(), self.request.user, self.object))
+        return super().form_valid(form)
 
 
 class CategoryIndexView(PermissionRequiredMixin, generic.ListView):
