@@ -38,6 +38,7 @@
       <thead>
         <tr>
           <th class="has-text-centered">コントロールデータ</th>
+          <th class="has-text-centered">状態</th>
           <th class="has-text-centered">#</th>
         </tr>
       </thead>
@@ -45,6 +46,7 @@
         {% for d in object_list %}
         <tr>
           <td class="has-text-centered">{{d.name}}</td>
+          <td class="has-text-centered">{{d.tmp_user_flg}}</td>
           <td class="has-text-centered"><a href="{% url 'register:control_update' d.pk %}">修正</a></td>
         </tr>
         {% endfor %}
