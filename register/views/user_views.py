@@ -1,23 +1,22 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.contrib.auth.views import PasswordChangeView
-from django.views import generic
+from django.contrib.auth.mixins import (PermissionRequiredMixin,
+                                        UserPassesTestMixin)
 from django.contrib.auth.models import Group
+from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, resolve_url
 from django.urls import reverse_lazy
-
-from register.forms import (PasswordUpdateForm, TempUserCreateForm, UserUpdateForm)
-
+from django.views import generic
+from register.forms import (PasswordUpdateForm, TempUserCreateForm,
+                            UpdateTempUserFlgForm, UserUpdateForm)
+from register.models import ControlRecord
+import logging
 
 User = get_user_model()
+logger = logging.getLogger(__name__)
 
 
 class UserListView(PermissionRequiredMixin, generic.ListView):
-    """ 管理者が使用するユーザリストの一覧表示。
-    templatesファイルはデフォルト（user_list.html）を使用。
-    渡されるobjectもデフォルトの「user_list」。
-    """
+    """ 管理者が使用するユーザリストの一覧表示 """
     model = User
     permission_required = ("register.add_user",)
     template_name = 'register/user/user_list.html'
@@ -99,7 +98,7 @@ class UserManagementView(PermissionRequiredMixin, generic.UpdateView):
         return redirect('register:user_list')
 
     def get_context_data(self, **kwargs):
-        """ ユーザ修正画面で現在値をformに表示させる  """
+        """ ユーザ修正画面で現在値をformに表示させる """
         context = super().get_context_data(**kwargs)
         pk = self.object.pk
         user = User.objects.get(pk=pk)
@@ -131,3 +130,24 @@ class DeleteUserView(PermissionRequiredMixin, generic.DeleteView):
     permission_required = ("register.add_user",)
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
+
+
+class ControlRecordListView(PermissionRequiredMixin, generic.ListView):
+    model = ControlRecord
+    template_name = 'register/user/control_list.html'
+    permission_required = ("register.add_user")
+
+
+class ControlRecordUpdateView(PermissionRequiredMixin, generic.UpdateView):
+    """ コントロールデータのアップデート """
+    model = ControlRecord
+    form_class = UpdateTempUserFlgForm
+    template_name = 'register/user/control_form.html'
+    permission_required = ("register.add_user")
+    # 保存が成功した場合に遷移するurl
+    success_url = reverse_lazy('notice:news_card')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'コントロールデータの修正'
+        return context

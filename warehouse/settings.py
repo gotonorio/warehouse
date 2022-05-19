@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import logging
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -139,7 +138,7 @@ STATIC_URL = '/static/'
 CSRF_TRUSTED_ORIGINS = ['https://*.sophiagardens.org']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-VERSION_NO = 'Dev.2022-05-16'
+VERSION_NO = 'Dev.2022-05-19'
 MEMBERSHIP_FEE = 270
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
@@ -185,24 +184,53 @@ try:
 except ImportError:
     pass
 
+# ログ出力先のディレクトリを設定する
+LOG_BASE_DIR = os.path.join("logs", )
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    "formatters": {"simple": {"format": "%(asctime)s [%(levelname)s] %(message)s"}},
+    # ログの出力方法についての設定。
+    "handlers": {
+        # DEBUG = Falseの場合、ログファイルに出力する。
+        "info": {
+            "level": "INFO",
+            "filters": ['require_debug_false'],
+            "class": "logging.handlers.RotatingFileHandler",
+            "maxBytes": 51200,
+            "backupCount": 5,
+            "filename": os.path.join(LOG_BASE_DIR, "info.log"),
+            "formatter": "simple",
+        },
+        # DEBUG = Trueの場合、コンソールにログ出力する。
+        "debug": {
+            "level": "INFO",
+            "filters": ['require_debug_true'],
+            "class": 'logging.StreamHandler',
+            "formatter": "simple",
+        },
+    },
+    # ロガーはルートロガーのみとする。
+    "root": {
+        "handlers": ["info", "debug"],
+        "level": "INFO",
+    },
+}
+
 # For debugging
 if DEBUG:
     # 開発環境における静的ファイルの場所を指定する。
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, "static"),
     )
-    # will output to your console
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format='%(asctime)s %(levelname)s %(message)s',
-    )
 else:
     # for nginx
     STATIC_ROOT = '/code/static'
-    # will output to logging file
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s %(levelname)s %(message)s',
-        filename='logs/my_log_file.log',
-        filemode='a'
-    )

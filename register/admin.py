@@ -5,7 +5,7 @@ from register.models import ControlRecord
 
 
 class ControlRecordAdmin(admin.ModelAdmin):
-    list_display = ['tmp_user_flg', ]
+    list_display = ['name', 'tmp_user_flg', ]
 
 
 admin.site.register(User, UserAdmin)

@@ -5,7 +5,8 @@ from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.dispatch import receiver
-from django.utils import timezone
+
+logger = logging.getLogger(__name__)
 
 
 class User(AbstractUser):
@@ -30,8 +31,8 @@ def post_save_user_signal_handler(sender, instance, created, **kwargs):
 class ControlRecord(models.Model):
     """ プロジェクトのコントロール用定数を定義 """
     # 仮登録メニューの表示/非表示コントロール
+    name = models.CharField(verbose_name='コントロール名', max_length=64, blank=True, null=True)
     tmp_user_flg = models.BooleanField(verbose_name='仮登録', default=False)
-    # add your control variable
 
     @classmethod
     def show_tmp_user_menu(cls):
@@ -42,14 +43,14 @@ class ControlRecord(models.Model):
 def user_logged_in_callback(sender, request, user, **kwargs):
     """ ログインした際に呼ばれて、管理者ならログ記録する """
     if user_is_manager(request, user):
-        logging.info('login {}-{}'.format(timezone.now(), user))
+        logger.info(f'{user} login')
 
 
 @receiver(user_logged_out)
 def user_logged_out_callback(sender, request, user, **kwargs):
     """ ログアウトした際に呼ばれる """
     if user_is_manager(request, user):
-        logging.info('logout {}-{}'.format(timezone.now(), user))
+        logger.info(f'{user} logout')
 
 
 def user_is_manager(request, user):

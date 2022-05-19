@@ -14,4 +14,6 @@ urlpatterns = [
     path('list', user_views.UserListView.as_view(), name='user_list'),
     path('user_update/<int:pk>/', user_views.UserManagementView.as_view(), name='user_update'),
     path('pwd_update/<int:pk>/', user_views.UserPasswordUpdate.as_view(), name='pwd_update'),
+    path('control_list', user_views.ControlRecordListView.as_view(), name='control_list'),
+    path('control_update/<int:pk>/', user_views.ControlRecordUpdateView.as_view(), name='control_update'),
 ]

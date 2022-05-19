@@ -9,6 +9,8 @@ from django.views import generic
 from overview.forms import CSVImportForm, OverviewForm, RoomForm
 from overview.models import OverView, Room
 
+logger = logging.getLogger(__name__)
+
 
 class OverviewUpdateListView(PermissionRequiredMixin, generic.ListView):
     model = OverView
@@ -31,6 +33,11 @@ class OverviewUpdateView(PermissionRequiredMixin, generic.UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'マンション概要データの修正'
         return context
+
+    def form_valid(self, form):
+        """ アップデートのログ記録のため """
+        logger.info(f'{self.request.user} update overview')
+        return super().form_valid(form)
 
 
 class RoomCreateView(PermissionRequiredMixin, generic.CreateView):
@@ -63,6 +70,8 @@ class RoomUpdateView(PermissionRequiredMixin, generic.UpdateView):
         self.object.created_date = timezone.datetime.now()
         # データを保存。
         self.object.save()
+        # ログファイルに更新者と更新した部屋番号を記録する。
+        logger.info(f'{self.request.user} update room {self.object.room_no}')
         return super().form_valid(form)
 
 
@@ -106,4 +115,5 @@ class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
             room = Room.objects.get(id=pk)
             room.parking_fee += int(row[1].replace(',', ''))
             room.save()
+        logger.info(f'{self.request.user} update parking_fee')
         return super().form_valid(form)
