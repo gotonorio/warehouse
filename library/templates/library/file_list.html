@@ -32,7 +32,7 @@
     <h3>ファイル一覧</h3>
     {% if category_pk %}
       <!-- カテゴリ一覧からカテゴリ別のファイル一覧で表示 -->
-      <a href="{% url 'library:file_create' category_pk %}" class="button is-primary">更新アップロード</a>
+      <a href="{% url 'library:file_create' category_pk %}" class="button is-primary">新規アップロード</a>
     {% else %}
       <a href="{% url 'library:file_create' %}" class="button is-primary">新規アップロード</a>
     {% endif %}
