@@ -64,6 +64,7 @@ class Room(models.Model):
     owner = models.CharField(verbose_name='区分所有者', max_length=64, blank=True, null=True)
     tenant = models.CharField(verbose_name='賃借人', max_length=64, blank=True, null=True)
     parking_fee = models.IntegerField(verbose_name='駐車場使用料', default=0)
+    parking_date = models.DateTimeField(verbose_name='駐車場使用料更新日', null=True, blank=True)
     bicycle_fee = models.IntegerField(verbose_name='駐輪場使用料', default=0)
     bike_fee = models.IntegerField(verbose_name='バイク置場使用料', default=0)
     chounaikai = models.BooleanField(verbose_name='町内会費', default=False)

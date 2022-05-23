@@ -109,11 +109,14 @@ class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
         # csv.readerに渡すため、TextIOWrapperでテキストモードなファイルに変換
         csvfile = io.TextIOWrapper(form.cleaned_data['file'], encoding='utf-8')
         parking = csv.reader(csvfile)
-        # 1行ずつ取り出し、作成していく。
+        # 1行目の年月データを読み込む
+        year_month = next(parking)
+        # 2行目から1行ずつ取り出して処理する。
         for row in parking:
             pk = pkdict[int(row[0])]
             room = Room.objects.get(id=pk)
             room.parking_fee += int(row[1].replace(',', ''))
+            room.parking_date = year_month[0]
             room.save()
-        logger.info(f'{self.request.user} update parking_fee')
+        logger.info(f'{self.request.user} update {year_month} parking_fee')
         return super().form_valid(form)
