@@ -83,13 +83,13 @@ class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
     # 必要な権限
     permission_required = ("library.add_file")
 
-    def pk_list(self):
+    def pk_dict(self):
         """ 部屋番号をキーとするプライマリキーの辞書を返す """
         qs = Room.objects.all().order_by('room_no')
-        pklist = {}
+        pkdict = {}
         for obj in qs:
-            pklist[obj.room_no] = obj.pk
-        return pklist
+            pkdict[obj.room_no] = obj.pk
+        return pkdict
 
     def clear_parkingfee(self):
         """ 全住戸の駐車場費をクリアする """
@@ -103,7 +103,7 @@ class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
         - CSVファイルはヘッダー無し。
         - 同じ部屋番号で複数台使用を考慮。.
         """
-        pklist = self.pk_list()
+        pkdict = self.pk_dict()
         # 最初に全住戸の駐車場費をクリア。
         self.clear_parkingfee()
         # csv.readerに渡すため、TextIOWrapperでテキストモードなファイルに変換
@@ -111,7 +111,7 @@ class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
         parking = csv.reader(csvfile)
         # 1行ずつ取り出し、作成していく。
         for row in parking:
-            pk = pklist[int(row[0])]
+            pk = pkdict[int(row[0])]
             room = Room.objects.get(id=pk)
             room.parking_fee += int(row[1].replace(',', ''))
             room.save()
