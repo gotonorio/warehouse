@@ -37,7 +37,7 @@
     <table class="table table_center_nowrap is-narrow is-striped">
       <thead>
         <tr>
-          <th class="has-text-centered">コントロールデータ</th>
+          <th class="has-text-centered">control</th>
           <th class="has-text-centered">状態</th>
           <th class="has-text-centered">#</th>
         </tr>
@@ -45,7 +45,7 @@
       <tbody>
         {% for d in object_list %}
         <tr>
-          <td class="has-text-centered">{{d.name}}</td>
+          <td class="has-text-centered">仮登録メニュー</td>
           <td class="has-text-centered">{{d.tmp_user_flg}}</td>
           <td class="has-text-centered"><a href="{% url 'control:control_update' d.pk %}">修正</a></td>
         </tr>
