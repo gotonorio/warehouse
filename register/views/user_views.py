@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import (PermissionRequiredMixin,
                                         UserPassesTestMixin)
@@ -7,9 +9,7 @@ from django.shortcuts import redirect, resolve_url
 from django.urls import reverse_lazy
 from django.views import generic
 from register.forms import (PasswordUpdateForm, TempUserCreateForm,
-                            UpdateTempUserFlgForm, UserUpdateForm)
-from register.models import ControlRecord
-import logging
+                            UserUpdateForm)
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -130,24 +130,3 @@ class DeleteUserView(PermissionRequiredMixin, generic.DeleteView):
     permission_required = ("register.add_user",)
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
-
-
-class ControlRecordListView(PermissionRequiredMixin, generic.ListView):
-    model = ControlRecord
-    template_name = 'register/user/control_list.html'
-    permission_required = ("register.add_user")
-
-
-class ControlRecordUpdateView(PermissionRequiredMixin, generic.UpdateView):
-    """ コントロールデータのアップデート """
-    model = ControlRecord
-    form_class = UpdateTempUserFlgForm
-    template_name = 'register/user/control_form.html'
-    permission_required = ("register.add_user")
-    # 保存が成功した場合に遷移するurl
-    success_url = reverse_lazy('notice:news_card')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'コントロールデータの修正'
-        return context

@@ -25,6 +25,7 @@ urlpatterns = [
     path('regist/', include('register.urls', namespace='regist')),
     path('library/', include('library.urls', namespace='library')),
     path('info/', include('information.urls', namespace='info')),
+    path('control/', include('control.urls', namespace='control')),
 ]
 
 # 開発環境で静的ファイルをアップロードするための追加設定。

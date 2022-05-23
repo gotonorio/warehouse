@@ -45,7 +45,7 @@
               {# 住戸データの登録は最初の1回だけ。その後は修正となるので、コメントアウトしておく。#}
               {% comment %} <a class="dropdown-item" href="{% url 'overview:create_room' %}">住戸データ登録・修正</a> {% endcomment %}
               <a class="dropdown-item" href="{% url 'overview:overview_list' %}">マンション概要・修正</a>
-              <a class="dropdown-item" href="{% url 'register:control_list' %}">コントロールデータ修正</a>
+              <a class="dropdown-item" href="{% url 'control:control_list' %}">コントロールデータ修正</a>
               <a class="dropdown-item" href="{% url 'overview:import_parkingfee' %}">駐車場費のインポート</a>
             {% endif %}
           </div>

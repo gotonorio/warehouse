@@ -6,7 +6,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.views import generic
 from library.models import File
 from register.forms import LoginForm
-from register.models import ControlRecord
+from control.models import ControlRecord
 
 # https://djangobrothers.com/blogs/referencing_the_user_model/
 User = get_user_model()

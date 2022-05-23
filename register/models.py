@@ -28,17 +28,6 @@ def post_save_user_signal_handler(sender, instance, created, **kwargs):
             instance.save()
 
 
-class ControlRecord(models.Model):
-    """ プロジェクトのコントロール用定数を定義 """
-    # 仮登録メニューの表示/非表示コントロール
-    name = models.CharField(verbose_name='コントロール名', max_length=64, blank=True, null=True)
-    tmp_user_flg = models.BooleanField(verbose_name='仮登録', default=False)
-
-    @classmethod
-    def show_tmp_user_menu(cls):
-        return cls.objects.get('tmp_user_flg')
-
-
 @receiver(user_logged_in)
 def user_logged_in_callback(sender, request, user, **kwargs):
     """ ログインした際に呼ばれて、管理者ならログ記録する """

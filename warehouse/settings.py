@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'information.apps.InformationConfig',
     'django_cleanup.apps.CleanupConfig',
     'overview.apps.OverviewConfig',
+    'control.apps.ControlConfig',
 ]
 
 MIDDLEWARE = [
@@ -138,7 +139,7 @@ STATIC_URL = '/static/'
 CSRF_TRUSTED_ORIGINS = ['https://*.sophiagardens.org']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-VERSION_NO = 'Dev.2022-05-19'
+VERSION_NO = 'Dev.2022-05-23'
 MEMBERSHIP_FEE = 270
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
