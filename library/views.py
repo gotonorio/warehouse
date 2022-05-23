@@ -15,6 +15,8 @@ from django.views import generic
 from library.forms import BigCategoryForm, CategoryForm, FileForm
 from library.models import BigCategory, Category, File
 
+logger = logging.getLogger(__name__)
+
 
 class FileIndexView(PermissionRequiredMixin, generic.ListView):
     """ 管理者用 ファイル一覧 """
@@ -77,7 +79,8 @@ class FileCreateView(PermissionRequiredMixin, generic.CreateView):
         action = self.request.POST['action']
         # file登録のログを記録する。
         file_name = form.cleaned_data['src']
-        logging.info('create {}:{}:{}'.format(timezone.now(), self.request.user, file_name))
+        # logging.info('create {}:{}:{}'.format(timezone.now(), self.request.user, file_name))
+        logger.info(f'create {file_name} by {self.request.user}')
 
         # 保存してもう一つ追加ボタンのとき
         if action == 'send_more':
@@ -102,7 +105,8 @@ class FileUpdateView(PermissionRequiredMixin, generic.UpdateView):
         action = self.request.POST['action']
         # fileアップデートのログを記録する。
         file_name = form.cleaned_data['src']
-        logging.info('update {}:{}:{}'.format(timezone.now(), self.request.user, file_name))
+        # logging.info('update {}:{}:{}'.format(timezone.now(), self.request.user, file_name))
+        logger.info(f'update {file_name} by {self.request.user}')
 
         # 保存してもう一つ追加ボタンのとき
         if action == 'send_more':
@@ -125,7 +129,8 @@ class FileDeleteView(PermissionRequiredMixin, generic.DeleteView):
     # 4.0以降delete()をオーバライドするのではなく、form_valid()をオーバライドするようだ。
     # https://docs.djangoproject.com/ja/4.0/ref/class-based-views/generic-editing/#deleteview
     def form_valid(self, form):
-        logging.info('delete {}:{}:{}'.format(timezone.now(), self.request.user, self.object))
+        # logging.info('delete {}:{}:{}'.format(timezone.now(), self.request.user, self.object))
+        logger.info(f'delete {iself.object} by {self.request.user}')
         return super().form_valid(form)
 
 
