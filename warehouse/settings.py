@@ -211,9 +211,19 @@ LOGGING = {
             "filename": os.path.join(LOG_BASE_DIR, "info.log"),
             "formatter": "simple",
         },
+        # DEBUG = Falseの場合、ファイル削除時にログファイルに出力する。
+        "warning": {
+            "level": "WARNING",
+            "filters": ['require_debug_false'],
+            "class": "logging.handlers.RotatingFileHandler",
+            "maxBytes": 51200,
+            "backupCount": 5,
+            "filename": os.path.join(LOG_BASE_DIR, "warning.log"),
+            "formatter": "simple",
+        },
         # DEBUG = Trueの場合、コンソールにログ出力する。
         "debug": {
-            "level": "INFO",
+            "level": "DEBUG",
             "filters": ['require_debug_true'],
             "class": 'logging.StreamHandler',
             "formatter": "simple",
