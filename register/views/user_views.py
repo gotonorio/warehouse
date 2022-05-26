@@ -31,7 +31,7 @@ class TempUserCreateView(generic.CreateView):
     """ 未登録ユーザーが仮登録するためのVIEW。
     ユーザには「add_post」と「view_post」のパーミションを付加する。
     """
-    template_name = 'register/user/temp_user_create_form.html'
+    template_name = 'register/user/create_tempuser_form.html'
     form_class = TempUserCreateForm
 
     def form_valid(self, form):
@@ -47,7 +47,7 @@ class TempUserCreateView(generic.CreateView):
 
 class TempUserDoneView(generic.TemplateView):
     """ 仮登録完了後、メールを待つように表示するだけのVIEW。 """
-    template_name = 'register/user/temp_user_done.html'
+    template_name = 'register/user/done_tempuser.html'
 
 
 class OnlyYouMixin(UserPassesTestMixin):
@@ -68,7 +68,7 @@ class UserPasswordUpdate(OnlyYouMixin, PasswordChangeView):
     """ ログインしたユーザが自分でパスワードを変更するためのVIEW。"""
     model = User
     form_class = PasswordUpdateForm
-    template_name = 'register/user/password_update_form.html'
+    template_name = 'register/user/update_password_form.html'
 
     def get_success_url(self):
         # return resolve_url('register:pwd_update', pk=self.kwargs['pk'])
@@ -79,7 +79,7 @@ class UserManagementView(PermissionRequiredMixin, generic.UpdateView):
     """ 管理者がユーザの「有効性」を操作するためのVIEW。 """
     model = User
     form_class = UserUpdateForm
-    template_name = 'register/user/user_update_form.html'
+    template_name = 'register/user/update_user_form.html'
     permission_required = ("register.add_user",)
 
     def get_success_url(self):
@@ -108,24 +108,23 @@ class UserManagementView(PermissionRequiredMixin, generic.UpdateView):
         else:
             group_name = ''
 
-        user_update_form = UserUpdateForm(initial={
+        update_user_form = UserUpdateForm(initial={
             'username': user.username,
             'email': user.email,
             'is_active': user.is_active,
             'group': group_name
         })
-        context['form'] = user_update_form
+        context['form'] = update_user_form
         return context
 
 
 class DeleteUserView(PermissionRequiredMixin, generic.DeleteView):
     """ 削除View """
     model = User
-    template_name = 'register/user/user_confirm_delete.html'
+    # 削除してよいか確認するためのtemplate
+    template_name = 'register/user/delete_user_confirm.html'
     # 削除が成功した場合に遷移するurl
     success_url = reverse_lazy('register:user_list')
-    # # 削除してよいか確認するためのtemplate
-    # template_name = "register/user/user_confirm_delete.html"
     # 必要な権限（データ登録できる権限は共通）
     permission_required = ("register.add_user",)
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
