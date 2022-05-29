@@ -11,7 +11,7 @@ class UpdateControlForm(forms.ModelForm):
             'tmp_user_flg': '仮登録表示',
         }
         widgets = {
-            'tmp_user_flg': forms.CheckboxInput(attrs={
-                'class': 'checkbox',
+            'tmp_user_flg': forms.NullBooleanSelect(attrs={
+                'class': 'select-css',
             }),
         }
