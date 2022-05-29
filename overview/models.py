@@ -37,6 +37,7 @@ class OverView(models.Model):
     public_water_equipment = models.CharField(verbose_name='共用部給水設備', max_length=32, blank=True, null=True)
     trunk_room = models.CharField(verbose_name='トランクルーム', max_length=32, blank=True, null=True)
     delivery_box = models.CharField(verbose_name='宅配ボックス', max_length=32, blank=True, null=True)
+    network = models.CharField(verbose_name='インターネット', max_length=32, blank=True, null=True)
 
     def __str__(self):
         return self.name

@@ -23,6 +23,7 @@ class OverviewForm(forms.ModelForm):
             'public_water_equipment',
             'trunk_room',
             'delivery_box',
+            'network',
             'management',
             )
         widgets = {
@@ -40,6 +41,7 @@ class OverviewForm(forms.ModelForm):
             'public_water_equipment': forms.TextInput(attrs={'class': 'input'}),
             'trunk_room': forms.TextInput(attrs={'class': 'input'}),
             'delivery_box': forms.TextInput(attrs={'class': 'input'}),
+            'network': forms.TextInput(attrs={'class': 'input'}),
             'management': forms.TextInput(attrs={'class': 'input'}),
         }
 
