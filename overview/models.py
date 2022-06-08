@@ -38,6 +38,8 @@ class OverView(models.Model):
     trunk_room = models.CharField(verbose_name='トランクルーム', max_length=32, blank=True, null=True)
     delivery_box = models.CharField(verbose_name='宅配ボックス', max_length=32, blank=True, null=True)
     network = models.CharField(verbose_name='インターネット', max_length=32, blank=True, null=True)
+    entrance = models.CharField(verbose_name='共用部エントランス', max_length=32, blank=True, null=True)
+    security = models.CharField(verbose_name='防犯カメラ', max_length=32, blank=True, null=True)
 
     def __str__(self):
         return self.name

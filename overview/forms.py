@@ -25,6 +25,8 @@ class OverviewForm(forms.ModelForm):
             'delivery_box',
             'network',
             'management',
+            'entrance',
+            'security',
             )
         widgets = {
             'flat_parking': forms.NumberInput(attrs={'class': 'input'}),
@@ -43,6 +45,8 @@ class OverviewForm(forms.ModelForm):
             'delivery_box': forms.TextInput(attrs={'class': 'input'}),
             'network': forms.TextInput(attrs={'class': 'input'}),
             'management': forms.TextInput(attrs={'class': 'input'}),
+            'entrance': forms.TextInput(attrs={'class': 'input'}),
+            'security': forms.TextInput(attrs={'class': 'input'}),
         }
 
 
