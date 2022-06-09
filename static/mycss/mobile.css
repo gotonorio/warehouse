@@ -1,0 +1,13 @@
+/* 議題 */
+.title_mobile {
+  border: solid 1px;
+  margin: 6px;
+  padding: 2px;
+  position: relative;
+}
+/* 議題本文 */
+.text_mobile {
+  margin: 6px;
+  padding: 2px;
+  position: relative;
+}

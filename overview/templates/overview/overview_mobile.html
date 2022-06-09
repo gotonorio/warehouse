@@ -2,8 +2,9 @@
 {% load static %}
 {% load humanize %}
 
-{% block header %}
-{% endblock header %}
+{% block head %}
+  <link href="{% static 'mycss/mobile.css' %}" rel="stylesheet">
+{% endblock head %}
 
 {% block navbar %}
 {# https://bulma.io/documentation/components/navbar/ #}
@@ -33,10 +34,10 @@
 
 {% block content %}
 <br>
-<div class="container is-fluid">
-  <div class="content">
+<div class="container">
+  <div class="content text_mobile">
     <h4>建物概要</h4>
-    <table class="table is-narrow is-responsible is-bordered">
+    <table class="table is-narrow is-responsible">
       <tbody>
         <tr>
           <td class="has-text-left has-background-grey-lighter">建築確認認可年月</td>
@@ -89,7 +90,7 @@
       </tbody>
     </table>
     <h4>面積等</h4>
-    <table class="table is-narrow is-responsible is-bordered">
+    <table class="table is-narrow is-responsible">
       <tbody>
         <tr>
           <td class="has-text-left has-background-grey-lighter">敷地面積</td>
@@ -142,7 +143,7 @@
       </tbody>
     </table>
     <h4>法規制</h4>
-    <table class="table is-narrow is-responsible is-bordered">
+    <table class="table is-narrow is-responsible">
       <tbody>
         <tr>
           <td class="has-text-left has-background-grey-lighter">用途地域</td>
@@ -183,7 +184,7 @@
       </tbody>
     </table>
     <h4>設備概要</h4>
-    <table class="table is-narrow is-responsible is-bordered">
+    <table class="table is-narrow is-responsible">
       <tbody>
         <tr>
           <td class="has-text-left has-background-grey-lighter">専有部給水設備</td>
