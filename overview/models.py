@@ -1,5 +1,6 @@
 from django.core.validators import RegexValidator
 from django.db import models
+from django.db.models import F, Sum
 from django.utils import timezone
 
 
@@ -57,6 +58,30 @@ class RoomType(models.Model):
 
     def __str__(self):
         return self.type_name
+
+    @classmethod
+    def total_kanrihi(cls):
+        """ 管理費の合計を返す """
+        qs = cls.objects.annotate(total=F('number_unit')*F('kanrihi')).aggregate(Sum('total'))
+        return qs
+
+    @classmethod
+    def total_shuuzenhi(cls):
+        """ 修繕費の合計を返す """
+        qs = cls.objects.annotate(total=F('number_unit')*F('shuuzenhi')).aggregate(Sum('total'))
+        return qs
+
+    @classmethod
+    def total_niwa(cls):
+        """ 専用庭使用料の合計を返す """
+        qs = cls.objects.annotate(total=F('number_unit')*F('niwa')).aggregate(Sum('total'))
+        return qs
+
+    @classmethod
+    def total_ryokuchi(cls):
+        """ 緑地管理費の合計を返す """
+        qs = cls.objects.annotate(total=F('number_unit')*F('ryokuchi')).aggregate(Sum('total'))
+        return qs
 
 
 class Room(models.Model):

@@ -1,7 +1,11 @@
+import logging
+
 from django.conf import settings
 from django.db.models import F
 from django.views import generic
 from overview.models import OverView, Room, RoomType
+
+logger = logging.getLogger(__name__)
 
 
 class Overview(generic.TemplateView):
@@ -33,7 +37,8 @@ class RoomView(generic.TemplateView):
     def calc_total(self, sql):
         total = {'total': 0, 'parking': 0, 'bicycle': 0, 'bike': 0, 'membershipfee': 0}
         for d in sql:
-            total['total'] += (d.room_type.kanrihi + d.room_type.shuuzenhi + d.room_type.ryokuchi + d.room_type.niwa)
+            total['total'] += (d.room_type.kanrihi+d.room_type.shuuzenhi +
+                               d.room_type.ryokuchi+d.room_type.niwa)
             total['parking'] += d.parking_fee
             if d.chounaikai:
                 total['membershipfee'] += settings.MEMBERSHIP_FEE
@@ -67,4 +72,20 @@ class RoomTypeView(generic.TemplateView):
         qs = RoomType.objects.all()
         qs = qs.annotate(total=F('kanrihi')+F('shuuzenhi')+F('ryokuchi')+F('niwa'))
         context['roomtypelist'] = qs
+        
+        # 管理費の合計
+        total_kanrihi = RoomType.total_kanrihi()['total__sum']
+        context['total_kanrihi'] = total_kanrihi
+        # 修繕費の合計
+        total_shuuzenhi = RoomType.total_shuuzenhi()['total__sum']
+        context['total_shuuzenhi'] = total_shuuzenhi
+        # 専用庭使用料の合計
+        total_niwa = RoomType.total_niwa()['total__sum']
+        context['total_niwa'] = total_niwa
+        # 緑地維持管理費の合計
+        total_ryokuchi = RoomType.total_ryokuchi()['total__sum']
+        context['total_ryokuchi'] = total_ryokuchi
+        # 合計
+        context['total_all'] = total_kanrihi+total_shuuzenhi+total_niwa+total_ryokuchi
+
         return context
