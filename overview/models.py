@@ -61,7 +61,9 @@ class RoomType(models.Model):
 
     @classmethod
     def total_kanrihi(cls):
-        """ 管理費の合計を返す """
+        """ 管理費の合計を返す
+        annnotateでフィールド間演算処理をして、aggrefateで集計処理を行う
+        """
         qs = cls.objects.annotate(total=F('number_unit')*F('kanrihi')).aggregate(Sum('total'))
         return qs
 
