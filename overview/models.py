@@ -60,29 +60,16 @@ class RoomType(models.Model):
         return self.type_name
 
     @classmethod
-    def total_kanrihi(cls):
-        """ 管理費の合計を返す
+    def total_kanrihi(cls, kanrihi_name):
+        """ 全戸数分の管理費等の合計を返す
+        kanrihi_nameとしては、
+        - kanrihi
+        - shuuzenhi
+        - niwa
+        - ryokuchi
         annnotateでフィールド間演算処理をして、aggrefateで集計処理を行う
         """
-        qs = cls.objects.annotate(total=F('number_unit')*F('kanrihi')).aggregate(Sum('total'))
-        return qs
-
-    @classmethod
-    def total_shuuzenhi(cls):
-        """ 修繕費の合計を返す """
-        qs = cls.objects.annotate(total=F('number_unit')*F('shuuzenhi')).aggregate(Sum('total'))
-        return qs
-
-    @classmethod
-    def total_niwa(cls):
-        """ 専用庭使用料の合計を返す """
-        qs = cls.objects.annotate(total=F('number_unit')*F('niwa')).aggregate(Sum('total'))
-        return qs
-
-    @classmethod
-    def total_ryokuchi(cls):
-        """ 緑地管理費の合計を返す """
-        qs = cls.objects.annotate(total=F('number_unit')*F('ryokuchi')).aggregate(Sum('total'))
+        qs = cls.objects.annotate(total=F('number_unit')*F(kanrihi_name)).aggregate(Sum('total'))
         return qs
 
 

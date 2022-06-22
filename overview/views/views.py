@@ -74,16 +74,16 @@ class RoomTypeView(generic.TemplateView):
         context['roomtypelist'] = qs
         
         # 管理費の合計
-        total_kanrihi = RoomType.total_kanrihi()['total__sum']
+        total_kanrihi = RoomType.total_kanrihi('kanrihi')['total__sum']
         context['total_kanrihi'] = total_kanrihi
         # 修繕費の合計
-        total_shuuzenhi = RoomType.total_shuuzenhi()['total__sum']
+        total_shuuzenhi = RoomType.total_kanrihi('shuuzenhi')['total__sum']
         context['total_shuuzenhi'] = total_shuuzenhi
         # 専用庭使用料の合計
-        total_niwa = RoomType.total_niwa()['total__sum']
+        total_niwa = RoomType.total_kanrihi('niwa')['total__sum']
         context['total_niwa'] = total_niwa
         # 緑地維持管理費の合計
-        total_ryokuchi = RoomType.total_ryokuchi()['total__sum']
+        total_ryokuchi = RoomType.total_kanrihi('ryokuchi')['total__sum']
         context['total_ryokuchi'] = total_ryokuchi
         # 合計
         context['total_all'] = total_kanrihi+total_shuuzenhi+total_niwa+total_ryokuchi
