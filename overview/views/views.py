@@ -38,6 +38,7 @@ class RoomView(PermissionRequiredMixin, generic.TemplateView):
 
     # 管理費等の合計をpython関数で求める。
     def calc_total(self, sql):
+        """ 縦の合計を返す """
         total = {'total': 0, 'parking': 0, 'bicycle': 0, 'bike': 0, 'membershipfee': 0}
         for d in sql:
             total['total'] += (d.room_type.kanrihi+d.room_type.shuuzenhi +
