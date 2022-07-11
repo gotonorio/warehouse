@@ -10,6 +10,7 @@ urlpatterns = [
     path('overview', views.Overview.as_view(), name='overview'),
     path('room/list', views.RoomView.as_view(), name='room_list'),
     path('roomtype/list', views.RoomTypeView.as_view(), name='roomtype_list'),
+    path('bicycle_list', views.BicycleStorage.as_view(), name='bicycle_list'),
     # データ処理
     path('overview/list', data_views.OverviewUpdateListView.as_view(), name='overview_list'),
     path('overview/update/<int:pk>', data_views.OverviewUpdateView.as_view(), name='overview_update'),

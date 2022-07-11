@@ -1,6 +1,8 @@
 import logging
+import re
 
 from django.conf import settings
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import F
 from django.views import generic
 from overview.models import OverView, Room, RoomType
@@ -28,10 +30,11 @@ class Overview(generic.TemplateView):
         return context
 
 
-class RoomView(generic.TemplateView):
+class RoomView(PermissionRequiredMixin, generic.TemplateView):
     """ 住戸データ """
     model = Room
     template_name = "overview/room_list.html"
+    permission_required = ("overview.view_room")
 
     # 管理費等の合計をpython関数で求める。
     def calc_total(self, sql):
@@ -72,7 +75,6 @@ class RoomTypeView(generic.TemplateView):
         qs = RoomType.objects.all()
         qs = qs.annotate(total=F('kanrihi')+F('shuuzenhi')+F('ryokuchi')+F('niwa'))
         context['roomtypelist'] = qs
-        
         # 管理費の合計
         total_kanrihi = RoomType.total_kanrihi('kanrihi')['total__sum']
         context['total_kanrihi'] = total_kanrihi
@@ -89,3 +91,33 @@ class RoomTypeView(generic.TemplateView):
         context['total_all'] = total_kanrihi+total_shuuzenhi+total_niwa+total_ryokuchi
 
         return context
+
+
+class BicycleStorage(generic.TemplateView):
+    """ 自転車置場 """
+    model = Room
+    template_name = 'overview/bicycle_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        qs = Room.objects.exclude(comment__exact=None).values(
+            'room_no', 'comment').order_by('room_no')
+        data_dict = {}
+        data_list = []
+        for obj in qs:
+            # valueのリストを文字列に変換
+            values_str = self.list_to_str(re.findall('[0-9]+', obj['comment']))
+            # 空白区切りの文字列をlistに変換してappendする
+            obj_list = values_str.split(' ')
+            data_list.extend(obj_list)
+            data_dict[obj['room_no']] = values_str
+        context['bicycle_list'] = data_dict
+        logger.info(data_list)
+        return context
+
+    def list_to_str(self, list_data):
+        """ リストを空白区切りの文字列として返す """
+        result = ""
+        for s in list_data:
+            result += s + " "
+        return result.strip()
