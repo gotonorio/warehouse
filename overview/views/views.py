@@ -1,3 +1,4 @@
+import collections
 import logging
 import re
 
@@ -104,16 +105,20 @@ class BicycleStorage(generic.TemplateView):
         qs = Room.objects.exclude(comment__exact=None).values(
             'room_no', 'comment').order_by('room_no')
         data_dict = {}
-        data_list = []
+        bicycle_storage_list = []
         for obj in qs:
-            # valueのリストを文字列に変換
+            # comment文から半角カンマで連続している数字列を半角空白区切りの文字列として取り出す
             values_str = self.list_to_str(re.findall('[0-9]+', obj['comment']))
             # 空白区切りの文字列をlistに変換してappendする
-            obj_list = values_str.split(' ')
-            data_list.extend(obj_list)
+            str_list = values_str.split(' ')
+            # 自転車置場番号をlistとして作成する
+            bicycle_storage_list.extend(str_list)
+            # 部屋番号をkeyとして自転車置場番号をvalueとするdictを作成する
             data_dict[obj['room_no']] = values_str
+        int_list = list(map(int, bicycle_storage_list))
         context['bicycle_list'] = data_dict
-        logger.info(data_list)
+        context['bicycle_storage_list'] = sorted(int_list)
+        context['bicycle_num'] = len(bicycle_storage_list)
         return context
 
     def list_to_str(self, list_data):
@@ -122,3 +127,11 @@ class BicycleStorage(generic.TemplateView):
         for s in list_data:
             result += s + " "
         return result.strip()
+
+    def check_storage(self, list_data):
+        """ 駐輪場番号の重複をチェックする """
+        chk_list = []
+        for k, v in collections.Counter(list_data).items():
+            if v > 1:
+                chk_list.append(k)
+        return chk_list

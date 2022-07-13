@@ -48,6 +48,28 @@
           <td class="has-text-left">{{values|cut:"駐輪場："}}</td>
         </tr>
         {% endfor %}
+        <tr>
+          <td></td>
+          <td class="has-text-right">{{bicycle_num}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <div class="table-container">
+    <table class="table table_center_nowrap is-narrow is-striped">
+      <thead>
+        <tr>
+          <th class="has-text-centered">No</th>
+          <th class="has-text-centered">駐輪場No</th>
+        </tr>
+      <tbody>
+        {% for data in bicycle_storage_list %}
+        <tr>
+          <td class="has-text-right">{{forloop.counter}}</td>
+          <td class="has-text-right">{{data}}</td>
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
