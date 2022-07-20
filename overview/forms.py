@@ -2,6 +2,7 @@ from django import forms
 
 from overview.models import OverView
 from overview.models import Room
+from django.core.validators import FileExtensionValidator
 
 
 class OverviewForm(forms.ModelForm):
@@ -117,7 +118,13 @@ class RoomForm(forms.ModelForm):
 
 class CSVImportForm(forms.Form):
     """ 部屋番号, 駐車場使用料 """
+    allowed_extentions = ['csv']
     file = forms.FileField(
         label='CSVファイル',
-        help_text='※ CSVファイルはヘッダー無しです。'
+        help_text='※ CSVファイルの1行目はヘッダーです。',
+        validators=[
+            FileExtensionValidator(
+                allowed_extensions=allowed_extentions,
+                message='拡張子.csvのファイルを選択してください。'
+            ), ]
         )

@@ -75,6 +75,17 @@ class RoomUpdateView(PermissionRequiredMixin, generic.UpdateView):
         return super().form_valid(form)
 
 
+def pk_dict():
+    """ 部屋番号をキーとするプライマリキーの辞書を返す
+    ImportParkingfee()とImportBicyclefee()で使うため、独立の関数とする。
+    """
+    qs = Room.objects.all().order_by('room_no')
+    pkdict = {}
+    for obj in qs:
+        pkdict[obj.room_no] = obj.pk
+    return pkdict
+
+
 class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
     """ 駐車場使用料をインポート """
     template_name = 'overview/import_parkingfee.html'
@@ -82,14 +93,6 @@ class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
     form_class = CSVImportForm
     # 必要な権限
     permission_required = ("library.add_file")
-
-    def pk_dict(self):
-        """ 部屋番号をキーとするプライマリキーの辞書を返す """
-        qs = Room.objects.all().order_by('room_no')
-        pkdict = {}
-        for obj in qs:
-            pkdict[obj.room_no] = obj.pk
-        return pkdict
 
     def clear_parkingfee(self):
         """ 全住戸の駐車場費をクリアする """
@@ -100,10 +103,9 @@ class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
 
     def form_valid(self, form):
         """ 駐車場使用料をアップデートする。
-        - CSVファイルはヘッダー無し。
         - 同じ部屋番号で複数台使用を考慮。.
         """
-        pkdict = self.pk_dict()
+        pkdict = pk_dict()
         # 最初に全住戸の駐車場費をクリア。
         self.clear_parkingfee()
         # csv.readerに渡すため、TextIOWrapperでテキストモードなファイルに変換
@@ -119,4 +121,42 @@ class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
             room.parking_date = year_month[0]
             room.save()
         logger.info(f'{self.request.user} update {year_month} parking_fee')
+        return super().form_valid(form)
+
+
+class ImportBicyclefee(PermissionRequiredMixin, generic.FormView):
+    """ 駐輪場使用料をインポート """
+    template_name = 'overview/import_bicyclefee.html'
+    success_url = reverse_lazy('notice:news_card')
+    form_class = CSVImportForm
+    # 必要な権限
+    permission_required = ("library.add_file")
+
+    def clear_bicyclefee(self):
+        """ 全住戸の駐輪場費をクリアする """
+        qs = Room.objects.all().order_by('room_no')
+        for row in qs:
+            row.bicycle_fee = 0
+            row.save()
+
+    def form_valid(self, form):
+        """ 駐輪場使用料をアップデートする。
+        - 同じ部屋番号で複数台使用を考慮。.
+        """
+        pkdict = pk_dict()
+        # 最初に全住戸の駐車場費をクリア。
+        self.clear_bicyclefee()
+        # csv.readerに渡すため、TextIOWrapperでテキストモードなファイルに変換
+        csvfile = io.TextIOWrapper(form.cleaned_data['file'], encoding='utf-8')
+        bicycle = csv.reader(csvfile)
+        # 1行目の年月データを読み込む
+        ym = next(bicycle)
+        year_month = ym[0] + '-' + ym[1] + '-01'
+        # 2行目から1行ずつ取り出して処理する。
+        for row in bicycle:
+            pk = pkdict[int(row[0])]
+            room = Room.objects.get(id=pk)
+            room.bicycle_fee += int(row[1].replace(',', ''))
+            room.save()
+        logger.info(f'{self.request.user} update {year_month} bicycle_fee')
         return super().form_valid(form)
