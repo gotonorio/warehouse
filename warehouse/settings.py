@@ -139,7 +139,7 @@ STATIC_URL = '/static/'
 CSRF_TRUSTED_ORIGINS = ['https://*.sophiagardens.org']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-VERSION_NO = 'Dev.2022-07-20'
+VERSION_NO = 'Dev.2022-09-16'
 MEMBERSHIP_FEE = 270
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
@@ -173,6 +173,8 @@ MARKDOWN_EXTENSIONS = [
 SELECT_LIMIT_NUM = 100
 # コメントを表示する件数。タイトル表示は20個、コメントも20タイトル分表示。
 COMMENT_LIMIT = 20
+# DBバックアップ数
+BACKUP_NUM = 3
 
 # settings.pyの末尾
 try:

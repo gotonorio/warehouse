@@ -1,7 +1,6 @@
 import datetime
 import os
 import shutil
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -40,19 +39,20 @@ def backupDB(request):
     """
     # DBコピー
     now = datetime.datetime.now()
-    db_file_name = f'{now.year}-{now.month}-{now.day}-{now.hour}-{now.minute}-({request.user}).sqlite3'
-    backup_path = f'./backupDB/{db_file_name}'
-    shutil.copy('./pb.sqlite3', backup_path)
+    
+    src_file = './wh2.sqlite3'
+    dst_file = f'./backup/{now.year}-{now.month}-{now.day}-{request.user}.sqlite3'
+    shutil.copy(src_file, dst_file)
     # backupファイルのリスト
-    file_list = os.listdir('./backupDB')
+    file_list = os.listdir('./backup')
     # もし20を超えたら古いバックアップを削除する。
     if len(file_list) >= settings.BACKUP_NUM:
         file_list.sort()
         # ソートした結果の最初（古い）ファイルを削除する。
-        os.remove('./backupDB/' + file_list[0])
+        os.remove('./backup/' + file_list[0])
 
     # master_pageに戻る。
     # https://docs.djangoproject.com/en/4.0/ref/contrib/messages/
     # https://stackoverflow.com/questions/51155947/django-redirect-to-another-view-with-context
-    messages.info(request, f'DBをバックアップしました。 ファイル名:{db_file_name}')
-    return redirect('register:master_page')
+    messages.info(request, f'DBをバックアップしました。 ファイル名:{dst_file}')
+    return redirect('notice:news_card')

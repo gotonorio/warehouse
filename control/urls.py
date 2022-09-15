@@ -9,5 +9,5 @@ urlpatterns = [
     # 仮登録メニュー表示のON/OFF切替え
     path('control_update/<int:pk>/', views.ControlRecordUpdateView.as_view(), name='control_update'),
     # DBバックアップ処理
-    path('backup/', views.backupDB, name='backupDB'),
+    path('backupDB/', views.backupDB, name='backupDB'),
 ]
