@@ -45,6 +45,8 @@
       <tr>
         <th class="has-text-centered">タイトル</th>
         <th class="has-text-centered">カテゴリ</th>
+        <th class="has-text-centered">src</th>
+        <th class="has-text-centered">登録日</th>
         <th class="has-text-centered">表示</th>
         <th class="has-text-centered">rank</th>
         <th class="has-text-centered">#</th>
@@ -54,8 +56,9 @@
       {% for file in file_list %}
       <tr>
         <td class="has-text-left">{{file.title}}</td>
-        {#<td class="nowrap"><a href="{% url 'library:file_category' file.category.pk %}">{{file.category.name}}</a></td>#}
-        <td class="nowrap">{{file.category.name}}</td>
+        <td class="has-text-left">{{file.category.name}}</td>
+        <td class="has-text-left">{{file.src}}</td>
+        <td class="has-text-left">{{file.created_at|date:"Y-m-d"}}</td>
         <td class="has-text-centered">{{ file.alive }}</td>
         <td class="has-text-centered">{{ file.rank }}</td>
         <td class="nowrap">
