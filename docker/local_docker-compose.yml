@@ -1,0 +1,30 @@
+# 開発用
+version: "3.7"
+services:
+  dev_wh2:
+    # 相対パスでDockerfileのpathを指定。
+    build: ./
+    # image名:タグ
+    image: local_wh2
+    # container名
+    container_name: local_wh2
+    restart: always
+    # ホスト上のswap/ディレクトリをcode/としてコンテナにマウントする。
+    volumes:
+      - ../:/code
+    # 環境変数TZを設定。
+    environment:
+      TZ: "Asia/Tokyo"
+    # 開発環境 localテスト用にポートを公開。
+    ports:
+      - "8100:8100"
+    command: python3 manage.py runserver 0.0.0.0:8100
+
+      #    networks:
+      #      - my_local_network
+      #
+      ## 作成したネットワークを外部に公開する。
+      #networks:
+      #  my_local_network:
+      #    external: true
+

@@ -7,7 +7,7 @@
 __pycache__/
 media/
 .vscode/
-docker/
+# docker/
 local_settings.py
 private_settings.py
 static/*.png
