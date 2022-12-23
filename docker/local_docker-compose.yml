@@ -1,13 +1,14 @@
 # 開発用
 version: "3.7"
 services:
-  dev_wh2:
+  # 資料保管システム用コンテナ
+  warehouse:
     # 相対パスでDockerfileのpathを指定。
     build: ./
     # image名:タグ
-    image: local_wh2
+    image: warehouse
     # container名
-    container_name: local_wh2
+    container_name: warehouse
     restart: always
     # ホスト上のswap/ディレクトリをcode/としてコンテナにマウントする。
     volumes:
@@ -20,11 +21,11 @@ services:
       - "8100:8100"
     command: python3 manage.py runserver 0.0.0.0:8100
 
-      #    networks:
-      #      - my_local_network
-      #
-      ## 作成したネットワークを外部に公開する。
-      #networks:
-      #  my_local_network:
-      #    external: true
+    networks:
+      - sophiag-network
+      
+# 作成したネットワークを外部に公開する。
+networks:
+  sophiag-network:
+    external: true
 
