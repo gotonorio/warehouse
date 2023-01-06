@@ -29,7 +29,6 @@ class FileIndexView(PermissionRequiredMixin, generic.ListView):
     def get_queryset(self):
         return File.objects.order_by('category', 'rank')
 
-
 # def indirect_link(request, pk):
 #     """ 間接リンク。実際のURLへリダイレクト """
 #     file = get_object_or_404(File, pk=pk)

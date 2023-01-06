@@ -54,8 +54,7 @@ def get_upload_to(instance, filename):
 class File(models.Model):
     """アップロードするファイル."""
     title = models.CharField('タイトル', max_length=128)
-    category = models.ForeignKey(Category, verbose_name='カテゴリ',
-                                 on_delete=models.PROTECT, default=1)
+    category = models.ForeignKey(Category, verbose_name='カテゴリ', on_delete=models.PROTECT, default=1)
     summary = models.TextField('概要', blank=True, null=True)
     key_word = models.TextField('キーワード', blank=True, null=True)
     src = models.FileField('ファイル', upload_to=get_upload_to)
