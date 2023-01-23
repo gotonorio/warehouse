@@ -53,15 +53,15 @@ def get_upload_to(instance, filename):
 
 class File(models.Model):
     """アップロードするファイル."""
-    title = models.CharField('タイトル', max_length=128)
+    title = models.CharField(verbose_name='タイトル', max_length=128)
     category = models.ForeignKey(Category, verbose_name='カテゴリ', on_delete=models.PROTECT, default=1)
-    summary = models.TextField('概要', blank=True, null=True)
-    key_word = models.TextField('キーワード', blank=True, null=True)
-    src = models.FileField('ファイル', upload_to=get_upload_to)
-    rank = models.IntegerField('表示順', default=0)
-    created_at = models.DateTimeField('作成日', default=timezone.now)
-    alive = models.BooleanField('表示', default=True)
-    download = models.BooleanField('ダウンロード', default=False)
+    summary = models.TextField(verbose_name='概要', blank=True, null=True)
+    key_word = models.TextField(verbose_name='キーワード', blank=True, null=True)
+    src = models.FileField(verbose_name='ファイル', upload_to=get_upload_to)
+    rank = models.IntegerField(verbose_name='表示順', default=0)
+    created_at = models.DateTimeField(verbose_name='作成日', default=timezone.now)
+    alive = models.BooleanField(verbose_name='表示', default=True)
+    download = models.BooleanField(verbose_name='ダウンロード', default=False)
 
     def __str__(self):
         return self.title
