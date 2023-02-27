@@ -213,7 +213,6 @@ LOGGING = {
             "filename": os.path.join(LOG_BASE_DIR, "info.log"),
             "formatter": "simple",
         },
-        # DEBUG = Falseの場合、ファイル削除時にログファイルに出力する。
         "warning": {
             "level": "WARNING",
             "filters": ['require_debug_false'],
@@ -221,6 +220,12 @@ LOGGING = {
             "maxBytes": 51200,
             "backupCount": 5,
             "filename": os.path.join(LOG_BASE_DIR, "warning.log"),
+            "formatter": "simple",
+        },
+        "error": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(LOG_BASE_DIR, "error.log"),
             "formatter": "simple",
         },
         # DEBUG = Trueの場合、コンソールにログ出力する。
@@ -233,7 +238,7 @@ LOGGING = {
     },
     # ロガーはルートロガーのみとする。
     "root": {
-        "handlers": ["info", "debug"],
+        "handlers": ["info", "warning", "error", "debug"],
         "level": "INFO",
     },
 }
