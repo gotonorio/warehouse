@@ -61,11 +61,10 @@ class InformationUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
 
 class InformationDeleteView(PermissionRequiredMixin, generic.DeleteView):
+    """ 情報の削除
+    getで呼び出された時は、model_confirm_delete.html が確認のため自動的に呼ばれる。
+    confirmでpostとして、再度呼び出された時に削除が行われる。
     """
-     情報の削除
-       getで呼び出された時は、model_confirm_delete.html が確認のため自動的に呼ばれる。
-       confirmでpostとして、再度呼び出された時に削除が行われる。
-     """
     model = Information
     # 必要な権限
     permission_required = ("notice.add_news")
