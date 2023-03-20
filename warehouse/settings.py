@@ -170,9 +170,9 @@ MARKDOWN_EXTENSIONS = [
 ]
 
 # viewクラスでselectする時のlimit値を設定する。
-SELECT_LIMIT_NUM = 100
+SELECT_LIMIT_NUM = 300
 # コメントを表示する件数。タイトル表示は20個、コメントも20タイトル分表示。
-COMMENT_LIMIT = 20
+COMMENT_LIMIT = 300
 # DBバックアップ数
 BACKUP_NUM = 3
 

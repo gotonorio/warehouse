@@ -26,8 +26,7 @@ class Category(models.Model):
     """カテゴリ."""
     name = models.CharField('カテゴリ名', max_length=128)
     path_name = models.CharField('ディレクトリ名', max_length=128)
-    parent = models.ForeignKey(BigCategory, verbose_name='親カテゴリ',
-                               on_delete=models.PROTECT, default=1)
+    parent = models.ForeignKey(BigCategory, verbose_name='親カテゴリ', on_delete=models.PROTECT, default=1)
     rank = models.IntegerField('表示順', default=0)
     created_at = models.DateTimeField('作成日', default=timezone.now)
     restrict = models.BooleanField('制限', default=False)

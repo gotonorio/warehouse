@@ -29,6 +29,7 @@ class FileIndexView(PermissionRequiredMixin, generic.ListView):
     def get_queryset(self):
         return File.objects.order_by('category', 'rank')
 
+
 # def indirect_link(request, pk):
 #     """ 間接リンク。実際のURLへリダイレクト """
 #     file = get_object_or_404(File, pk=pk)
@@ -248,7 +249,7 @@ class BigCategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
 
 class BigCategoryView(generic.TemplateView):
     """ メニューで選択された「BigCategory」に属するファイルを「Category」毎
-    に表示する。表示数は100に制限する。（増えたら settings.py で変更してね）
+    に表示する。表示数は300に制限している。（増えたら settings.py で変更してね）
     """
     template_name = "library/main_category.html"
 
@@ -270,13 +271,11 @@ class BigCategoryView(generic.TemplateView):
                 logging.debug(perm_tuple)
             category_obj = category_obj.order_by('parent__rank', '-rank')
         # settings.pyでSELECT構文のLIMIT値を設定してある。
-        # limit = settings.SELECT_LIMIT_NUM
+        limit = settings.SELECT_LIMIT_NUM
         category_list = []
         for i in category_obj:
-            file_obj = File.objects.filter(
-                category=i.pk).filter(
-                    alive=True).order_by('-rank', '-created_at')
-            # alive=True).order_by('-rank', '-created_at')[:limit]
+            file_obj = File.objects.filter(category=i.pk).filter(alive=True).order_by('-rank', '-created_at')[:limit]
+            # alive=True).order_by('-rank', '-created_at')
             file_list = []
             for j in file_obj:
                 file_list.append(j)
@@ -290,8 +289,8 @@ class BigCategoryView(generic.TemplateView):
 
 class SearchlistView(LoginRequiredMixin, generic.ListView):
     """ 検索結果表示用View
-     検索ボタンで抽出されたFileオブジェクトを一覧表示する。
-     検索対象は「summary」「key_word」
+    - 検索ボタンで抽出されたFileオブジェクトを一覧表示する。
+    - 検索対象は「summary」「key_word」
     """
     model = File
     template_name = "notice/search_list.html"
@@ -315,60 +314,21 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class RijikaiMinutesView(LoginRequiredMixin, generic.ListView):
-    """ 理事会議事録ファイルの一覧表
-    左サイドのBigCategoryメニューからの表示は50件に制限している。
-    ここでは全ファイルを表示する。
-    """
-    model = File
-    template_name = "library/rijikai_minutes_list.html"
-    # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
-    raise_exception = True
-    # paginate_by = 40
-
-    def get_queryset(self):
-        """ カテゴリパス名「rijikai」でfilter. """
-        return File.objects.filter(category__path_name='rijikai').order_by('-rank')
-
-
-class RijikaiDataListView(LoginRequiredMixin, generic.ListView):
-    """ 理事会資料ファイルの一覧表
-    左サイドのBigCategoryメニューからの表示は50件に制限している。
-    ここでは全ファイルを表示する。
-    """
-    model = File
-    template_name = "library/rijikai_data_list.html"
-    # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
-    raise_exception = True
-    # paginate_by = 40
-
-    def get_queryset(self):
-        """ カテゴリパス名「rijikai_data」でfilter. """
-        return File.objects.filter(category__path_name='rijikai_data').order_by('-rank')
-
-
-class SoukaiRejimeListView(LoginRequiredMixin, generic.ListView):
-    """ 総会議事録ファイルの一覧表
-    左サイドのBigCategoryメニューからの表示は50件に制限している。
-    ここでは全ファイルを表示する。
-    """
-    model = File
-    template_name = "library/soukai_rejime_list.html"
-    # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
-    raise_exception = True
-    # paginate_by = 40
-
-    def get_queryset(self):
-        """ カテゴリパス名「soukai_rejime」でfilter. """
-        return File.objects.filter(category__path_name='soukai_rejime').order_by('-rank')
-
-
 def pdf_view(request, pk):
-    """ 効率的にはwebサーバが静的ファイルを配信するべきだが、
-    djangoで配信してみる実験。
+    """ 静的ファイル（PDFファイル）の閲覧処理 
+    効率的にはwebサーバが静的ファイルを配信するべきだが、セキュリティを重視するためdjangoで配信してみる実験。
     """
     fn = get_object_or_404(File, pk=pk)
-    if fn.download:
-        return FileResponse(fn.src, as_attachment=True)
+    if fn.category.restrict:
+        if request.user.is_active:
+            if fn.download:
+                return FileResponse(fn.src, as_attachment=True)
+            else:
+                return FileResponse(fn.src)
+        else:
+            return redirect('notice:news_card')
     else:
-        return FileResponse(fn.src)
+        if fn.download:
+            return FileResponse(fn.src, as_attachment=True)
+        else:
+            return FileResponse(fn.src)
