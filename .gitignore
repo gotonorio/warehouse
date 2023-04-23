@@ -5,10 +5,12 @@
 *.ico
 *.txt
 *.sqlite3
+Dockerfile
+docker-compose.yml
+local_docker-compose.yml
 __pycache__/
 media/
 .vscode/
-docker/
 local_settings.py
 private_settings.py
 static/*.png
