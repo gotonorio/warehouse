@@ -3,7 +3,6 @@
 *.pyc
 *.pdf
 *.ico
-*.txt
 *.sqlite3
 Dockerfile
 docker-compose.yml
@@ -15,4 +14,3 @@ local_settings.py
 private_settings.py
 static/*.png
 .DS_Store
-.gitignore
