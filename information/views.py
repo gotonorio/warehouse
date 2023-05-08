@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -6,7 +7,7 @@ from information.forms import InformationForm
 from information.models import Information
 
 
-class InformationView(generic.TemplateView):
+class InformationView(LoginRequiredMixin, generic.TemplateView):
     """ 情報一覧。 表示・非表示を考慮する """
 
     model = Information
