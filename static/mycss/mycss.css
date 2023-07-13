@@ -11,7 +11,7 @@ html {
 /* my_footerを使う場合、本体をmargin-bottomでfooterエリアを確保しなければならない。 */
 /* Macではヒラギノ角ゴシック、WindowではWebフォントのNoto Sans JPを使う */
 main {
-    font-family: "ヒラギノ角ゴシック W4",'Noto Sans JP',sans-serif;
+    font-family:'Helvetica Neue',Arial,'Hiragino Sans','Meiryo',sans-serif;
     margin-bottom: 40px;
 }
 /* footerだとBulmaのfooterを上書きしてしまう */
