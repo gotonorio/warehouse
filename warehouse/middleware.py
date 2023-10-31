@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 
 class UAmiddleware(object):
-    """ mobile判定をrequestに追加する。
+    """mobile判定をrequestに追加する。
     https://studylog.hateblo.jp/entry/2014/02/10/061003
     https://docs.djangoproject.com/ja/4.0/topics/http/middleware/#activating-middleware
     """
@@ -24,7 +24,7 @@ class UAmiddleware(object):
         return response
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        """ mobile判定 """
+        """mobile判定"""
         request.user_agent_flag = UAmiddleware.user_agent_check(request)
         return None
 
@@ -37,6 +37,5 @@ class UAmiddleware(object):
             else:
                 return ""
         except KeyError:
-            logger.warning('HTTP_USER_AGENTが設定されていないアクセス')
+            logger.warning("HTTP_USER_AGENTが設定されていないアクセス")
             return ""
-

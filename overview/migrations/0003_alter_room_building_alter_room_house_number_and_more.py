@@ -4,35 +4,44 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('overview', '0002_overview_bouka_chiiki_overview_constraction_and_more'),
+        ("overview", "0002_overview_bouka_chiiki_overview_constraction_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='room',
-            name='building',
-            field=models.CharField(blank=True, max_length=64, null=True, verbose_name='建物名'),
+            model_name="room",
+            name="building",
+            field=models.CharField(
+                blank=True, max_length=64, null=True, verbose_name="建物名"
+            ),
         ),
         migrations.AlterField(
-            model_name='room',
-            name='house_number',
-            field=models.CharField(blank=True, max_length=64, null=True, verbose_name='番地'),
+            model_name="room",
+            name="house_number",
+            field=models.CharField(
+                blank=True, max_length=64, null=True, verbose_name="番地"
+            ),
         ),
         migrations.AlterField(
-            model_name='room',
-            name='municipality',
-            field=models.CharField(blank=True, max_length=128, null=True, verbose_name='市区町村'),
+            model_name="room",
+            name="municipality",
+            field=models.CharField(
+                blank=True, max_length=128, null=True, verbose_name="市区町村"
+            ),
         ),
         migrations.AlterField(
-            model_name='room',
-            name='prefecture',
-            field=models.CharField(blank=True, max_length=32, null=True, verbose_name='都道府県'),
+            model_name="room",
+            name="prefecture",
+            field=models.CharField(
+                blank=True, max_length=32, null=True, verbose_name="都道府県"
+            ),
         ),
         migrations.AlterField(
-            model_name='room',
-            name='zip_code',
-            field=models.CharField(blank=True, max_length=7, null=True, verbose_name='郵便番号'),
+            model_name="room",
+            name="zip_code",
+            field=models.CharField(
+                blank=True, max_length=7, null=True, verbose_name="郵便番号"
+            ),
         ),
     ]

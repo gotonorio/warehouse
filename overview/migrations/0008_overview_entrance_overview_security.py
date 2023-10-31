@@ -4,20 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('overview', '0007_overview_network'),
+        ("overview", "0007_overview_network"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='overview',
-            name='entrance',
-            field=models.CharField(blank=True, max_length=32, null=True, verbose_name='共用部エントランス'),
+            model_name="overview",
+            name="entrance",
+            field=models.CharField(
+                blank=True, max_length=32, null=True, verbose_name="共用部エントランス"
+            ),
         ),
         migrations.AddField(
-            model_name='overview',
-            name='security',
-            field=models.CharField(blank=True, max_length=32, null=True, verbose_name='防犯カメラ'),
+            model_name="overview",
+            name="security",
+            field=models.CharField(
+                blank=True, max_length=32, null=True, verbose_name="防犯カメラ"
+            ),
         ),
     ]

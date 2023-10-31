@@ -4,17 +4,27 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('register', '0001_initial'),
+        ("register", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ControlRecord',
+            name="ControlRecord",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tmp_user_flg', models.BooleanField(default=False, verbose_name='仮登録')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "tmp_user_flg",
+                    models.BooleanField(default=False, verbose_name="仮登録"),
+                ),
             ],
         ),
     ]

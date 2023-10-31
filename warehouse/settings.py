@@ -24,72 +24,74 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    'register.apps.RegisterConfig',
-    'library.apps.LibraryConfig',
-    'notice.apps.NoticeConfig',
-    'information.apps.InformationConfig',
-    'django_cleanup.apps.CleanupConfig',
-    'overview.apps.OverviewConfig',
-    'control.apps.ControlConfig',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.humanize",
+    "register.apps.RegisterConfig",
+    "library.apps.LibraryConfig",
+    "notice.apps.NoticeConfig",
+    "information.apps.InformationConfig",
+    "django_cleanup.apps.CleanupConfig",
+    "overview.apps.OverviewConfig",
+    "control.apps.ControlConfig",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'warehouse.middleware.UAmiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "warehouse.middleware.UAmiddleware",
 ]
 
-ROOT_URLCONF = 'warehouse.urls'
+ROOT_URLCONF = "warehouse.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'warehouse.context_processors.menu',
-                'warehouse.context_processors.version_no',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [
+            os.path.join(BASE_DIR, "templates"),
+        ],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "warehouse.context_processors.menu",
+                "warehouse.context_processors.version_no",
             ],
-            'libraries': {
-                'mytag': 'notice.templatetags.mytag',
+            "libraries": {
+                "mytag": "notice.templatetags.mytag",
             },
         },
     },
 ]
 
-WSGI_APPLICATION = 'warehouse.wsgi.application'
+WSGI_APPLICATION = "warehouse.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'wh2.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "wh2.sqlite3"),
     }
 }
 
@@ -99,16 +101,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -116,9 +118,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'ja'
+LANGUAGE_CODE = "ja"
 
-TIME_ZONE = 'Asia/Tokyo'
+TIME_ZONE = "Asia/Tokyo"
 
 USE_I18N = True
 
@@ -130,20 +132,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 # ------------------------------------------------------------------
 # user setting
 # ------------------------------------------------------------------
 # For Django4
-CSRF_TRUSTED_ORIGINS = ['https://*.sophiagardens.org']
+CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-VERSION_NO = '2023-07-01'
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+VERSION_NO = "2023-07-01"
 MEMBERSHIP_FEE = 270
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
 # アップロードファイルのpermissionとサイズを設定
@@ -153,20 +155,20 @@ MEDIA_URL = "/media/"
 FILE_UPLOAD_PERMISSIONS = 0o755
 # FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760
 
-AUTH_USER_MODEL = 'register.User'
+AUTH_USER_MODEL = "register.User"
 NUMBER_GROUPING = 3
 
-LOGIN_URL = 'register:login'
-LOGIN_REDIRECT_URL = 'notice:news_card'
-LOGOUT_REDIRECT_URL = 'notice:news_card'
+LOGIN_URL = "register:login"
+LOGIN_REDIRECT_URL = "notice:news_card"
+LOGOUT_REDIRECT_URL = "notice:news_card"
 
 # ブラウザを閉じたらログアウトさせる。
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # マークダウンの拡張
 MARKDOWN_EXTENSIONS = [
-    'markdown.extensions.extra',
-    'markdown.extensions.codehilite',
+    "markdown.extensions.extra",
+    "markdown.extensions.codehilite",
 ]
 
 # viewクラスでselectする時のlimit値を設定する。
@@ -188,16 +190,18 @@ except ImportError:
     pass
 
 # ログ出力先のディレクトリを設定する
-LOG_BASE_DIR = os.path.join("logs", )
+LOG_BASE_DIR = os.path.join(
+    "logs",
+)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
         },
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
         },
     },
     "formatters": {"simple": {"format": "%(asctime)s [%(levelname)s] %(message)s"}},
@@ -206,7 +210,7 @@ LOGGING = {
         # DEBUG = Falseの場合、ログファイルに出力する。
         "info": {
             "level": "INFO",
-            "filters": ['require_debug_false'],
+            "filters": ["require_debug_false"],
             "class": "logging.handlers.RotatingFileHandler",
             "maxBytes": 51200,
             "backupCount": 5,
@@ -215,7 +219,7 @@ LOGGING = {
         },
         "warning": {
             "level": "WARNING",
-            "filters": ['require_debug_false'],
+            "filters": ["require_debug_false"],
             "class": "logging.handlers.RotatingFileHandler",
             "maxBytes": 51200,
             "backupCount": 5,
@@ -231,8 +235,8 @@ LOGGING = {
         # DEBUG = Trueの場合、コンソールにログ出力する。
         "debug": {
             "level": "DEBUG",
-            "filters": ['require_debug_true'],
-            "class": 'logging.StreamHandler',
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
             "formatter": "simple",
         },
     },
@@ -246,9 +250,7 @@ LOGGING = {
 # For debugging
 if DEBUG:
     # 開発環境における静的ファイルの場所を指定する。
-    STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, "static"),
-    )
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 else:
     # for nginx
-    STATIC_ROOT = '/code/static'
+    STATIC_ROOT = "/code/static"

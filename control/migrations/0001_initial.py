@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,19 +14,51 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='ControlRecord',
+            name="ControlRecord",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tmp_user_flg', models.BooleanField(default=False, verbose_name='仮登録')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "tmp_user_flg",
+                    models.BooleanField(default=False, verbose_name="仮登録"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='AttendanceRecord',
+            name="AttendanceRecord",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('login_time', models.DateTimeField(blank=True, null=True, verbose_name='ログイン時刻')),
-                ('logout_time', models.DateTimeField(blank=True, null=True, verbose_name='ログアウト時刻')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL, verbose_name='ユーザー')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "login_time",
+                    models.DateTimeField(blank=True, null=True, verbose_name="ログイン時刻"),
+                ),
+                (
+                    "logout_time",
+                    models.DateTimeField(blank=True, null=True, verbose_name="ログアウト時刻"),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="ユーザー",
+                    ),
+                ),
             ],
         ),
     ]

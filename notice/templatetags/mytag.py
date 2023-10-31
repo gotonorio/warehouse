@@ -18,7 +18,7 @@ def url_replace(request, field, value):
 
 @register.filter
 def markdown_to_html(text):
-    """ マークダウンをhtmlに変換する。
+    """マークダウンをhtmlに変換する。
     https://python-markdown.github.io/reference/#extensions
     このfilterでhtml表示する場合、bulmaではclass='content'が必要。
     """

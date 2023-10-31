@@ -5,15 +5,16 @@ import django.utils.timezone
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('overview', '0004_room_created_date'),
+        ("overview", "0004_room_created_date"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='room',
-            name='parking_date',
-            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name='駐車場使用料更新日'),
+            model_name="room",
+            name="parking_date",
+            field=models.DateTimeField(
+                default=django.utils.timezone.now, verbose_name="駐車場使用料更新日"
+            ),
         ),
     ]

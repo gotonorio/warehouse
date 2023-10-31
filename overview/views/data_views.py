@@ -14,54 +14,57 @@ logger = logging.getLogger(__name__)
 
 class OverviewUpdateListView(PermissionRequiredMixin, generic.ListView):
     model = OverView
-    permission_required = ("library.add_file")
+    permission_required = "library.add_file"
 
 
 class OverviewUpdateView(PermissionRequiredMixin, generic.UpdateView):
-    """ マンション概要データアップデートView
+    """マンション概要データアップデートView
     - 概要は変化しないので、管理画面で初期データを登録する。
     - 駐車場台数や法規制は変更の可能性があるので、修正画面を作成する。
     """
+
     model = OverView
     form_class = OverviewForm
-    template_name = 'overview/overview_form.html'
-    permission_required = ("library.add_file")
+    template_name = "overview/overview_form.html"
+    permission_required = "library.add_file"
     # 保存が成功した場合に遷移するurl
-    success_url = reverse_lazy('overview:overview')
+    success_url = reverse_lazy("overview:overview")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'マンション概要データの修正'
+        context["title"] = "マンション概要データの修正"
         return context
 
     def form_valid(self, form):
-        """ アップデートのログ記録のため """
-        logger.info(f'{self.request.user} update overview')
+        """アップデートのログ記録のため"""
+        logger.info(f"{self.request.user} update overview")
         return super().form_valid(form)
 
 
 class RoomCreateView(PermissionRequiredMixin, generic.CreateView):
-    """ 住戸データの登録
+    """住戸データの登録
     最初に1回しか使わないので、管理画面で初期登録を行うため使用しない。
     """
+
     model = Room
     form_class = RoomForm
     template_name = "overview/room_form.html"
     # 必要な権限
-    permission_required = ("library.add_file")
+    permission_required = "library.add_file"
     # 保存が成功した場合に遷移するurl
-    success_url = reverse_lazy('overview:create_room')
+    success_url = reverse_lazy("overview:create_room")
 
 
 class RoomUpdateView(PermissionRequiredMixin, generic.UpdateView):
-    """ 住戸データのアップデート """
+    """住戸データのアップデート"""
+
     model = Room
     form_class = RoomForm
     template_name = "overview/room_form.html"
     # 必要な権限
-    permission_required = ("library.add_file")
+    permission_required = "library.add_file"
     # 保存が成功した場合に遷移するurl
-    success_url = reverse_lazy('overview:room_list')
+    success_url = reverse_lazy("overview:room_list")
 
     def form_valid(self, form):
         # commitを停止する。
@@ -71,15 +74,15 @@ class RoomUpdateView(PermissionRequiredMixin, generic.UpdateView):
         # データを保存。
         self.object.save()
         # ログファイルに更新者と更新した部屋番号を記録する。
-        logger.info(f'{self.request.user} update room {self.object.room_no}')
+        logger.info(f"{self.request.user} update room {self.object.room_no}")
         return super().form_valid(form)
 
 
 def pk_dict():
-    """ 部屋番号をキーとするプライマリキーの辞書を返す
+    """部屋番号をキーとするプライマリキーの辞書を返す
     ImportParkingfee()とImportBicyclefee()で使うため、独立の関数とする。
     """
-    qs = Room.objects.all().order_by('room_no')
+    qs = Room.objects.all().order_by("room_no")
     pkdict = {}
     for obj in qs:
         pkdict[obj.room_no] = obj.pk
@@ -87,29 +90,30 @@ def pk_dict():
 
 
 class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
-    """ 駐車場使用料をインポート """
-    template_name = 'overview/import_parkingfee.html'
-    success_url = reverse_lazy('notice:news_card')
+    """駐車場使用料をインポート"""
+
+    template_name = "overview/import_parkingfee.html"
+    success_url = reverse_lazy("notice:news_card")
     form_class = CSVImportForm
     # 必要な権限
-    permission_required = ("library.add_file")
+    permission_required = "library.add_file"
 
     def clear_parkingfee(self):
-        """ 全住戸の駐車場費をクリアする """
-        qs = Room.objects.all().order_by('room_no')
+        """全住戸の駐車場費をクリアする"""
+        qs = Room.objects.all().order_by("room_no")
         for row in qs:
             row.parking_fee = 0
             row.save()
 
     def form_valid(self, form):
-        """ 駐車場使用料をアップデートする。
+        """駐車場使用料をアップデートする。
         - 同じ部屋番号で複数台使用を考慮。.
         """
         pkdict = pk_dict()
         # 最初に全住戸の駐車場費をクリア。
         self.clear_parkingfee()
         # csv.readerに渡すため、TextIOWrapperでテキストモードなファイルに変換
-        csvfile = io.TextIOWrapper(form.cleaned_data['file'], encoding='utf-8')
+        csvfile = io.TextIOWrapper(form.cleaned_data["file"], encoding="utf-8")
         parking = csv.reader(csvfile)
         # 1行目の年月データを読み込む
         year_month = next(parking)
@@ -117,46 +121,47 @@ class ImportParkingfee(PermissionRequiredMixin, generic.FormView):
         for row in parking:
             pk = pkdict[int(row[0])]
             room = Room.objects.get(id=pk)
-            room.parking_fee += int(row[1].replace(',', ''))
+            room.parking_fee += int(row[1].replace(",", ""))
             room.parking_date = year_month[0]
             room.save()
-        logger.info(f'{self.request.user} update {year_month} parking_fee')
+        logger.info(f"{self.request.user} update {year_month} parking_fee")
         return super().form_valid(form)
 
 
 class ImportBicyclefee(PermissionRequiredMixin, generic.FormView):
-    """ 駐輪場使用料をインポート """
-    template_name = 'overview/import_bicyclefee.html'
-    success_url = reverse_lazy('notice:news_card')
+    """駐輪場使用料をインポート"""
+
+    template_name = "overview/import_bicyclefee.html"
+    success_url = reverse_lazy("notice:news_card")
     form_class = CSVImportForm
     # 必要な権限
-    permission_required = ("library.add_file")
+    permission_required = "library.add_file"
 
     def clear_bicyclefee(self):
-        """ 全住戸の駐輪場費をクリアする """
-        qs = Room.objects.all().order_by('room_no')
+        """全住戸の駐輪場費をクリアする"""
+        qs = Room.objects.all().order_by("room_no")
         for row in qs:
             row.bicycle_fee = 0
             row.save()
 
     def form_valid(self, form):
-        """ 駐輪場使用料をアップデートする。
+        """駐輪場使用料をアップデートする。
         - 同じ部屋番号で複数台使用を考慮。.
         """
         pkdict = pk_dict()
         # 最初に全住戸の駐車場費をクリア。
         self.clear_bicyclefee()
         # csv.readerに渡すため、TextIOWrapperでテキストモードなファイルに変換
-        csvfile = io.TextIOWrapper(form.cleaned_data['file'], encoding='utf-8')
+        csvfile = io.TextIOWrapper(form.cleaned_data["file"], encoding="utf-8")
         bicycle = csv.reader(csvfile)
         # 1行目の年月データを読み込む
         ym = next(bicycle)
-        year_month = ym[0] + '-' + ym[1] + '-01'
+        year_month = ym[0] + "-" + ym[1] + "-01"
         # 2行目から1行ずつ取り出して処理する。
         for row in bicycle:
             pk = pkdict[int(row[0])]
             room = Room.objects.get(id=pk)
-            room.bicycle_fee += int(row[1].replace(',', ''))
+            room.bicycle_fee += int(row[1].replace(",", ""))
             room.save()
-        logger.info(f'{self.request.user} update {year_month} bicycle_fee')
+        logger.info(f"{self.request.user} update {year_month} bicycle_fee")
         return super().form_valid(form)

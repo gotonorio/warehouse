@@ -4,95 +4,154 @@ from library.models import BigCategory, Category, File
 
 
 class FileForm(forms.ModelForm):
-    """ Fileモデルのフォーム
+    """Fileモデルのフォーム
     ModelForm限定の方法としてclass Metaでwidgetを設定する。class以外も変更できる。
     https://narito.ninja/blog/detail/52/
     """
+
     class Meta:
         model = File
-        fields = ("title", "category", "summary", "key_word",
-                  "src", "rank", "created_at", "alive", "download")
+        fields = (
+            "title",
+            "category",
+            "summary",
+            "key_word",
+            "src",
+            "rank",
+            "created_at",
+            "alive",
+            "download",
+        )
         # field毎に異なるclassを設定する場合には、この方法を取る。
         widgets = {
-            'title': forms.TextInput(attrs={
-                'class': "input",
-            }),
-            'category': forms.Select(attrs={
-                'class': "select-css",
-            }),
-            'summary': forms.Textarea(attrs={
-                'class': "textarea",
-            }),
-            'key_word': forms.Textarea(attrs={
-                'class': "textarea",
-            }),
+            "title": forms.TextInput(
+                attrs={
+                    "class": "input",
+                }
+            ),
+            "category": forms.Select(
+                attrs={
+                    "class": "select-css",
+                }
+            ),
+            "summary": forms.Textarea(
+                attrs={
+                    "class": "textarea",
+                }
+            ),
+            "key_word": forms.Textarea(
+                attrs={
+                    "class": "textarea",
+                }
+            ),
             # 'src': forms.ClearableFileInput(attrs={
-            'src': forms.FileInput(attrs={
-                # 'class': "file",
-                'class': "input",
-            }),
-            'rank': forms.TextInput(attrs={
-                'class': "input",
-            }),
-            'created_at': forms.DateInput(attrs={
-                'class': 'input',
-            }),
-            'alive': forms.NullBooleanSelect(attrs={
-                'class': "select-css",
-            }),
-            'download': forms.NullBooleanSelect(attrs={
-                'class': "select-css",
-            }),
+            "src": forms.FileInput(
+                attrs={
+                    # 'class': "file",
+                    "class": "input",
+                }
+            ),
+            "rank": forms.TextInput(
+                attrs={
+                    "class": "input",
+                }
+            ),
+            "created_at": forms.DateInput(
+                attrs={
+                    "class": "input",
+                }
+            ),
+            "alive": forms.NullBooleanSelect(
+                attrs={
+                    "class": "select-css",
+                }
+            ),
+            "download": forms.NullBooleanSelect(
+                attrs={
+                    "class": "select-css",
+                }
+            ),
         }
 
 
 class CategoryForm(forms.ModelForm):
-    """ Categoryモデルのフォーム """
+    """Categoryモデルのフォーム"""
+
     class Meta:
         model = Category
-        fields = ('name', 'path_name', 'parent',
-                  'rank', 'created_at', 'restrict', 'alive')
+        fields = (
+            "name",
+            "path_name",
+            "parent",
+            "rank",
+            "created_at",
+            "restrict",
+            "alive",
+        )
         widgets = {
-            'name': forms.TextInput(attrs={
-                'class': "input",
-            }),
-            'path_name': forms.TextInput(attrs={
-                'class': "input",
-            }),
-            'parent': forms.Select(attrs={
-                'class': "select-css",
-            }),
-            'rank': forms.TextInput(attrs={
-                'class': "input",
-            }),
-            'created_at': forms.DateInput(attrs={
-                'class': "input",
-            }),
-            'restrict': forms.CheckboxInput(attrs={
-                'class': "checkboxinput",
-            }),
-            'alive': forms.CheckboxInput(attrs={
-                'class': "checkboxinput",
-            }),
+            "name": forms.TextInput(
+                attrs={
+                    "class": "input",
+                }
+            ),
+            "path_name": forms.TextInput(
+                attrs={
+                    "class": "input",
+                }
+            ),
+            "parent": forms.Select(
+                attrs={
+                    "class": "select-css",
+                }
+            ),
+            "rank": forms.TextInput(
+                attrs={
+                    "class": "input",
+                }
+            ),
+            "created_at": forms.DateInput(
+                attrs={
+                    "class": "input",
+                }
+            ),
+            "restrict": forms.CheckboxInput(
+                attrs={
+                    "class": "checkboxinput",
+                }
+            ),
+            "alive": forms.CheckboxInput(
+                attrs={
+                    "class": "checkboxinput",
+                }
+            ),
         }
 
 
 class BigCategoryForm(forms.ModelForm):
-    """ 親Categoryモデルのフォーム """
+    """親Categoryモデルのフォーム"""
+
     class Meta:
         model = BigCategory
-        fields = ('name', 'rank', 'created_at', 'alive')
+        fields = ("name", "rank", "created_at", "alive")
         widgets = {
-            'name': forms.TextInput(attrs={
-                'class': "input",
-            }),
-            'rank': forms.TextInput(attrs={
-                'class': "input",
-            }),
-            'created_at': forms.DateInput(attrs={
-                'class': "input",
-            }),
-            'alive': forms.CheckboxInput(attrs={
-                'class': "checkboxinput",
-            }),
+            "name": forms.TextInput(
+                attrs={
+                    "class": "input",
+                }
+            ),
+            "rank": forms.TextInput(
+                attrs={
+                    "class": "input",
+                }
+            ),
+            "created_at": forms.DateInput(
+                attrs={
+                    "class": "input",
+                }
+            ),
+            "alive": forms.CheckboxInput(
+                attrs={
+                    "class": "checkboxinput",
+                }
+            ),
         }

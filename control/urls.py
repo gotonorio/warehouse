@@ -1,13 +1,16 @@
-
 from django.urls import path
 from control import views
 
 
-app_name = 'control'
+app_name = "control"
 urlpatterns = [
-    path('control_list', views.ControlRecordListView.as_view(), name='control_list'),
+    path("control_list", views.ControlRecordListView.as_view(), name="control_list"),
     # 仮登録メニュー表示のON/OFF切替え
-    path('control_update/<int:pk>/', views.ControlRecordUpdateView.as_view(), name='control_update'),
+    path(
+        "control_update/<int:pk>/",
+        views.ControlRecordUpdateView.as_view(),
+        name="control_update",
+    ),
     # DBバックアップ処理
-    path('backupDB/', views.backupDB, name='backupDB'),
+    path("backupDB/", views.backupDB, name="backupDB"),
 ]

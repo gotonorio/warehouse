@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('overview', '0006_alter_room_parking_date'),
+        ("overview", "0006_alter_room_parking_date"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='overview',
-            name='network',
-            field=models.CharField(blank=True, max_length=32, null=True, verbose_name='インターネット'),
+            model_name="overview",
+            name="network",
+            field=models.CharField(
+                blank=True, max_length=32, null=True, verbose_name="インターネット"
+            ),
         ),
     ]

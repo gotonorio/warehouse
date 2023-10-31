@@ -5,21 +5,32 @@ import django.utils.timezone
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='News',
+            name="News",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255, verbose_name='お知らせ')),
-                ('comment', models.TextField(verbose_name='内容')),
-                ('display_news', models.BooleanField(default=True, verbose_name='表示')),
-                ('created_at', models.DateTimeField(default=django.utils.timezone.now, verbose_name='作成日')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255, verbose_name="お知らせ")),
+                ("comment", models.TextField(verbose_name="内容")),
+                ("display_news", models.BooleanField(default=True, verbose_name="表示")),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now, verbose_name="作成日"
+                    ),
+                ),
             ],
         ),
     ]

@@ -19,16 +19,15 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('notice.urls')),
-    path('overview/', include('overview.urls', namespace='overview')),
-    path('regist/', include('register.urls', namespace='regist')),
-    path('library/', include('library.urls', namespace='library')),
-    path('info/', include('information.urls', namespace='info')),
-    path('control/', include('control.urls', namespace='control')),
+    path("admin/", admin.site.urls),
+    path("", include("notice.urls")),
+    path("overview/", include("overview.urls", namespace="overview")),
+    path("regist/", include("register.urls", namespace="regist")),
+    path("library/", include("library.urls", namespace="library")),
+    path("info/", include("information.urls", namespace="info")),
+    path("control/", include("control.urls", namespace="control")),
 ]
 
 # 開発環境で静的ファイルをアップロードするための追加設定。
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

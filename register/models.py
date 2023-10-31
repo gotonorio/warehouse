@@ -15,12 +15,12 @@ class User(AbstractUser):
 
 @receiver(models.signals.post_save, sender=User)
 def post_save_user_signal_handler(sender, instance, created, **kwargs):
-    """ シグナルによってUserにgroupを追加する。
+    """シグナルによってUserにgroupを追加する。
     https://stackoverflow.com/questions/51974276/how-to-automatically-add-group-and-staff-permissions-when-user-is-created/51975193
     """
     if created:
         try:
-            group = Group.objects.get(name='guest')
+            group = Group.objects.get(name="guest")
         except ObjectDoesNotExist:
             pass
         else:
@@ -30,23 +30,23 @@ def post_save_user_signal_handler(sender, instance, created, **kwargs):
 
 @receiver(user_logged_in)
 def user_logged_in_callback(sender, request, user, **kwargs):
-    """ ログインした際に呼ばれて、管理者ならログ記録する """
+    """ログインした際に呼ばれて、管理者ならログ記録する"""
     if user_is_manager(request, user):
-        logger.info(f'{user} login')
+        logger.info(f"{user} login")
 
 
 @receiver(user_logged_out)
 def user_logged_out_callback(sender, request, user, **kwargs):
-    """ ログアウトした際に呼ばれる """
+    """ログアウトした際に呼ばれる"""
     if user_is_manager(request, user):
-        logger.info(f'{user} logout')
+        logger.info(f"{user} logout")
 
 
 def user_is_manager(request, user):
-    """ userが「管理者」どうかの判定(adminuserは除外) """
+    """userが「管理者」どうかの判定(adminuserは除外)"""
     rtn = False
-    manager_group = ['news_manager', 'data_manager', 'director', 'chairman']
-    qs = request.user.groups.values_list('name', flat=True)
+    manager_group = ["news_manager", "data_manager", "director", "chairman"]
+    qs = request.user.groups.values_list("name", flat=True)
     if qs and list(qs)[0] in manager_group:
         rtn = True
     return rtn
