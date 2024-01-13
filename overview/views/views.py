@@ -1,11 +1,10 @@
-import collections
 import logging
-import re
 
 from django.conf import settings
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import F
 from django.views import generic
+
 from overview.models import OverView, Room, RoomType
 
 logger = logging.getLogger(__name__)
@@ -46,10 +45,7 @@ class RoomView(PermissionRequiredMixin, generic.TemplateView):
         total = {"total": 0, "parking": 0, "bicycle": 0, "bike": 0, "membershipfee": 0}
         for d in sql:
             total["total"] += (
-                d.room_type.kanrihi
-                + d.room_type.shuuzenhi
-                + d.room_type.ryokuchi
-                + d.room_type.niwa
+                d.room_type.kanrihi + d.room_type.shuuzenhi + d.room_type.ryokuchi + d.room_type.niwa
             )
             total["parking"] += d.parking_fee
             if d.chounaikai:
@@ -87,9 +83,7 @@ class RoomTypeView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         qs = RoomType.objects.all()
-        qs = qs.annotate(
-            total=F("kanrihi") + F("shuuzenhi") + F("ryokuchi") + F("niwa")
-        )
+        qs = qs.annotate(total=F("kanrihi") + F("shuuzenhi") + F("ryokuchi") + F("niwa"))
         context["roomtypelist"] = qs
         # 管理費の合計
         total_kanrihi = RoomType.total_kanrihi("kanrihi")["total__sum"]
@@ -104,8 +98,6 @@ class RoomTypeView(generic.TemplateView):
         total_ryokuchi = RoomType.total_kanrihi("ryokuchi")["total__sum"]
         context["total_ryokuchi"] = total_ryokuchi
         # 合計
-        context["total_all"] = (
-            total_kanrihi + total_shuuzenhi + total_niwa + total_ryokuchi
-        )
+        context["total_all"] = total_kanrihi + total_shuuzenhi + total_niwa + total_ryokuchi
 
         return context
