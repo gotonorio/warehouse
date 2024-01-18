@@ -44,7 +44,10 @@
       {% if not user.id %}
         <a class="navbar-item" href="{% url 'register:login' %}">区分所有者ログイン</a>
       {% else %}
-        <a class="navbar-item" href="{% url 'register:logout' %}">ログアウト</a>
+        <form method="post" class="navbar-item" action="{% url 'register:logout' %}">
+          {% csrf_token %}
+          <button type="submit">ログアウト</button>
+        </form>
       {% endif %}
     </div>
   </div>
