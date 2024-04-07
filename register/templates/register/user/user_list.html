@@ -41,6 +41,7 @@
           <th class="has-text-centered">user</th>
           <th class="has-text-centered">email</th>
           <th class="has-text-centered">有効</th>
+          <th class="has-text-centered">#</th>
         </tr>
       </thead>
       <tbody>
@@ -54,6 +55,7 @@
           {% else %}
             <td class="has-text-centered ">{{ list.is_active}}</td>
           {% endif %}
+          <td class="has-text-left"><a href="{% url 'register:user_delete' list.pk %}">削除</a></td>
         </tr>
         {% endfor %}
       </tbody>

@@ -12,14 +12,7 @@ urlpatterns = [
     path("signup", user_views.TempUserCreateView.as_view(), name="signup"),
     path("signup_done", user_views.TempUserDoneView.as_view(), name="temp_user_done"),
     path("list", user_views.UserListView.as_view(), name="user_list"),
-    path(
-        "user_update/<int:pk>/",
-        user_views.UserManagementView.as_view(),
-        name="user_update",
-    ),
-    path(
-        "pwd_update/<int:pk>/",
-        user_views.UserPasswordUpdate.as_view(),
-        name="pwd_update",
-    ),
+    path("user_update/<int:pk>/", user_views.UserManagementView.as_view(), name="user_update",),
+    path("pwd_update/<int:pk>/", user_views.UserPasswordUpdate.as_view(), name="pwd_update",),
+    path("user_delete/<int:pk>/", user_views.DeleteUserView.as_view(), name="user_delete"),
 ]
