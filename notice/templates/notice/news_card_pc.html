@@ -10,7 +10,8 @@
 {% block navbar %}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <div class="navbar-item">【SG川崎】</div>
+    {% comment %} <div class="navbar-item">【SG川崎】</div> {% endcomment %}
+    <div class="navbar-item">{{user}}</div>
     {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
       <span aria-hidden="true"></span>

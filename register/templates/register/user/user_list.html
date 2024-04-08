@@ -29,10 +29,18 @@
 {% endblock navbar %}
 {% block content %}
 <br>
-<div class="container with_mobile">
+<div class="container is-fluid">
   <div class="content has-text-centered">
     <h4>登録ユーザ 一覧</h4>
   </div>
+  <div class="content" id="form_style">
+    <ul>
+      <li>chairman : データ編集権限・ユーザ編集権限</li>
+      <li>data_manager : データ編集権限</li>
+      <li>login : データ閲覧権限</li>
+    </ul>
+  </div>
+  <br>
   <div class="table-container">
     <table class="table table_center_nowrap is-striped is-narrow is-responsible">
       <thead>
