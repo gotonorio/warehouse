@@ -161,9 +161,7 @@ class CategoryBigView(PermissionRequiredMixin, generic.ListView):
     def get_queryset(self):
         """カテゴリでfilter."""
         big_pk = self.kwargs["big_pk"]
-        return Category.objects.filter(parent__pk=big_pk).order_by(
-            "-rank", "-created_at"
-        )
+        return Category.objects.filter(parent__pk=big_pk).order_by("-rank", "-created_at")
 
     def get_context_data(self, *args, **kwargs):
         """親カテゴリのpkをテンプレートへ渡す."""
@@ -277,9 +275,7 @@ class BigCategoryView(generic.TemplateView):
         # ログインしている場合は表示。していない場合はrestrict=Trueのカテゴリは非表示とする。
         category_obj = Category.objects.filter(parent=big_category, alive=True)
         if user.id is None:
-            category_obj = category_obj.filter(restrict=False).order_by(
-                "parent__rank", "-rank"
-            )
+            category_obj = category_obj.filter(restrict=False).order_by("parent__rank", "-rank")
             # raise 403
             if len(category_obj) < 1:
                 raise PermissionDenied()
@@ -293,9 +289,7 @@ class BigCategoryView(generic.TemplateView):
         category_list = []
         for i in category_obj:
             file_obj = (
-                File.objects.filter(category=i.pk)
-                .filter(alive=True)
-                .order_by("-rank", "-created_at")[:limit]
+                File.objects.filter(category=i.pk).filter(alive=True).order_by("-rank", "-created_at")[:limit]
             )
             # alive=True).order_by('-rank', '-created_at')
             file_list = []
@@ -324,9 +318,7 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
         keyword = self.request.GET.get("keyword")
         if keyword:
             queryset = queryset.filter(
-                Q(title__icontains=keyword)
-                | Q(key_word__icontains=keyword)
-                | Q(summary__icontains=keyword)
+                Q(title__icontains=keyword) | Q(key_word__icontains=keyword) | Q(summary__icontains=keyword)
             )
             queryset = queryset.distinct()
         return queryset

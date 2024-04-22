@@ -9,13 +9,13 @@
   <section class="content has-text-centered">
     <div>
         <h1>403 Forbidden 居住者専用です。</h1>
+        戻るボタンが効かない場合はブラウザの戻るボタンを押してください。
     </div>
     {% if exception %}
     <p style="color: red">{{ exception }}</p>
     {% endif %}
       {% comment %} <h3><a href="javascript:history.back()">戻る</a></h3> {% endcomment %}
       <h3><a class='button is-primary' href='javascript:void(0);' onclick='window.history.back();'>戻る</a></h3>
-
   </section>
 </div>
 {% endblock %}
