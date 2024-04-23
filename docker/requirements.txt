@@ -1,5 +1,5 @@
-django==5.0.3
-gunicorn==21.0.1
+django==5.0.4
+gunicorn==22.0.0
 Markdown==3.5.2
 django-cleanup==8.1.0
 user_agents==2.2.0
