@@ -8,12 +8,14 @@ from django.utils import timezone
 
 
 def default_category():
-    """デフォルトのカテゴリを返す（まだなければ作る）."""
+    """デフォルトのカテゴリを返す（まだなければ作る）"""
     category, _ = Category.objects.get_or_create(name="default")
     return category
 
 
 class BigCategory(models.Model):
+    """親カテゴリ"""
+
     name = models.CharField("親カテゴリ名", max_length=128)
     rank = models.IntegerField("表示順", default=0)
     created_at = models.DateTimeField("作成日", default=timezone.now)
@@ -24,13 +26,11 @@ class BigCategory(models.Model):
 
 
 class Category(models.Model):
-    """カテゴリ."""
+    """カテゴリ"""
 
     name = models.CharField("カテゴリ名", max_length=128)
     path_name = models.CharField("ディレクトリ名", max_length=128)
-    parent = models.ForeignKey(
-        BigCategory, verbose_name="親カテゴリ", on_delete=models.PROTECT, default=1
-    )
+    parent = models.ForeignKey(BigCategory, verbose_name="親カテゴリ", on_delete=models.PROTECT, default=1)
     rank = models.IntegerField("表示順", default=0)
     created_at = models.DateTimeField("作成日", default=timezone.now)
     restrict = models.BooleanField("制限", default=False)
@@ -42,7 +42,7 @@ class Category(models.Model):
 
 def get_upload_to(instance, filename):
     """upload_toを動的(カテゴリのpath毎)に指定する
-    https://docs.djangoproject.com/ja/3.2/ref/models/fields/
+    https://docs.djangoproject.com/ja/5.0/ref/models/fields/
     ここで、ファイルをuploadするパスを設定する。
     media/カテゴリのpath/filename
     """
@@ -58,9 +58,7 @@ class File(models.Model):
     """アップロードするファイル."""
 
     title = models.CharField(verbose_name="タイトル", max_length=128)
-    category = models.ForeignKey(
-        Category, verbose_name="カテゴリ", on_delete=models.PROTECT, default=1
-    )
+    category = models.ForeignKey(Category, verbose_name="カテゴリ", on_delete=models.PROTECT, default=1)
     summary = models.TextField(verbose_name="概要", blank=True, null=True)
     key_word = models.TextField(verbose_name="キーワード", blank=True, null=True)
     src = models.FileField(verbose_name="ファイル", upload_to=get_upload_to)
