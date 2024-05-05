@@ -44,6 +44,7 @@ class FileCategoryView(PermissionRequiredMixin, generic.ListView):
     permission_required = "library.add_file"
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
+    # pagingを止める
     # paginate_by = 20
 
     def get_queryset(self):

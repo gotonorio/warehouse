@@ -7,11 +7,7 @@ app_name = "library"
 urlpatterns = [
     # FileのCRUD
     path("", views.FileIndexView.as_view(), name="file_index"),
-    path(
-        "file/category/<int:category_pk>",
-        views.FileCategoryView.as_view(),
-        name="file_category",
-    ),
+    path("file/category/<int:category_pk>", views.FileCategoryView.as_view(), name="file_category"),
     path("file/create/", views.FileCreateView.as_view(), name="file_create"),
     path("file/create/<int:pk>", views.FileCreateView.as_view(), name="file_create"),
     path("file/update/<int:pk>", views.FileUpdateView.as_view(), name="file_update"),
