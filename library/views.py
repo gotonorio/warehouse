@@ -1,6 +1,7 @@
 import logging
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
@@ -332,6 +333,7 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
         return context
 
 
+@login_required
 def pdf_view(request, pk):
     """静的ファイル（PDFファイル）の閲覧処理
     効率的にはwebサーバが静的ファイルを配信するべきだが、セキュリティを重視するためdjangoで配信してみる実験。
