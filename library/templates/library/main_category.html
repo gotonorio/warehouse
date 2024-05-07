@@ -51,7 +51,7 @@
       {% for file in category %}
       <tr>
         {% if file.download %}
-        {% comment %} nginxで配布させると効率的だが、表示urlのコピーでログイン無しで再表示できてしまう {% endcomment %}
+          {% comment %} nginxで配布させると効率的だが、表示urlのコピーでログイン無しで再表示できてしまう {% endcomment %}
           {% comment %} <td class="has-text-left"><a href="{{file.src.url}}" target="_blank" rel="noopener noreferrer" download>{{file.title}}</a></td> {% endcomment %}
           <td class="has-text-left"><a href="{% url 'library:file_view' file.pk %}" download>{{file.title}}</a></td>
         {% else %}

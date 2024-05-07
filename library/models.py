@@ -26,7 +26,9 @@ class BigCategory(models.Model):
 
 
 class Category(models.Model):
-    """カテゴリ"""
+    """カテゴリ
+    - カテゴリ毎に閲覧制限することを考えて、restric要素を追加しておく。
+    """
 
     name = models.CharField("カテゴリ名", max_length=128)
     path_name = models.CharField("ディレクトリ名", max_length=128)
