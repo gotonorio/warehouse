@@ -62,10 +62,10 @@
         <td class="has-text-centered">{{ file.alive }}</td>
         <td class="has-text-centered">{{ file.rank }}</td>
         <td class="nowrap">
-          <a href="{% url 'library:file_update' file.pk %}" class="button has-background-grey-lighter is-small">
+          <a href="{% url 'library:file_update' file.pk %}" class="button is-primary is-small">
             更新
           </a>
-          <a href="{% url 'library:file_delete' file.pk %}" class="button has-background-grey-lighter is-small">
+          <a href="{% url 'library:file_delete' file.pk %}" class="button is-danger is-small">
             削除
           </a>
         </td>

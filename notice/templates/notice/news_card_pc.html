@@ -35,20 +35,21 @@
           <a class="navbar-link is-size-6">管理者用</a>
           <div class="navbar-dropdown">
             {% if perms.notice.add_news %}
-              <a class="dropdown-item" href="{% url 'notice:news_list' %}">お知らせ管理</a>
+              <a class="navbar-item" href="{% url 'notice:news_list' %}">お知らせ管理</a>
+              {% comment %} <a class="navbar-item" href="{% url 'notice:news_list' %}">お知らせ管理</a> {% endcomment %}
             {% endif %}
             {% if perms.library.add_file %}
-              <a class="dropdown-item" href="{% url 'library:big_category_index' %}">文書ファイル登録・修正</a>
-              <a class="dropdown-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
+              <a class="navbar-item" href="{% url 'library:big_category_index' %}">文書ファイル登録・修正</a>
+              <a class="navbar-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
             {% endif %}
             {% if perms.overview.add_room %}
               <div class="dropdown-divider"></div>
+              <a class="navbar-item" href="{% url 'overview:overview_list' %}">マンション概要・修正</a>
+              <a class="navbar-item" href="{% url 'control:control_list' %}">コントロールデータ修正</a>
+              {% comment %} <a class="navbar-item" href="{% url 'overview:import_parkingfee' %}">駐車場費のインポート</a> {% endcomment %}
+              {% comment %} <a class="navbar-item" href="{% url 'overview:import_bicyclefee' %}">駐輪場費のインポート</a> {% endcomment %}
               {# 住戸データの登録は最初の1回だけ。その後は修正となるので、コメントアウトしておく。#}
               {% comment %} <a class="dropdown-item" href="{% url 'overview:create_room' %}">住戸データ登録・修正</a> {% endcomment %}
-              <a class="dropdown-item" href="{% url 'overview:overview_list' %}">マンション概要・修正</a>
-              <a class="dropdown-item" href="{% url 'control:control_list' %}">コントロールデータ修正</a>
-              <a class="dropdown-item" href="{% url 'overview:import_parkingfee' %}">駐車場費のインポート</a>
-              <a class="dropdown-item" href="{% url 'overview:import_bicyclefee' %}">駐輪場費のインポート</a>
             {% endif %}
             <a class="navbar-item" href="{% url 'control:backupDB' %}">DBバックアップ</a>
           </div>
@@ -68,7 +69,7 @@
 {% endblock navbar %}
 
 {% block header %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/a11y-dark.min.css">
+{% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/a11y-dark.min.css"> {% endcomment %}
 <section class="hero is-dark">
   <div class="hero-body">
     <div class="container has-text-centered">

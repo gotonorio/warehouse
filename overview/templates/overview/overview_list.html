@@ -45,7 +45,7 @@
         {% for d in object_list %}
         <tr>
           <td class="has-text-centered">{{d.name}}</td>
-          <td class="has-text-centered"><a href="{% url 'overview:overview_update' d.pk %}">修正</a></td>
+          <td class="has-text-centered"><a href="{% url 'overview:overview_update' d.pk %}"class="button is-primary is-small">修正</a></td>
         </tr>
         {% endfor %}
       </tbody>

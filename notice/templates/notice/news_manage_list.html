@@ -45,8 +45,8 @@
         <td class="has-text-left">{{ news.title}}</td>
         <td class="has-text-center">{{ news.display_news }}</td>
         <td class="nowrap">
-          <a href="{% url 'notice:news_update' news.pk %}" class="button has-background-grey-lighter is-small">更新</a>
-          <a href="{% url 'notice:news_delete' news.pk %}" class="button has-background-grey-lighter is-small">削除</a>
+          <a href="{% url 'notice:news_update' news.pk %}" class="button is-primary is-small">更新</a>
+          <a href="{% url 'notice:news_delete' news.pk %}" class="button is-danger is-small">削除</a>
         </td>
       </tr>
       {% endfor %}

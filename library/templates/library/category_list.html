@@ -62,14 +62,14 @@
         <td class="has-text-centered">{{ category.alive }}</td>
         <td class="has-text-centered">{{ category.rank }}</td>
         <td class="has-text-left nowrap">
-          <a href="{% url 'library:category_update' category.pk %}" class="button has-background-grey-lighter is-small">
+          <a href="{% url 'library:file_category' category.pk %}" class="button is-primary is-small">
+            ファイル一覧
+          </a>
+          <a href="{% url 'library:category_update' category.pk %}" class="button is-primary is-small">
             更新
           </a>
-          <a href="{% url 'library:category_delete' category.pk %}" class="button has-background-grey-lighter is-small">
+          <a href="{% url 'library:category_delete' category.pk %}" class="button is-danger is-small">
             削除
-          </a>
-          <a href="{% url 'library:file_category' category.pk %}" class="button has-background-grey-lighter is-small">
-            ファイル一覧
           </a>
         </td>
       </tr>

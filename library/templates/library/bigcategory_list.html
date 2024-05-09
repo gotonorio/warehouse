@@ -51,15 +51,15 @@
             <td class="has-text-left">{{ pcategory.created_at }}</td>
             <td class="has-text-centered">{{ pcategory.rank }}</td>
             <td>
-                <a href="{% url 'library:big_category_update' pcategory.pk %}" class="button has-background-grey-lighter is-small">
-                  更新
                 </a>
-                <a href="{% url 'library:big_category_delete' pcategory.pk %}" class="button has-background-grey-lighter is-small">
-                  削除 
-                </a>
-                <a href="{% url 'library:category_big' pcategory.pk %}" class="button has-background-grey-lighter is-small">
+                <a href="{% url 'library:category_big' pcategory.pk %}" class="button is-primary is-small">
                   カテゴリ一覧
                 </a>
+                <a href="{% url 'library:big_category_update' pcategory.pk %}" class="button is-primary is-small">
+                  更新
+                </a>
+                <a href="{% url 'library:big_category_delete' pcategory.pk %}" class="button is-danger is-small">
+                  削除 
             </td>
           </tr>
         {% endfor %}

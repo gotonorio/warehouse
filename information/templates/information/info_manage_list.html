@@ -47,8 +47,8 @@
         <td class="has-text-left nowrap">{{ info.title }}</td>
         <td class="has-text-left">{{ info.comment }}</td>
         <td class="has-text-left nowrap">
-          <a href="{% url 'information:info_update' info.pk %}" class="button has-background-grey-lighter is-small">更新</a>
-          <a href="{% url 'information:info_delete' info.pk %}" class="button has-background-grey-lighter is-small">削除</a>
+          <a href="{% url 'information:info_update' info.pk %}" class="button is-primary is-small">更新</a>
+          <a href="{% url 'information:info_delete' info.pk %}" class="button is-danger is-small">削除</a>
         </td>
       </tr>
       {% endfor %}

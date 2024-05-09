@@ -2,11 +2,13 @@
 /* iPad(768px)まではmarginを20pxにする */
 .markdown {
   overflow-x: auto;
-  margin:20px;
+  margin:0px;
 }
 
 .markdown strong {
-  background-color: yellow;
+  /* background-color: yellow; */
+  color: var(--main-bg);
+  background-color: var(--main-text);
 }
 
 /* 767px以下ではmargin-leftを4pxにする */

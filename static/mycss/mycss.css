@@ -1,19 +1,36 @@
-/* mycss ver.1.1.0 */
+/* https://www.webcreatorbox.com/tech/dark-mode */
+:root {
+  --main-text: #333;
+  --main-bg: #fff;
+  --md-strong: yellow;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* --main-text: #ddd; */
+    --main-text: #fff;
+    --main-bg: #000;
+    --md-strong: #666666;
+  }
+}
 
 /* 固定フッタスタイル */
 html {
     position: relative;
     min-height: 100%;
     margin:0px;
-    background-color:#ffffff;
-    color:#333333;
+    color: var(--main-text);
+    background-color: var(--main-bg);
 }
+
 /* my_footerを使う場合、本体をmargin-bottomでfooterエリアを確保しなければならない。 */
-/* Macではヒラギノ角ゴシック、WindowではWebフォントのNoto Sans JPを使う */
 main {
-    font-family:'Helvetica Neue',Arial,'Hiragino Sans','Meiryo',sans-serif;
-    margin-bottom: 40px;
+    font-family:'Helvetica Neue',Arial,'Hiragino Sans',"BIZ UDPGothic",'Meiryo',sans-serif;
+    /* font-family: "ヒラギノ角ゴシック W4","Hiragino Sans",'Noto Sans JP',meiryo,sans-serif; */
+    /* font-family: 'Noto Sans JP','ヒラギノ角ゴ Pro W4',sans-serif; */
+    /* font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W4', Meiryo, メイリオ, '游ゴシック Medium', 'Yu Gothic Medium', '游ゴシック体', 'Yu Gothic', YuGothic, Osaka, arial, sans-serif; */
+    margin-bottom: 20px;
 }
+
 /* footerだとBulmaのfooterを上書きしてしまう */
 .my_footer {
     font-size: 80%;
@@ -22,7 +39,8 @@ main {
     width: 100%;
     height: 40px; /* ここでフッタの固定高さを設定 */
     line-height: 40px; /* ここでテキストを垂直に中央に配置 */
-    background-color: #f5f5f5;
+    color: var(--main-text);
+    background-color: var(--main-bg);
 }
 /*
  tableの列を改行禁止にする。
@@ -43,6 +61,8 @@ a.vmenu {
     background:url(/static/cat_foot.png) no-repeat 0 7px ;
     /*猫の足跡アイコンとメニュー項目の文字がカブらないように、左側を20px空ける*/
     padding:3px 0 3px 20px;
+    color: var(--main-text);
+    background-color: var(--main-bg);
 }
 a.vmenu:hover {
     color:#666666;
@@ -136,59 +156,23 @@ div.my_field > textarea {
 }
 /* form入力style */
 #form_style {
-  width: 400px;
+  width: 420px;
   margin: auto;
 }
- /* 767px以下ではwidthを80%にする */
-@media screen and (max-width: 321px) {
-  .login_container {
-    width: 80%;
-    margin: auto;
-  }
-  #form_style {
-    width: 90%;
-    margin: auto;
-  }
-}
-
-/* 768px以上ではmarginを16pxにする */
-@media screen and (min-width: 769px) {
-  .container.with_mobile {
-    max-width: none !important;
-    padding-left: 16px;
-    padding-right: 16px;
-    width: 100%;
-  }
-}
-/* 767px以下ではmarginを6pxにする */
-@media screen and (max-width: 768px) {
-  .container.with_mobile {
-    max-width: none !important;
-    padding-left:10px;
-    padding-right:10px;
-    width: 100%;
-  }
-}
-/*
-グラフ表示用
-https://obel.hatenablog.jp/entry/20160626/1466937585 
-*/
-/* 769px以上ではwidthは60% */
-.graph_container {
-  width: 70%;
-  margin: auto;
-}
-/* 768px以下ではwidthは100% */
-@media screen and (max-width: 768px) {
-  .graph_container {
-    width: 100%;
-    margin: auto;
-  }
-}
-
 /* tableの中央配置 */
 .table_center_nowrap {
   width: auto;
   margin: 3px auto;
+  white-space: nowrap;
+}
+.table_nowrap {
+  width: auto;
+  white-space: nowrap;
+}
+.markdown table {
+  /* 表の外枠表示 */
+  border: dotted 1px;
+  /* 表の最小幅で表示させる。倍率は適当。 */
+  width: 30%;
   white-space: nowrap;
 }
