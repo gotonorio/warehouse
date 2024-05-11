@@ -6,7 +6,6 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    /* --main-text: #ddd; */
     --main-text: #fff;
     --main-bg: #000;
     --md-strong: #666666;
@@ -28,9 +27,8 @@ main {
     /* font-family: "ヒラギノ角ゴシック W4","Hiragino Sans",'Noto Sans JP',meiryo,sans-serif; */
     /* font-family: 'Noto Sans JP','ヒラギノ角ゴ Pro W4',sans-serif; */
     /* font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W4', Meiryo, メイリオ, '游ゴシック Medium', 'Yu Gothic Medium', '游ゴシック体', 'Yu Gothic', YuGothic, Osaka, arial, sans-serif; */
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
-
 /* footerだとBulmaのfooterを上書きしてしまう */
 .my_footer {
     font-size: 80%;
