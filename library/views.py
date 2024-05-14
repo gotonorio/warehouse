@@ -333,6 +333,7 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
         return context
 
 
+# @login_required
 def pdf_view(request, pk):
     """静的ファイル（PDFファイル）の閲覧処理
     - 効率的にはwebサーバが静的ファイルを配信するべきだが、セキュリティを重視するためdjangoで配信してみる実験。

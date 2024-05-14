@@ -43,7 +43,7 @@
               <a class="navbar-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
             {% endif %}
             {% if perms.overview.add_room %}
-              <div class="dropdown-divider"></div>
+              <div class="navbar-divider"></div>
               <a class="navbar-item" href="{% url 'overview:overview_list' %}">マンション概要・修正</a>
               <a class="navbar-item" href="{% url 'control:control_list' %}">コントロールデータ修正</a>
               {% comment %} <a class="navbar-item" href="{% url 'overview:import_parkingfee' %}">駐車場費のインポート</a> {% endcomment %}
