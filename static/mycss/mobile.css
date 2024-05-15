@@ -11,3 +11,7 @@
   padding: 2px;
   position: relative;
 }
+.mobile_container {
+  margin-left: 6px;
+  margin-right: 0px;
+}

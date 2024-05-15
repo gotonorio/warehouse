@@ -1,9 +1,10 @@
-{% extends "base.html" %}
+{% extends "base_single_page.html" %}
 {% load static %}
 {% load mytag %}
 
 {% block head %}
   <link href="{% static 'mycss/my_markdown.css' %}" rel="stylesheet">
+  <link href="{% static 'mycss/mobile.css' %}" rel="stylesheet">
 {% endblock head %}
 
 <!-- navbar -->
@@ -11,10 +12,6 @@
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="{% url 'register:menu' %}">メニュー</a>
-    {% comment %} <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a> {% endcomment %}
-    {% comment %} <a class="navbar-item" href="https://keijiban.sophiagardens.org" target="_blank">掲示板</a> {% endcomment %}
-    {% comment %} <a class="navbar-item" href="{% url 'overview:overview' %}">概要</a> {% endcomment %}
-    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -67,17 +64,19 @@
 {% endblock header %}
 
 {% block content %}
-{% for news in news_list %}
-<div class="card content">
-  <header class="card-header">
-    <p class="card-header-title has-background-dark has-text-white">{{news.title}}</p>
-  </header>
-  <p>{{ news.created_at | date }}</p>
-  <div class="card-content markdown table is-bordered">
-    {{news.comment | markdown_to_html}}
+<div class="mobile_container">
+  {% for news in news_list %}
+  <div class="card content">
+    <header class="card-header">
+      <p class="card-header-title has-background-dark has-text-white">{{news.title}}</p>
+    </header>
+    <p>{{ news.created_at | date }}</p>
+    <div class="card-content markdown table is-bordered">
+      {{news.comment | markdown_to_html}}
+    </div>
   </div>
-</div>
-<br>
-{% endfor %}
-{% include 'page.html' %}
+  {% comment %} <br> {% endcomment %}
+  {% endfor %}
+  {% include 'page.html' %}
+{% comment %} </div> {% endcomment %}
 {% endblock %}

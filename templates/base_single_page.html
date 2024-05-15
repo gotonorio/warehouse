@@ -22,6 +22,9 @@
 <body>
   {% block navbar %}
   {% endblock%}
+  <!-- ヘッダー（hero) -->
+  {% block header %}
+  {% endblock %}
   <!-- footerを設置する場合、<main>で囲む -->
   <main>
   {% block content %}
@@ -41,7 +44,6 @@
       </div>
     </div>
   </footer>
-
   {# 参考： https://bulma.io/documentation/components/navbar/ #}
   {# ToDo ハンバーガアイコン用のjs。staticから読み込むことはできないか？ #}
   <script>
