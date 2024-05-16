@@ -52,12 +52,11 @@
 {% endblock navbar %}
 
 {% block header %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/a11y-dark.min.css">
 <section class="hero is-dark">
   <div class="hero-body">
-    <div class="content has-text-centered">
-      <h4 class="title">ソフィア・ガーデンズ川崎</h4>
-      <h5 class="subtitle">管理組合 ホームページ</h5>
+    <div class="has-text-centered">
+      <div class="title is-size-4">ソフィア・ガーデンズ川崎</div>
+      <div class="subtitle is-size-6">管理組合 ホームページ</div>
     </div>
   </div>
 </section>
@@ -65,18 +64,18 @@
 
 {% block content %}
 <div class="mobile_container">
-  {% for news in news_list %}
-  <div class="card content">
-    <header class="card-header">
-      <p class="card-header-title has-background-dark has-text-white">{{news.title}}</p>
-    </header>
-    <p>{{ news.created_at | date }}</p>
-    <div class="card-content markdown table is-bordered">
-      {{news.comment | markdown_to_html}}
-    </div>
+{% for news in news_list %}
+<div class="card content">
+  <header class="card-header">
+    <p class="card-header-title has-background-dark has-text-white">{{news.title}}</p>
+  </header>
+  <p>{{ news.created_at | date }}</p>
+  <div class="card-content markdown table is-bordered">
+    {{news.comment | markdown_to_html}}
   </div>
-  {% comment %} <br> {% endcomment %}
-  {% endfor %}
-  {% include 'page.html' %}
-{% comment %} </div> {% endcomment %}
+</div>
+<br>
+{% endfor %}
+</div>
+{% include 'page.html' %}
 {% endblock %}
