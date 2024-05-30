@@ -27,7 +27,6 @@
 </nav>
 {% endblock %}
 
-<!-- content -->
 {% block content %}
 <section class="hero is-dark">
   <div class="hero-body">
@@ -37,65 +36,61 @@
     </div>
   </div>
 </section>
-
 <br>
 <div class="container with_mobile">
-<section class="sectionbox">
-  <div class="is-size-5 has-text-weight-bold">
-  <p>公開情報</p>
-  </div>
-  <br>
-  <div class="columns">
-    <div class="column">
-      <div class="menubox has-text-centered">
-        <a href="{% url 'overview:overview' %}" class="white_color">マンション概要</a>
+  <section class="sectionbox">
+    <div class="is-size-5 has-text-weight-bold">
+    <p>公開情報</p>
+    </div>
+    <br>
+    <div class="columns">
+      <div class="column">
+        <div class="menubox has-text-centered">
+          <a href="{% url 'overview:overview' %}" class="white_color">マンション概要</a>
+        </div>
+      </div>
+      <div class="column">
+        <div class="menubox has-text-centered">
+          <a href="{% static 'pamphlet.pdf' %}" target="_blank" class="white_color">パンフレット</a>
+        </div>
       </div>
     </div>
-    <div class="column">
-      <div class="menubox has-text-centered">
-        <a href="{% static 'pamphlet.pdf' %}" target="_blank" class="white_color">パンフレット</a>
+  </section>
+  <hr>
+  <section class="sectionbox">
+    <div class="is-size-5 has-text-weight-bold">
+    <p>管理組合専用(ログイン必要)</p>
+    </div>
+    <br>
+    <div class="columns">
+    {% if perms.library.view_file %}
+      <div class="column">
+        <div class="menubox has-text-centered">
+          <a class="white_color" href="https://keijiban.sophiagardens.org" target="_blank">掲示板</a>
+        </div>
+      </div>
+      <div class="column">
+        <div class="menubox has-text-centered">
+          <a class="white_color" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
+        </div>
+      </div>
+    {% endif %}
+      <div class="column">
+        <div class="menubox has-text-centered">
+          <a href="https://accounting.sophiagardens.org" target="_blank" class="white_color">会計資料</a>
+        </div>
+      </div>
+      <div class="column">
+        <div class="menubox has-text-centered">
+          <a href="https://facility.sophiagardens.org" target="_blank" class="white_color">共用設備・修繕計画</a>
+        </div>
+      </div>
+      <div class="column">
+        <div class="menubox has-text-centered">
+          <a href="{% url 'information:information' %}" class="white_color">インフォメーション</a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-<hr>
-<section class="sectionbox">
-  <div class="is-size-5 has-text-weight-bold">
-  <p>管理組合専用</p>
-  </div>
-  <br>
-  <div class="columns">
-    <div class="column">
-      <div class="menubox has-text-centered">
-        <a href="https://accounting.sophiagardens.org" target="_blank" class="white_color">会計資料</a>
-      </div>
-    </div>
-    <div class="column">
-      <div class="menubox has-text-centered">
-        <a href="https://facility.sophiagardens.org" target="_blank" class="white_color">共用設備・修繕計画</a>
-      </div>
-    </div>
-    <div class="column">
-      <div class="menubox has-text-centered">
-        <a class="white_color" href="https://keijiban.sophiagardens.org" target="_blank">掲示板</a>
-      </div>
-    </div>
-    <div class="column">
-      <div class="menubox has-text-centered">
-        <a class="white_color" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
-      </div>
-    </div>
-    <div class="column">
-      <div class="menubox has-text-centered">
-        <a href="{% url 'information:information' %}" class="white_color">インフォメーション</a>
-      </div>
-    </div>
-    {% comment %} <div class="column is-2">
-      <div class="menubox has-text-centered">
-        <a href="https://gijiroku.sophiagardens.org" target="_blank" class="white_color">議事録</a>
-      </div>
-    </div> {% endcomment %}
-  </div>
-</section>
+  </section>
 </div>
 {% endblock %}

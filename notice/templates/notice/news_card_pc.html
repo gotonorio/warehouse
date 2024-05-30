@@ -22,8 +22,10 @@
   <div id="navbarMypage" class="navbar-menu">
     <div class="navbar-start">
       <a class="navbar-item" href="{% url 'register:menu' %}">メニュー</a>
-      <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
-      <a class="navbar-item" href="https://keijiban.sophiagardens.org" target="_blank">掲示板</a>
+      {% if perms.library.view_file %}
+        <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
+        <a class="navbar-item" href="https://keijiban.sophiagardens.org" target="_blank">掲示板</a>
+      {% endif %}
       <a class="navbar-item" href="{% url 'overview:overview' %}">マンション概要</a>
     </div>
     <div class="navbar-end">
@@ -46,10 +48,6 @@
               <div class="navbar-divider"></div>
               <a class="navbar-item" href="{% url 'overview:overview_list' %}">マンション概要・修正</a>
               <a class="navbar-item" href="{% url 'control:control_list' %}">コントロールデータ修正</a>
-              {% comment %} <a class="navbar-item" href="{% url 'overview:import_parkingfee' %}">駐車場費のインポート</a> {% endcomment %}
-              {% comment %} <a class="navbar-item" href="{% url 'overview:import_bicyclefee' %}">駐輪場費のインポート</a> {% endcomment %}
-              {# 住戸データの登録は最初の1回だけ。その後は修正となるので、コメントアウトしておく。#}
-              {% comment %} <a class="dropdown-item" href="{% url 'overview:create_room' %}">住戸データ登録・修正</a> {% endcomment %}
             {% endif %}
             <a class="navbar-item" href="{% url 'control:backupDB' %}">DBバックアップ</a>
           </div>
