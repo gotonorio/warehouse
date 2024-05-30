@@ -21,7 +21,7 @@
     <div class="navbar-start">
     </div>
     <div class="navbar-end">
-      <a class="navbar-item" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
+      <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
     </div>
   </div>
 </nav>
@@ -40,59 +40,63 @@
 
 <br>
 <div class="container with_mobile">
-<section class="sectionbox">
-  <div class="is-size-5 has-text-weight-bold">
-  <p>公開情報</p>
-  </div>
-  <br>
-  <div class="columns">
-    <div class="column is-2">
-      <div class="menubox has-text-centered">
-        <a href="{% url 'overview:overview' %}" class="white_color">マンション概要</a>
+{% comment %} 
+  <section class="sectionbox">
+    <div class="is-size-5 has-text-weight-bold">
+    <p>公開情報</p>
+    </div>
+    <br>
+    <div class="columns">
+      <div class="column is-2">
+        <div class="menubox has-text-centered">
+          <a href="{% url 'overview:overview' %}" class="white_color">マンション概要</a>
+        </div>
+      </div>
+      <div class="column is-2">
+        <div class="menubox has-text-centered">
+          <a href="{% static 'pamphlet.pdf' %}" target="_blank" class="white_color">パンフレット</a>
+        </div>
       </div>
     </div>
-    <div class="column is-2">
-      <div class="menubox has-text-centered">
-        <a href="{% static 'pamphlet.pdf' %}" target="_blank" class="white_color">パンフレット</a>
+  </section>
+  <hr>
+  {% endcomment %}
+  <section class="sectionbox">
+    <div class="is-size-5 has-text-weight-bold">
+      <p>管理組合専用（ログインが必要）</p>
+    </div>
+    <br>
+    {% if perms.library.view_file %}
+      <div class="columns">
+        <div class="column is-2">
+          <div class="menubox has-text-centered">
+            <a class="white_color" href="https://keijiban.sophiagardens.org" target="_blank">掲示板</a>
+          </div>
+        </div>
+        <div class="column is-2">
+          <div class="menubox has-text-centered">
+            <a class="white_color" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    <div class="columns">
+      <div class="column is-2">
+        <div class="menubox has-text-centered">
+          <a href="https://accounting.sophiagardens.org" target="_blank" class="white_color">会計資料</a>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="menubox has-text-centered">
+          <a href="https://facility.sophiagardens.org" target="_blank" class="white_color">共用設備・修繕計画</a>
+        </div>
+      </div>
+      <div class="column is-3">
+        <div class="menubox has-text-centered">
+          <a href="{% url 'information:information' %}" class="white_color">インフォメーション</a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-<hr>
-<section class="sectionbox">
-  <div class="is-size-5 has-text-weight-bold">
-  <p>管理組合専用（ログイン必要）</p>
-  </div>
-  <br>
-  <div class="columns">
-    <div class="column is-2">
-      <div class="menubox has-text-centered">
-        <a href="https://accounting.sophiagardens.org" target="_blank" class="white_color">会計資料</a>
-      </div>
-    </div>
-    {% comment %}
-    <div class="column is-2">
-      <div class="menubox has-text-centered">
-        <a href="https://facility.sophiagardens.org/parking/fig/" target="_blank" class="white_color">駐車場空き状況</a>
-      </div>
-    </div>
-    {% endcomment %}
-    <div class="column is-3">
-      <div class="menubox has-text-centered">
-        <a href="https://facility.sophiagardens.org" target="_blank" class="white_color">共用設備・修繕計画</a>
-      </div>
-    </div>
-    <div class="column is-3">
-      <div class="menubox has-text-centered">
-        <a href="{% url 'information:information' %}" class="white_color">インフォメーション</a>
-      </div>
-    </div>
-    {% comment %} <div class="column is-2">
-      <div class="menubox has-text-centered">
-        <a href="https://gijiroku.sophiagardens.org" target="_blank" class="white_color">議事録</a>
-      </div>
-    </div> {% endcomment %}
-  </div>
-</section>
+  </section>
 </div>
 {% endblock %}

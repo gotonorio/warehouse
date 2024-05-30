@@ -10,9 +10,12 @@
 {% block navbar %}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    {% comment %} <div class="navbar-item">【SG川崎】</div> {% endcomment %}
-    <div class="navbar-item">{{user}}</div>
-    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    {{DRBUG}}
+    {% if DEBUG %}
+      <div class="navbar-item">{{user}}</div>
+    {% else %}
+      <div class="navbar-item">【SG川崎】</div>
+    {% endif %}
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -21,35 +24,32 @@
   </div>
   <div id="navbarMypage" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="{% url 'register:menu' %}">メニュー</a>
+      <a class="navbar-item" href="{% url 'overview:overview' %}">マンション概要</a>
+      <a href="{% static 'pamphlet.pdf' %}" target="_blank" class="white_color navbar-item">パンフレット</a>
       {% if perms.library.view_file %}
         <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
         <a class="navbar-item" href="https://keijiban.sophiagardens.org" target="_blank">掲示板</a>
+        <a class="navbar-item" href="{% url 'register:menu' %}">管理組合メニュー</a>
       {% endif %}
-      <a class="navbar-item" href="{% url 'overview:overview' %}">マンション概要</a>
     </div>
     <div class="navbar-end">
-      {% if perms.register.add_user %}
-        <a class="navbar-item" href="{% url 'register:user_list' %}">ユーザ管理</a>
-      {% endif %}
-      {% if perms.notice.add_news or perms.library.add_file %}
+      {% if perms.notice.add_news %}
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link is-size-6">管理者用</a>
           <div class="navbar-dropdown">
-            {% if perms.notice.add_news %}
-              <a class="navbar-item" href="{% url 'notice:news_list' %}">お知らせ管理</a>
-              {% comment %} <a class="navbar-item" href="{% url 'notice:news_list' %}">お知らせ管理</a> {% endcomment %}
-            {% endif %}
+            <a class="navbar-item" href="{% url 'notice:news_list' %}">お知らせ管理</a>
             {% if perms.library.add_file %}
+              <div class="navbar-divider"></div>
               <a class="navbar-item" href="{% url 'library:big_category_index' %}">文書ファイル登録・修正</a>
               <a class="navbar-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
-            {% endif %}
-            {% if perms.overview.add_room %}
-              <div class="navbar-divider"></div>
               <a class="navbar-item" href="{% url 'overview:overview_list' %}">マンション概要・修正</a>
+              <a class="navbar-item" href="{% url 'control:backupDB' %}">DBバックアップ</a>
+            {% endif %}
+            {% if perms.register.add_user %}
+              <div class="navbar-divider"></div>
+              <a class="navbar-item" href="{% url 'register:user_list' %}">ユーザ一覧</a>
               <a class="navbar-item" href="{% url 'control:control_list' %}">コントロールデータ修正</a>
             {% endif %}
-            <a class="navbar-item" href="{% url 'control:backupDB' %}">DBバックアップ</a>
           </div>
         </div>
       {% endif %}

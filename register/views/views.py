@@ -1,12 +1,13 @@
 # import logging
 
+from control.models import ControlRecord
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views import generic
 from library.models import File
+
 from register.forms import LoginForm
-from control.models import ControlRecord
 
 # https://djangobrothers.com/blogs/referencing_the_user_model/
 User = get_user_model()
@@ -32,7 +33,7 @@ class Logout(LoginRequiredMixin, LogoutView):
     template_name = "register/logout.html"
 
 
-class MenuView(generic.TemplateView):
+class MenuView(LoginRequiredMixin, generic.TemplateView):
     """メニュー画面"""
 
     def get_template_names(self):
