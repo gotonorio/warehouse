@@ -1,8 +1,6 @@
 from django import forms
 
 from overview.models import OverView
-from overview.models import Room
-from django.core.validators import FileExtensionValidator
 
 
 class OverviewForm(forms.ModelForm):
@@ -38,9 +36,7 @@ class OverviewForm(forms.ModelForm):
             "youto_chiiki": forms.TextInput(attrs={"class": "input"}),
             "specified_floor_area_ratio": forms.NumberInput(attrs={"class": "input"}),
             "bouka_chiiki": forms.TextInput(attrs={"class": "input"}),
-            "specified_building_coverage_ratio": forms.NumberInput(
-                attrs={"class": "input"}
-            ),
+            "specified_building_coverage_ratio": forms.NumberInput(attrs={"class": "input"}),
             "height_limit": forms.TextInput(attrs={"class": "input"}),
             "required_parking": forms.TextInput(attrs={"class": "input"}),
             "private_water_equipment": forms.TextInput(attrs={"class": "input"}),
@@ -52,86 +48,3 @@ class OverviewForm(forms.ModelForm):
             "entrance": forms.TextInput(attrs={"class": "input"}),
             "security": forms.TextInput(attrs={"class": "input"}),
         }
-
-
-class RoomForm(forms.ModelForm):
-    """区分所有者データの作成
-    - mishuu_feeは使用停止
-    - created_dateは自動設定
-    """
-
-    class Meta:
-        model = Room
-        fields = (
-            "room_no",
-            "room_type",
-            "owner",
-            "tenant",
-            "parking_fee",
-            "parking_date",
-            "bicycle_fee",
-            "bike_fee",
-            "chounaikai",
-            "comment",
-            "zip_code",
-            "prefecture",
-            "municipality",
-            "house_number",
-            "building",
-            "tel_number",
-        )
-        widgets = {
-            "room_no": forms.NumberInput(
-                attrs={"class": "input", "readonly": "readonly"}
-            ),
-            # 'room_type': forms.Select(attrs={'class': 'select-css', 'disabled': 'disable'}),
-            "room_type": forms.Select(attrs={"class": "input", "readonly": "readonly"}),
-            "owner": forms.TextInput(attrs={"class": "input"}),
-            "tenant": forms.TextInput(attrs={"class": "input"}),
-            "parking_fee": forms.NumberInput(attrs={"class": "input"}),
-            "parking_date": forms.DateInput(attrs={"class": "input"}),
-            "bicycle_fee": forms.NumberInput(attrs={"class": "input"}),
-            "bike_fee": forms.NumberInput(attrs={"class": "input"}),
-            "chounaika": forms.CheckboxInput(attrs={"class": "checkbox"}),
-            # 'mishuu_fee': forms.NumberInput(attrs={'class': 'input'}),
-            "comment": forms.TextInput(attrs={"class": "input"}),
-            "zip_code": forms.TextInput(attrs={"class": "input"}),
-            "prefecture": forms.TextInput(attrs={"class": "input"}),
-            "municipality": forms.TextInput(attrs={"class": "input"}),
-            "house_number": forms.TextInput(attrs={"class": "input"}),
-            "building": forms.TextInput(attrs={"class": "input"}),
-            "tel_number": forms.TextInput(attrs={"class": "input"}),
-        }
-        help_texts = {
-            "zip_code": "※ 郵便番号はハイフン(-)無しです。",
-            "tel_number": "※ 電話番号はハイフン(-)無しです。",
-        }
-
-    def clean_zip_code(self):
-        zip_code = self.cleaned_data.get("zip_code")
-        if zip_code:
-            if "-" in zip_code:
-                self.add_error("zip_code", "郵便番号にハイフン(-)を含めないでください。")
-        return zip_code
-
-    def clean_tel_number(self):
-        tel_number = self.cleaned_data.get("tel_number")
-        if tel_number:
-            if "-" in tel_number:
-                self.add_error("tel_number", "電話番号にハイフン(-)を含めないでください。")
-        return tel_number
-
-
-class CSVImportForm(forms.Form):
-    """部屋番号, 駐車場使用料"""
-
-    allowed_extentions = ["csv"]
-    file = forms.FileField(
-        label="CSVファイル",
-        help_text="※ CSVファイルの1行目はヘッダーです。",
-        validators=[
-            FileExtensionValidator(
-                allowed_extensions=allowed_extentions, message="拡張子.csvのファイルを選択してください。"
-            ),
-        ],
-    )

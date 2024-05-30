@@ -51,3 +51,36 @@
 - FileField()を利用する。
 - upload_toで保存パスを動的に設定する。
 - django_cleanupパッケージでファイル削除を行う。（同じファイル名で保存した場合の処理）
+
+
+##### admin管理画面
+
+1. admin画面で以下のgroupを作成しておく。
+    - chairman （プログラム管理者）
+        - can add user
+        - can add parking_space
+        - can view parking_space
+        - can add kouji_name
+        - can view kouji_name
+    - chief_manager（ユーザ・データ管理者）
+        - can add user
+        - can add parking_space
+        - can view parking_space
+        - can add kouji_name
+        - can view kouji_name
+    - data_manager（修繕計画データ管理を除いたデータ管理）
+        - can add parking_space
+        - can view parking_space
+        - can view kouji_name
+    - director（理事会、専門委員会 : 予定金額を除く閲覧権限）
+        - can view parking_space
+        - can view kouji_name
+    - sophiag（区分所有者 : 予定金額・プライバシー等を除く閲覧権限）
+        - can view parkinga_space
+
+1. admin画面で以下のuserを作成する。
+    - sophiag（区分所有者：閲覧のみ）  
+        - ログインユーザなので、グループ設定は無しで良い。  
+        - パスワードは議事録等で区分所有者に公開する。
+        - データ管理者は、ログイン後に仮登録し、directorグループとする。  
+        - 総合管理者は、chairmanグループとする。  

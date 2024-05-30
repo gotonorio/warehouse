@@ -1,11 +1,8 @@
 import logging
 
-from django.conf import settings
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import F
 from django.views import generic
-
-from overview.models import OverView, Room, RoomType
+from overview.models import OverView, RoomType
 
 logger = logging.getLogger(__name__)
 
@@ -29,48 +26,6 @@ class Overview(generic.TemplateView):
         # 表示を考慮してDictでデータを抽出する。
         qs_dict = OverView.objects.all().values()
         context["ov"] = qs_dict[0]
-        return context
-
-
-class RoomView(PermissionRequiredMixin, generic.TemplateView):
-    """住戸データ"""
-
-    model = Room
-    template_name = "overview/room_list.html"
-    permission_required = "overview.view_room"
-
-    # 管理費等の合計をpython関数で求める。
-    def calc_total(self, sql):
-        """縦の合計を返す"""
-        total = {"total": 0, "parking": 0, "bicycle": 0, "bike": 0, "membershipfee": 0}
-        for d in sql:
-            total["total"] += (
-                d.room_type.kanrihi + d.room_type.shuuzenhi + d.room_type.ryokuchi + d.room_type.niwa
-            )
-            total["parking"] += d.parking_fee
-            if d.chounaikai:
-                total["membershipfee"] += settings.MEMBERSHIP_FEE
-            total["bicycle"] += d.bicycle_fee
-            total["bike"] += d.bike_fee
-        return total
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        qs = Room.objects.all().order_by("room_no")
-        qs = qs.annotate(
-            total=F("room_type__kanrihi")
-            + F("room_type__shuuzenhi")
-            + F("room_type__ryokuchi")
-            + F("room_type__niwa")
-        )
-        total = self.calc_total(qs)
-        context["roomlist"] = qs
-        context["total"] = total["total"]
-        context["total_parking"] = total["parking"]
-        context["total_bicycle"] = total["bicycle"]
-        context["total_bike"] = total["bike"]
-        context["total_membershipfee"] = total["membershipfee"]
-        context["membership_fee"] = settings.MEMBERSHIP_FEE
         return context
 
 

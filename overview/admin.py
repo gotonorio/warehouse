@@ -1,7 +1,6 @@
 from django.contrib import admin
-from overview.models import OverView
-from overview.models import RoomType
-from overview.models import Room
+
+from overview.models import OverView, RoomType
 
 
 class OverViewAdmin(admin.ModelAdmin):
@@ -18,4 +17,3 @@ class RoomAdmin(admin.ModelAdmin):
 
 admin.site.register(OverView, OverViewAdmin)
 admin.site.register(RoomType, RoomTypeAdmin)
-admin.site.register(Room, RoomAdmin)
