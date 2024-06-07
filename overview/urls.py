@@ -19,4 +19,9 @@ urlpatterns = [
         data_views.OverviewUpdateView.as_view(),
         name="overview_update",
     ),
+    path(
+        "roomtype/update/<int:pk>",
+        data_views.RoomTypeUpdateView.as_view(),
+        name="roomtype_update",
+    ),
 ]

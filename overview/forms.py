@@ -1,6 +1,6 @@
 from django import forms
 
-from overview.models import OverView
+from overview.models import OverView, RoomType
 
 
 class OverviewForm(forms.ModelForm):
@@ -47,4 +47,21 @@ class OverviewForm(forms.ModelForm):
             "management": forms.TextInput(attrs={"class": "input"}),
             "entrance": forms.TextInput(attrs={"class": "input"}),
             "security": forms.TextInput(attrs={"class": "input"}),
+        }
+
+
+class RoomTypeForm(forms.ModelForm):
+    """住居タイプデータ編集用フォーム"""
+
+    class Meta:
+        model = RoomType
+        fields = ("type_name", "area", "kanrihi", "shuuzenhi", "ryokuchi", "niwa", "number_unit")
+        widgets = {
+            "type_name": forms.TextInput(attrs={"class": "input"}),
+            "area": forms.NumberInput(attrs={"class": "input"}),
+            "kanrihi": forms.NumberInput(attrs={"class": "input"}),
+            "shuuzenhi": forms.NumberInput(attrs={"class": "input"}),
+            "ryokuchi": forms.NumberInput(attrs={"class": "input"}),
+            "niwa": forms.NumberInput(attrs={"class": "input"}),
+            "number_unit": forms.NumberInput(attrs={"class": "input"}),
         }

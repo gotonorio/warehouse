@@ -1,37 +1,42 @@
 {% extends "base_single_page.html" %}
+
 {% block title %}
-ログイン
-{% endblock %}
+住戸データの修正
+{% endblock title %}
 
 {% block navbar %}
 <nav class="navbar is-fixed-top is-black" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item">【ソフィア・ガーデンズ川崎】</a>
-    {# ハンバーガアイコンのため #}
-    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMainMenu">
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
-  <div id="navbarMainMenu" class="navbar-menu">
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
     <div class="navbar-end">
-      {% if tmp_user_flg == True %}
-        <a class="navbar-item" href="{% url 'register:signup' %}">仮登録</a>
-      {% endif  %}
+      <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
     </div>
   </div>
 </nav>
 {% endblock navbar %}
 
 {% block content %}
-<div class="container is-fluid ">
-  <br>
+<br>
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<div class="container">
   <div class="content has-text-centered">
-    <h4>区分所有者 ログイン</h4>
+    <h4>{{title}}</h4>
   </div>
-  <br>
-  <form method='POST' class='login_container' enctype='multipart/form-data'>
+  <form method='POST' enctype='multipart/form-data' id='form_style'>
     {{ form.non_field_errors }}
     {% for field in form %}
       <div class='field'>
@@ -47,10 +52,10 @@
     {% endfor %}
     {% csrf_token %}
     <br>
-    <div class='my_button has-text-centered'>
-      <button type='submit' class='button is-success'>ログイン</button>
-      <a class="button is-danger" href="{% url 'notice:news_card' %}">戻る</a>
+    <div class='content has-text-centered my_button'>
+      <button type='submit' class='button is-primary'>読込み</button>
+      <a class='button is-danger' href='javascript:void(0);' onclick='window.history.back();'>キャンセル</a>
     </div>
   </form>
-</div>
-{% endblock %}
+  <br>
+{% endblock content %}

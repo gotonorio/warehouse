@@ -50,7 +50,13 @@
       <tbody>
         {% for d in roomtypelist %}
         <tr>
-          <td class="has-text-centered">{{d.type_name}}</td>
+          <td class="has-text-centered">
+            {% if perms.library.add_file %}
+              <a href="{% url 'overview:roomtype_update' d.pk %}">{{d.type_name}}</a>
+            {% else %}
+              {{d.type_name}}
+            {% endif %}
+          </td>
           <td class="has-text-right">{{d.number_unit}}</td>
           <td class="has-text-centered nowrap">{{d.area|floatformat:2}}</td>
           <td class="has-text-right">{{d.kanrihi|intcomma}}</td>
