@@ -10,11 +10,6 @@ urlpatterns = [
     path("roomtype/list", views.RoomTypeView.as_view(), name="roomtype_list"),
     # データ処理
     path(
-        "overview/list",
-        data_views.OverviewUpdateListView.as_view(),
-        name="overview_list",
-    ),
-    path(
         "overview/update/<int:pk>",
         data_views.OverviewUpdateView.as_view(),
         name="overview_update",

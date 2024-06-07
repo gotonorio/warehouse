@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_single_page.html' %}
 {% load static %}
 {% load humanize %}
 
@@ -22,6 +22,9 @@
       <a class="navbar-item" href="{% url 'overview:roomtype_list' %}">管理費等</a>
     </div>
     <div class="navbar-end">
+      {% if perms.library.add_file %}
+        <a class="navbar-item" href="{% url 'overview:overview_update' ov.pk %}">修正</a>
+      {% endif %}
       <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
     </div>
   </div>
@@ -34,7 +37,7 @@
   <div class="content has-text-centered">
     <h4>{{ov.name}} マンション概要</h4>
   </div>
-  <table class="table is-narrow is-responsible is-bordered">
+  <table class="table table_center_nowrap is-narrow is-responsible is-bordered">
     <tbody>
       <tr>
         <td class="has-text-left" rowspan="5">建物概要</td>

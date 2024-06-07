@@ -21,11 +21,9 @@ class Overview(generic.TemplateView):
         return [template_name]
 
     def get_context_data(self, **kwargs):
-        """最新の日付データをタイトルとして表示する"""
         context = super().get_context_data(**kwargs)
-        # 表示を考慮してDictでデータを抽出する。
-        qs_dict = OverView.objects.all().values()
-        context["ov"] = qs_dict[0]
+        qs = OverView.objects.all()
+        context["ov"] = qs[0]
         return context
 
 

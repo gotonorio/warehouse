@@ -42,7 +42,6 @@
               <div class="navbar-divider"></div>
               <a class="navbar-item" href="{% url 'library:big_category_index' %}">文書ファイル登録・修正</a>
               <a class="navbar-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
-              <a class="navbar-item" href="{% url 'overview:overview_list' %}">マンション概要・修正</a>
               <a class="navbar-item" href="{% url 'control:backupDB' %}">DBバックアップ</a>
             {% endif %}
             {% if perms.register.add_user %}
