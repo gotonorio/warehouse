@@ -37,11 +37,11 @@
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link is-size-6">管理者用</a>
           <div class="navbar-dropdown">
-            <a class="navbar-item" href="{% url 'notice:news_list' %}">お知らせ管理</a>
+            <a class="navbar-item" href="{% url 'notice:news_list' %}">トップ画面の編集</a>
             {% if perms.library.add_file %}
               <div class="navbar-divider"></div>
               <a class="navbar-item" href="{% url 'library:big_category_index' %}">文書ファイル登録・修正</a>
-              <a class="navbar-item" href="{% url 'information:info_list' %}">情報ファイル登録・修正</a>
+              <a class="navbar-item" href="{% url 'information:info_list' %}">マンション情報の編集</a>
               <a class="navbar-item" href="{% url 'control:backupDB' %}">DBバックアップ</a>
             {% endif %}
             {% if perms.register.add_user %}
