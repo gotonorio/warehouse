@@ -31,12 +31,6 @@ class FileIndexView(PermissionRequiredMixin, generic.ListView):
         return File.objects.order_by("category", "rank")
 
 
-# def indirect_link(request, pk):
-#     """ 間接リンク。実際のURLへリダイレクト """
-#     file = get_object_or_404(File, pk=pk)
-#     return redirect(file.src.url)
-
-
 class FileCategoryView(PermissionRequiredMixin, generic.ListView):
     """管理者用 カテゴリ別のファイル一覧"""
 
@@ -333,11 +327,13 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
         return context
 
 
-# @login_required
+@login_required
 def pdf_view(request, pk):
     """静的ファイル（PDFファイル）の閲覧処理
-    - 効率的にはwebサーバが静的ファイルを配信するべきだが、セキュリティを重視するためdjangoで配信してみる実験。
-    - 余計なコードも残しておく。
+    - 効率的には下記のようにwebサーバが静的ファイルを配信する。urlをコピーするとログインせずに表示できてしまう。
+    - <a href="{{file.src.url}}" target="_blank" rel="noopener noreferrer" download>{{file.title}}</a>
+    - セキュリティを重視するため下記のように配信用の関数を使う。
+    - <a href="{% url 'library:file_view' file.pk %}" target="_blank">{{file.title}}</a>
     """
     fn = get_object_or_404(File, pk=pk)
     if fn.category.restrict:
@@ -347,6 +343,9 @@ def pdf_view(request, pk):
             else:
                 return FileResponse(fn.src)
         else:
+            # @login_required制限をはずすと、ログインしない場合に下記を実行する。
+            # ログイン画面に戻す場合は@login_requiredをセットする。
+            # メイン画面に戻す場合は@login_requiredを外す。
             return redirect("notice:news_card")
     else:
         if fn.download:
