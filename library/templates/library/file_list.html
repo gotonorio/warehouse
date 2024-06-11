@@ -40,39 +40,53 @@
     <a class="button is-primary" href="javascript:void(0);" onclick="window.history.back();">前に戻る</a>
   </div>
   <br>
-  <table class="table is-narrow is-bordered is-striped">
-    <thead>
-      <tr>
-        <th class="has-text-centered">タイトル</th>
-        <th class="has-text-centered">カテゴリ</th>
-        <th class="has-text-centered">src</th>
-        <th class="has-text-centered">登録日</th>
-        <th class="has-text-centered">表示</th>
-        <th class="has-text-centered">rank</th>
-        <th class="has-text-centered">#</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for file in file_list %}
-      <tr>
-        <td class="has-text-left">{{file.title}}</td>
-        <td class="has-text-left">{{file.category.name}}</td>
-        <td class="has-text-left">{{file.src}}</td>
-        <td class="has-text-left">{{file.created_at|date:"Y-m-d"}}</td>
-        <td class="has-text-centered">{{ file.alive }}</td>
-        <td class="has-text-centered">{{ file.rank }}</td>
-        <td class="nowrap">
-          <a href="{% url 'library:file_update' file.pk %}" class="button is-primary is-small">
-            更新
-          </a>
-          <a href="{% url 'library:file_delete' file.pk %}" class="button is-danger is-small">
-            削除
-          </a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="table-container">
+    <table class="table table_nowrap is-narrow is-bordered is-striped">
+      <thead>
+        <tr>
+          <th class="has-text-centered">タイトル</th>
+          <th class="has-text-centered">親カテゴリ</th>
+          <th class="has-text-centered">カテゴリ</th>
+          <th class="has-text-centered">src</th>
+          <th class="has-text-centered">登録日</th>
+          <th class="has-text-centered">表示</th>
+          <th class="has-text-centered">rank</th>
+          <th class="has-text-centered">#</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for file in file_list %}
+        <tr>
+          {% if file.alive %}
+            <td class="has-text-left">{{file.title}}</td>
+            <td class="has-text-left">{{file.category.parent}}</td>
+            <td class="has-text-left">{{file.category.name|truncatechars:16}}</td>
+            <td class="has-text-left">{{file.src}}</td>
+            <td class="has-text-left">{{file.created_at|date:"Y-m-d"}}</td>
+            <td class="has-text-centered">{{ file.alive }}</td>
+            <td class="has-text-centered">{{ file.rank }}</td>
+          {% else %}
+            <td class="has-text-left has-text-danger">{{file.title}}</td>
+            <td class="has-text-left has-text-danger">{{file.category.parent}}</td>
+            <td class="has-text-left has-text-danger">{{file.category.name|truncatechars:16}}</td>
+            <td class="has-text-left has-text-danger">{{file.src}}</td>
+            <td class="has-text-left has-text-danger">{{file.created_at|date:"Y-m-d"}}</td>
+            <td class="has-text-centered has-text-danger">{{ file.alive }}</td>
+            <td class="has-text-centered has-text-danger">{{ file.rank }}</td>
+          {% endif %}
+          <td class="nowrap">
+            <a href="{% url 'library:file_update' file.pk %}" class="button is-primary is-small">
+              更新
+            </a>
+            <a href="{% url 'library:file_delete' file.pk %}" class="button is-danger is-small">
+              削除
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
   <br>
   <div class="text-center">
   {% include "page.html" %}

@@ -28,6 +28,16 @@
 {% block content %}
 <div class="container is-fluid">
   <br>
+  {% if messages %}
+    <div class="container" style="margin-top:1rem;">
+      <div class="notification is-info">
+        <button class="delete" type="button"></button>
+        {% for message in messages %}
+          <p>{{message}}</p>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
   <div class="content">
     <h3>カテゴリ一覧</h3>
     {% if big_pk %}
@@ -55,11 +65,19 @@
     <tbody>
       {% for category in category_list %}
       <tr>
-        <td class="has-text-left"><div class="cell_min_200">{{ category.name }}</div></td>
-        <td class="has-text-left">{{ category.path_name }}</td>
-        <td class="has-text-left">{{ category.parent }}</td>
-        <td class="has-text-centered">{{ category.restrict }}</td>
-        <td class="has-text-centered">{{ category.alive }}</td>
+        {% if category.alive %}
+          <td class="has-text-left">{{ category.name }}</td>
+          <td class="has-text-left">{{ category.path_name }}</td>
+          <td class="has-text-left">{{ category.parent }}</td>
+          <td class="has-text-centered">{{ category.restrict }}</td>
+          <td class="has-text-centered">{{ category.alive }}</td>
+        {% else %}
+          <td class="has-text-left has-text-danger">{{ category.name }}</td>
+          <td class="has-text-left has-text-danger">{{ category.path_name }}</td>
+          <td class="has-text-left has-text-danger">{{ category.parent }}</td>
+          <td class="has-text-centered has-text-danger">{{ category.restrict }}</td>
+          <td class="has-text-centered has-text-danger">{{ category.alive }}</td>
+        {% endif %}
         <td class="has-text-centered">{{ category.rank }}</td>
         <td class="has-text-left nowrap">
           <a href="{% url 'library:file_category' category.pk %}" class="button is-primary is-small">

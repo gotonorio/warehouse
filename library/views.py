@@ -1,10 +1,12 @@
 import logging
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
+from django.db import models
 from django.db.models import Q
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404, redirect
@@ -28,7 +30,7 @@ class FileIndexView(PermissionRequiredMixin, generic.ListView):
     # paginate_by = 50
 
     def get_queryset(self):
-        return File.objects.order_by("category", "rank")
+        return File.objects.order_by("-alive", "category", "rank")
 
 
 class FileCategoryView(PermissionRequiredMixin, generic.ListView):
@@ -45,7 +47,7 @@ class FileCategoryView(PermissionRequiredMixin, generic.ListView):
     def get_queryset(self):
         """カテゴリでfilter."""
         category_pk = self.kwargs["category_pk"]
-        return File.objects.filter(category__pk=category_pk).order_by("-rank")
+        return File.objects.filter(category__pk=category_pk).order_by("-alive", "-rank")
 
     def get_context_data(self, *args, **kwargs):
         """カテゴリのpkをテンプレートへ渡す."""
@@ -141,7 +143,7 @@ class CategoryIndexView(PermissionRequiredMixin, generic.ListView):
     # paginate_by = 20
 
     def get_queryset(self):
-        return Category.objects.order_by("parent__rank")
+        return Category.objects.order_by("-alive", "parent__rank")
 
 
 class CategoryBigView(PermissionRequiredMixin, generic.ListView):
@@ -157,7 +159,7 @@ class CategoryBigView(PermissionRequiredMixin, generic.ListView):
     def get_queryset(self):
         """カテゴリでfilter."""
         big_pk = self.kwargs["big_pk"]
-        return Category.objects.filter(parent__pk=big_pk).order_by("-rank", "-created_at")
+        return Category.objects.filter(parent__pk=big_pk).order_by("-alive", "-rank", "-created_at")
 
     def get_context_data(self, *args, **kwargs):
         """親カテゴリのpkをテンプレートへ渡す."""
@@ -205,6 +207,15 @@ class CategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     success_url = reverse_lazy("library:category_index")
+
+    def post(self, request, *args, **kwargs):
+        """保護されたファイルが存在して削除失敗時の処理"""
+        try:
+            obj = self.get_object()
+            obj.delete()
+        except models.ProtectedError as e:
+            messages.error(request, f"「{obj}」はファイルに紐付けられているため削除できません。{e}")
+            return redirect("library:category_index")
 
 
 class BigCategoryIndexView(PermissionRequiredMixin, generic.ListView):
@@ -254,6 +265,15 @@ class BigCategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     success_url = reverse_lazy("library:big_category_index")
+
+    def post(self, request, *args, **kwargs):
+        """保護されたカテゴリーが存在して削除失敗時の処理"""
+        try:
+            obj = self.get_object()
+            obj.delete()
+        except models.ProtectedError as e:
+            messages.error(request, f"「{obj}」はカテゴリーに紐付けられているため削除できません。{e}")
+            return redirect("library:big_category_index")
 
 
 class BigCategoryView(generic.TemplateView):

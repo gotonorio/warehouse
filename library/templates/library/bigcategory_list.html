@@ -28,6 +28,16 @@
 {% block content %}
 <div class="container is-fluid">
   <br>
+  {% if messages %}
+    <div class="container" style="margin-top:1rem;">
+      <div class="notification is-info">
+        <button class="delete" type="button"></button>
+        {% for message in messages %}
+          <p>{{message}}</p>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
   <div class="content">
     <h3>親カテゴリ一覧</h3>
     <a href="{% url 'library:big_category_create' %}" class="button is-primary">新規作成</a>
@@ -40,6 +50,7 @@
         <tr>
           <th class="has-text-centered">親カテゴリ名</th>
           <th class="has-text-centered">作成日</th>
+          <th class="has-text-centered">有効</th>
           <th class="has-text-centered">rank</th>
           <th class="has-text-centered">#</th>
         </tr>
@@ -47,9 +58,17 @@
       <tbody>
         {% for pcategory in bigcategory_list %}
           <tr>
-            <td class="has-text-left">{{ pcategory.name }}</td>
-            <td class="has-text-left">{{ pcategory.created_at }}</td>
-            <td class="has-text-centered">{{ pcategory.rank }}</td>
+            {% if pcategory.alive %}
+              <td class="has-text-left">{{ pcategory.name }}</td>
+              <td class="has-text-left">{{ pcategory.created_at }}</td>
+              <td class="has-text-left">{{ pcategory.alive }}</td>
+              <td class="has-text-centered">{{ pcategory.rank }}</td>
+            {% else %}
+              <td class="has-text-left has-text-danger">{{ pcategory.name }}</td>
+              <td class="has-text-left has-text-danger">{{ pcategory.created_at }}</td>
+              <td class="has-text-left has-text-danger">{{ pcategory.alive }}</td>
+              <td class="has-text-centered has-text-danger">{{ pcategory.rank }}</td>
+            {% endif %}
             <td>
                 </a>
                 <a href="{% url 'library:category_big' pcategory.pk %}" class="button is-primary is-small">

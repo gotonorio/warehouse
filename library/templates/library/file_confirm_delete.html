@@ -24,11 +24,13 @@
 {% endblock navbar %}
 
 {% block content %}
-<div class="container">
+<div class="container is-fluid">
   <form action="" method="POST" enctype='multipart/form-data'>
-    <div class="content has-text-centered">
-      <p>タイトル:{{ file.title }}</p>
+    <div class="content">
+      <br>
       <p>カテゴリ名:{{ file.category.name }}</p>
+      <p>タイトル:{{ file.title }}</p>
+      <p>ファイル名:{{file.src}}</p>
       <button type="submit" class="button is-danger">削除する</button>
       <a class="button is-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
     </div>
