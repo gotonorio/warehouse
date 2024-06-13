@@ -2,7 +2,8 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+
+# from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
@@ -347,7 +348,7 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
         return context
 
 
-@login_required
+# @login_required
 def pdf_view(request, pk):
     """静的ファイル（PDFファイル）の閲覧処理
     - 効率的には下記のようにwebサーバが静的ファイルを配信する。urlをコピーするとログインせずに表示できてしまう。
