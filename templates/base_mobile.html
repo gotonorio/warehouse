@@ -8,6 +8,13 @@
   <link rel="shortcut icon" type="image/png" href="{{STATIC_URL}}/static/favicon.ico" />
   <link rel="apple-touch-icon-precomposed" href="{{STATIC_URL}}/static/apple-touch-icon-precomposed.png">
 
+  <style>
+    .custom_container {
+      padding: 6px;
+      {% comment %} left-margin: 6px; {% endcomment %}
+      {% comment %} right-margin: 6px; {% endcomment %}
+    }
+  </style>
   {# css #}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
   {% comment %} <link href="{% static 'bulma.min.css' %}" rel="stylesheet"> {% endcomment %}
@@ -30,7 +37,8 @@
   {% endblock %}
   <br>
   <!-- contents -->
-  <div class="container is-fluid">
+  <div class="container custom_container">
+  {% comment %} <div class="container is-fluid"> {% endcomment %}
   <main>
     <div class="columns">
       <!-- 本体 -->
@@ -42,6 +50,7 @@
       <div class="column">
         <div class="content">
           <table class="table table_nowrap is-bordered is-fullwidth">
+          {% comment %} <table class="table table_nowrap is-bordered"> {% endcomment %}
             <thead>
               <tr class="has-background-dark">
                 <th class="has-text-centered has-text-white">文書資料</th>
