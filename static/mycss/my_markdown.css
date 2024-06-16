@@ -5,11 +5,11 @@
   margin:0px;
 }
 
-.markdown strong {
-  /* background-color: yellow; */
+/* .markdown strong {
+  background-color: yellow;
   color: var(--main-bg);
   background-color: var(--main-text);
-}
+} */
 
 /* 767px以下ではmargin-leftを4pxにする */
 @media screen and (max-width: 767px) {
