@@ -22,7 +22,11 @@ class InformationView(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         """最新の日付データをタイトルとして表示する"""
         context = super().get_context_data(**kwargs)
-        qs = Information.objects.filter(display_info=True).order_by("-created_at")
+        qs = (
+            Information.objects.filter(display_info=True)
+            .filter(type_name__type_name="情報")
+            .order_by("-created_at")
+        )
         context["information_list"] = qs
         return context
 
