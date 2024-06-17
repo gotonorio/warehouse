@@ -43,10 +43,3 @@ class MenuView(LoginRequiredMixin, generic.TemplateView):
         else:
             template_name = "register/menu_pc.html"
         return [template_name]
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        qs = File.objects.filter(title="基本使用規則")
-        for kisoku in qs:
-            context["kisoku"] = kisoku
-        return context

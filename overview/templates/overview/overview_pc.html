@@ -20,6 +20,7 @@
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
       <a class="navbar-item" href="{% url 'overview:roomtype_list' %}">管理費等</a>
+      <a href="{% static 'pamphlet.pdf' %}" target="_blank" class="white_color navbar-item">パンフレット</a>
     </div>
     <div class="navbar-end">
       {% if perms.library.add_file %}

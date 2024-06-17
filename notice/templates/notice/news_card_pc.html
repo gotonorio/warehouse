@@ -24,12 +24,11 @@
   </div>
   <div id="navbarMypage" class="navbar-menu">
     <div class="navbar-start">
+      <a class="navbar-item" href="{% url 'register:menu' %}">管理組合メニュー</a>
       <a class="navbar-item" href="{% url 'overview:overview' %}">マンション概要</a>
-      <a href="{% static 'pamphlet.pdf' %}" target="_blank" class="white_color navbar-item">パンフレット</a>
       {% if perms.library.view_file %}
         <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
         <a class="navbar-item" href="https://keijiban.sophiagardens.org" target="_blank">掲示板</a>
-        <a class="navbar-item" href="{% url 'register:menu' %}">管理組合メニュー</a>
       {% endif %}
     </div>
     <div class="navbar-end">
@@ -53,7 +52,7 @@
         </div>
       {% endif %}
       {% if not user.id %}
-        <a class="navbar-item" href="{% url 'register:login' %}">区分所有者ログイン</a>
+        <a class="navbar-item" href="{% url 'register:login' %}">ログイン</a>
       {% else %}
         <form method="post" class="navbar-item" action="{% url 'register:logout' %}">
           {% csrf_token %}

@@ -2,10 +2,7 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
-
-# from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
 from django.db import models
 from django.db.models import Q
@@ -227,7 +224,7 @@ class BigCategoryIndexView(PermissionRequiredMixin, generic.ListView):
     model = BigCategory
     # 必要な権限
     permission_required = "library.add_file"
-    # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
+    # 権限がない場合、Forbidden 403を返す。403.htmlがない場合はログイン画面に飛ばす。
     raise_exception = True
     queryset = BigCategory.objects.order_by("rank")
     # paginate_by = 20
@@ -278,8 +275,9 @@ class BigCategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
 
 
 class BigCategoryView(generic.TemplateView):
-    """メニューで選択された「BigCategory」に属するファイルを「Category」毎
-    に表示する。表示数は300に制限している。（増えたら settings.py で変更してね）
+    """メニューで選択された「BigCategory」に属するファイルを「Category」毎に表示する。
+    - 表示数は300に制限している。（増えたら settings.py で変更する）
+    - limit = settings.SELECT_LIMIT_NUM
     """
 
     template_name = "library/main_category.html"
@@ -289,17 +287,14 @@ class BigCategoryView(generic.TemplateView):
         big_category = get_object_or_404(BigCategory, pk=self.kwargs["pk"])
         # user.idは、ログインしていないとNoneとなる。
         user = self.request.user
-        # ログインしている場合は表示。していない場合はrestrict=Trueのカテゴリは非表示とする。
         category_obj = Category.objects.filter(parent=big_category, alive=True)
+        # ログイン制限(restrict=True)があるカテゴリはPermissionエラーを返す。
         if user.id is None:
             category_obj = category_obj.filter(restrict=False).order_by("parent__rank", "-rank")
-            # raise 403
             if len(category_obj) < 1:
                 raise PermissionDenied()
         else:
-            if settings.DEBUG:
-                perm_tuple = [(x.name) for x in Permission.objects.filter(user=user)]
-                logging.debug(perm_tuple)
+            # ログインの場合はカテゴリを表示する。
             category_obj = category_obj.order_by("parent__rank", "-rank")
         # settings.pyでSELECT構文のLIMIT値を設定してある。
         limit = settings.SELECT_LIMIT_NUM
@@ -348,7 +343,6 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
         return context
 
 
-# @login_required
 def pdf_view(request, pk):
     """静的ファイル（PDFファイル）の閲覧処理
     - 効率的には下記のようにwebサーバが静的ファイルを配信する。urlをコピーするとログインせずに表示できてしまう。
