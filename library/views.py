@@ -280,7 +280,13 @@ class BigCategoryView(generic.TemplateView):
     - limit = settings.SELECT_LIMIT_NUM
     """
 
-    template_name = "library/main_category.html"
+    def get_template_names(self):
+        """templateファイルを切り替える"""
+        if self.request.user_agent_flag == "mobile":
+            template_name = "library/main_category_mobile.html"
+        else:
+            template_name = "library/main_category.html"
+        return [template_name]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

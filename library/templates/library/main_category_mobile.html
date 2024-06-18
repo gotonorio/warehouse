@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- navbar -->
+{% block navbar %}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{% url 'notice:news_card' %}">ホーム</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMypage">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarMypage" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+
+{% block header %}
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="has-text-centered">
+      <div class="title is-size-5"> ソフィア・ガーデンズ川崎 </div>
+      <div class="subtitle is-size-6">{{big_category_name}}</div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{# 親カテゴリに属するカテゴリ毎にループを回して、各カテゴリごとにファイルをtableで表示する。 #}
+{% block content %}
+{% for category in category_list %}
+  <div class="content">
+    <h3>{{category.0.category}}</h3>
+  </div>
+  <table class="table is-narrow is-striped is-bordered">
+    <thead>
+      <tr class="has-background-dark">
+        <th class="has-text-centered has-text-white">文書名</th>
+        <th class="has-text-centered has-text-white">概要</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for file in category %}
+      <tr>
+        {% if file.download %}
+          {% comment %} nginxで配布させると効率的だが、表示urlのコピーでログイン無しで再表示できてしまう {% endcomment %}
+          {% comment %} <td class="has-text-left"><a href="{{file.src.url}}" target="_blank" rel="noopener noreferrer" download>{{file.title}}</a></td> {% endcomment %}
+          <td class="has-text-left"><a href="{% url 'library:file_view' file.pk %}" download>{{file.title}}</a></td>
+        {% else %}
+          {% comment %} nginxで配布させると効率的だが、表示urlのコピーでログイン無しで再表示できてしまう {% endcomment %}
+          {% comment %} <td class="has-text-left"><a href="{{file.src.url}}" target="_blank" rel="noopener noreferrer">{{file.title}}</a></td> {% endcomment %}
+          <td class="has-text-left"><a href="{% url 'library:file_view' file.pk %}" target="_blank">{{file.title}}</a></td>
+        {% endif %}
+        {% if forloop.counter < comment_limit %}
+          <td class="has-text-left">{{file.summary|escape|linebreaksbr|urlize}}</td>
+        {% else %}
+          <td class="has-text-left is-size-7">1カテゴリー当たりの表示件数上限を超えました。</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br>
+{% endfor %}
+{% endblock %}
