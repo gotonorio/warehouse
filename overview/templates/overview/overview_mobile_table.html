@@ -1,0 +1,233 @@
+{% extends 'base_single_page.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block head %}
+  <link href="{% static 'mycss/mobile.css' %}" rel="stylesheet">
+{% endblock head %}
+
+{% block navbar %}
+{# https://bulma.io/documentation/components/navbar/ #}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+      <a class="navbar-item" href="{% url 'overview:roomtype_list' %}">管理費等</a>
+    <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+
+{% block content %}
+<br>
+<div class="container">
+  <div class="content text_mobile">
+    <h4>建物概要</h4>
+    <table class="table is-narrow is-responsible">
+      <tbody>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">建築確認認可年月</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.kenchiku_kakunin}}</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">竣工年</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.shunkou}} 年</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">総戸数</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.soukosu}} 戸</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">構造</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.kouzou}}</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">平置き駐車場</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.flat_parking}} 台</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">機械式駐車場</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.machine_parking}} 台</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">駐輪場</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.bicycle_parking}} 台</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">バイク置場</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.bike_parking}} 台</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>面積等</h4>
+    <table class="table is-narrow is-responsible">
+      <tbody>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">敷地面積</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.site_area|intcomma}} m2</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">容積率</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.floor_area_ratio}} %</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">建築面積</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.building_area|intcomma}} m2</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">建ぺい率</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.building_coverage_ratio}} %</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">延べ床面積</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.total_floor_area|intcomma}} m2</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">容積対象面積</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.volume_target_area|intcomma}} m2</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">基準階階高</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.standard_floor_height}} m</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">最高高さ</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.max_height}} m</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>法規制</h4>
+    <table class="table is-narrow is-responsible">
+      <tbody>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">用途地域</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.youto_chiiki}}</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">指定容積率</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.specified_floor_area_ratio}} %</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">防火地域</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.bouka_chiiki}}</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">指定建ぺい率</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.specified_building_coverage_ratio}} %</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">高度制限</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.height_limit}}</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">必要駐車場台数</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.required_parking}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>設備概要</h4>
+    <table class="table is-narrow is-responsible">
+      <tbody>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">専有部給水設備</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.private_water_equipment}}</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">共用部給水設備</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.public_water_equipment}}</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">共用部エントランス</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.entrance}}</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">防犯カメラ</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.security}}</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">トランクルーム</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.trunk_room}}</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">宅配ボックス</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.delivery_box}}</td>
+        </tr>
+        <tr>
+          <td class="has-text-centered has-background-grey-lighter has-text-black">インターネット</td>
+        </tr>
+        <tr>
+          <td class="has-text-left">{{ov.network}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+</div>
+{% endblock %}

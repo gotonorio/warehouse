@@ -55,8 +55,8 @@ a.vmenu {
     text-decoration: none; 
     color:#000000; /* リンク要素のデフォルトの青を黒に */
     font-size:100%;
-    /*猫の足跡は背景として敷く。背景画像は繰り返さず、横0、上10px空けて配置する*/
-    background:url(/static/cat_foot.png) no-repeat 0 7px ;
+    /*猫の足跡は背景として敷く。背景画像は繰り返さず、横0、上3px空けて配置する*/
+    background:url(/static/cat_foot.png) no-repeat 0 3px ;
     /*猫の足跡アイコンとメニュー項目の文字がカブらないように、左側を20px空ける*/
     padding:3px 0 3px 20px;
     color: var(--main-text);
