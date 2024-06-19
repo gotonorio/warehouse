@@ -28,7 +28,7 @@
       {% endif %}
       {% if perms.notice.add_news or perms.library.add_file %}
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link is-size-6">管理者用</a>
+          <a class="navbar-link">管理者用</a>
           <div class="navbar-dropdown">
             {% if perms.notice.add_news %}
               <a class="dropdown-item" href="{% url 'notice:news_list' %}">お知らせ管理</a>
