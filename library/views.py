@@ -334,10 +334,10 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = File.objects.order_by("-created_at")
         keyword = self.request.GET.get("keyword")
+        kw_list = keyword.split()
+        q_objects = self.mk_q_objects(kw_list)
         if keyword:
-            queryset = queryset.filter(
-                Q(title__icontains=keyword) | Q(key_word__icontains=keyword) | Q(summary__icontains=keyword)
-            )
+            queryset = queryset.filter(q_objects)
             queryset = queryset.distinct()
         return queryset
 
@@ -347,6 +347,17 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
         keyword = self.request.GET.get("keyword")
         context["keyword"] = keyword
         return context
+
+    def mk_q_objects(self, kw_list):
+        """and検索のためのQオブジェクトを生成する"""
+        q_obj = Q()
+        for value in kw_list:
+            q_obj &= (
+                Q(**{"title__icontains": value})
+                | Q(**{"key_word__icontains": value})
+                | Q(**{"summary__icontains": value})
+            )
+        return q_obj
 
 
 def pdf_view(request, pk):
