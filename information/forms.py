@@ -9,7 +9,7 @@ class InformationForm(forms.ModelForm):
     class Meta:
         model = Information
         fields = "__all__"
-        fields = ("title", "comment", "information", "display_info", "created_at", "type_name")
+        fields = ("title", "comment", "information", "display_info", "created_at", "type_name", "sequense")
         widgets = {
             "title": forms.TextInput(
                 attrs={
@@ -39,6 +39,11 @@ class InformationForm(forms.ModelForm):
             "type_name": forms.Select(
                 attrs={
                     "class": "select-css",
+                }
+            ),
+            "sequense": forms.NumberInput(
+                attrs={
+                    "class": "input",
                 }
             ),
         }

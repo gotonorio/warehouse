@@ -22,6 +22,7 @@ class Information(models.Model):
     members_only = models.BooleanField(default=True)
     created_at = models.DateTimeField(verbose_name="作成日", default=timezone.now)
     type_name = models.ForeignKey(InformationType, on_delete=models.PROTECT, blank=True, null=True)
+    sequense = models.IntegerField(verbose_name="表示順", default=0)
 
     def __str__(self):
         return self.title

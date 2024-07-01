@@ -25,7 +25,7 @@ class InformationView(LoginRequiredMixin, generic.TemplateView):
         qs = (
             Information.objects.filter(display_info=True)
             .filter(type_name__type_name="情報")
-            .order_by("-created_at")
+            .order_by("-sequense")
         )
         context["information_list"] = qs
         return context
@@ -36,7 +36,7 @@ class InfoListView(generic.ListView):
 
     model = Information
     template_name = "information/info_manage_list.html"
-    queryset = Information.objects.order_by("-created_at")
+    queryset = Information.objects.order_by("-sequense")
 
 
 class InformationCreateView(PermissionRequiredMixin, generic.CreateView):
