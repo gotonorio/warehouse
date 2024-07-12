@@ -24,4 +24,6 @@ urlpatterns = [
         views.InformationDeleteView.as_view(),
         name="info_delete",
     ),
+    # PDF出力
+    path("make_pdf/<int:pk>/", views.weasyprint, name="make_pdf"),
 ]

@@ -1,0 +1,28 @@
+{% extends "base_single_page.html" %}
+{% load static %}
+{% load mytag %}
+
+{% block head %}
+  <link href="{% static 'mycss/my_markdown.css' %}" rel="stylesheet">
+{% endblock head%}
+
+<!-- navbar -->
+{% block navbar %}
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+<div class="container">
+  <div class="card content">
+    <header class="card-header">
+      <p class="card-header-title">
+        {{target.title}}
+      </p>
+    </header>
+    {{target.created_at|date}}
+    <div class="card-content markdown table is-size-7 is-bordered is-narrow">
+      {{target.information| markdown_to_html}}
+    </div>
+  </div>
+</div>
+{% endblock %}
