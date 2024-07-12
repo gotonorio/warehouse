@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
@@ -5,6 +7,8 @@ from django.views import generic
 
 from information.forms import InformationForm
 from information.models import Information
+
+logger = logging.getLogger(__name__)
 
 
 class InformationView(LoginRequiredMixin, generic.TemplateView):
@@ -96,7 +100,7 @@ def weasyprint(request, pk):
     target_qs = Information.objects.get(id=pk)
 
     # pdf化するtemplatesを読み込む
-    html_template = get_template("information/target_information.html")
+    html_template = get_template("information/weasyprint.html")
 
     html_str = html_template.render({"target": target_qs}, request)
     pdf_file = HTML(
@@ -105,6 +109,6 @@ def weasyprint(request, pk):
         base_url=request.build_absolute_uri(),
     ).write_pdf()
     response = HttpResponse(pdf_file, content_type="application/pdf")
-    file_name = "target.pdf"
+    file_name = "information.pdf"
     response["Content-Disposition"] = f"attachment; filename={file_name}"
     return response
