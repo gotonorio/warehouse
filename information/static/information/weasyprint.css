@@ -1,0 +1,73 @@
+body.pdf {
+  /* dockerコンテナでfont-noto-cjkをインストールしておく */
+  /* font-family: "Noto Sans CJK JP"; */
+  font-family: serif !important;
+  font-size: 80%;
+}
+
+/* https://stackoverflow.com/questions/34654071/print-page-count-with-total-number-of-pages-using-css */
+@page {
+  /* margin: 4rem; */
+  margin-top: 1.0cm;
+  margin-bottom: 1.0cm;
+  margin-left: 1.0cm;
+  margin-right: 1.0cm;
+  size: A4;
+  @bottom-center {
+    content: counter(page) "/" counter(pages);
+  }
+}
+
+/* エラーの場合に作成されるul要素は、errorlistというクラス名がついている */
+.errorlist {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  color: red;
+}
+
+/* tableセル幅を自動調整 */
+table, th, td {
+  width: auto !important;
+  border: 1px solid black;
+}
+/* 文字折り返し禁止*/
+table tr {
+  white-space: nowrap;
+}
+th {
+  background: #EEE;
+}
+.columns > div.column {
+  text-align: left;
+}
+.columns {
+  margin-top: 0px;
+}
+.columns:not(:last-child) {
+  margin-bottom: 2px;
+}
+.columns_border {
+  margin-top: 0;
+  border: solid 1px black;
+}
+.gidai {
+  padding-left: 10px;
+  font-size: 110%;
+  font-weight: 600;
+  border: solid 1px black;
+}
+.center {
+  text-align: center;
+}
+.right {
+  text-align: right;
+}
+
+/* tagメニュー */
+.tag {
+  margin-bottom: 1px;
+  margin-left: 10px;
+  margin-right: 0.1em;
+  border: 1px solid;
+}
