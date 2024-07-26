@@ -77,6 +77,9 @@ class FileCreateView(PermissionRequiredMixin, generic.CreateView):
         # file登録のログを記録する。
         file_name = form.cleaned_data["src"]
         logger.info(f"create {file_name} by {self.request.user}")
+        # ToDo 保存したpdfファイルのmetadata（Microsoft print to PDFで作成された）を処理する。
+        File.fix_pdf_file(file.src)
+        # logger.debug(file.src)
 
         # 保存してもう一つ追加ボタンのとき
         if action == "send_more":
