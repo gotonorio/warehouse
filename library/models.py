@@ -117,7 +117,9 @@ class File(models.Model):
             writer.add_metadata(new_metadata)
             # 修正されたPDFを保存するためにバイトIOオブジェクトに変換
             pdf_io = io.BytesIO()
+            # バイトIOオブジェクトにPDFを書き込む
             writer.write(pdf_io)
+            # ファイル名をセットしたpdfオブジェクト
             pdf_content = ContentFile(pdf_io.getvalue(), name=self.src.name)
             # PDFファイルを修正されたものに置き換え
             self.src = pdf_content
