@@ -1,5 +1,6 @@
 # import os
 import io
+import logging
 from pathlib import Path
 
 from django.core.files.base import ContentFile
@@ -9,6 +10,8 @@ from django.db import models
 # from django.dispatch import receiver
 from django.utils import timezone
 from pypdf import PdfReader, PdfWriter
+
+logger = logging.getLogger(__name__)
 
 
 def default_category():
@@ -106,9 +109,9 @@ class File(models.Model):
             # metadataの「文字化けTitle」を「new_title」に修正する。
             metadata = reader.metadata
             new_metadata = {key: metadata[key] for key in metadata if key != "/Title"}
-            # 「/Title」を「new_title」に修正する。
-            new_metadata["/Title"] = str(self.src)
-            # 「/Author」は除去する。
+            # 「/Title」を除去する。
+            new_metadata["/Title"] = ""
+            # 「/Author」を除去する。
             new_metadata["/Author"] = ""
             # new_metadataをセットする。
             writer.add_metadata(new_metadata)
