@@ -1,6 +1,8 @@
 # import os
+import io
 from pathlib import Path
 
+from django.core.files.base import ContentFile
 from django.db import models
 
 # from django.db.models.signals import post_delete
@@ -88,41 +90,72 @@ class File(models.Model):
         # return os.path.basename(self.src.name)
         return Path(self.src.name).name
 
-    @staticmethod
-    def fix_pdf_file(input_file_path):
+    def save(self, *args, **kwargs):
         """「Microsoft Print to PDF」によるtitleの文字化けを修正する
         https://note.nkmk.me/python-pypdf2-pdf-metadata/
         - 保存したpdfファイルのmetadataを修正して保存する。
         """
-        # file名
-        new_title = Path(input_file_path).name
-
-        # Open the original PDF
-        with open(input_file_path, "rb") as input_file_path:
-            # PDFファイルの読み込み
-            reader = PdfReader(input_file_path)
-            # PDF出力用のオブジェクトを用意
+        if self.src and not self.pk:
+            # PDFファイルを読み込む
+            reader = PdfReader(self.src)
             writer = PdfWriter()
-
-            # Copy all pages from the reader to the writer
-            for page_num in range(len(reader.pages)):
-                writer.add_page(reader.pages[page_num])
+            # ページを修正（例えば全ページに透かしを追加）
+            for page in reader.pages:
+                writer.add_page(page)
 
             # metadataの「文字化けTitle」を「new_title」に修正する。
             metadata = reader.metadata
             new_metadata = {key: metadata[key] for key in metadata if key != "/Title"}
             # 「/Title」を「new_title」に修正する。
-            new_metadata["/Title"] = new_title
+            new_metadata["/Title"] = str(self.src)
             # 「/Author」は除去する。
             new_metadata["/Author"] = ""
             # new_metadataをセットする。
             writer.add_metadata(new_metadata)
-            # pdfオブジェクトを出力してみる。
-            print(writer)
+            # 修正されたPDFを保存するためにバイトIOオブジェクトに変換
+            pdf_io = io.BytesIO()
+            writer.write(pdf_io)
+            pdf_content = ContentFile(pdf_io.getvalue(), name=self.src.name)
+            # PDFファイルを修正されたものに置き換え
+            self.src = pdf_content
 
-            # metadataを修正したファイルを保存する。
-            with open(input_file_path, "wb") as output_pdf_file:
-                writer.write(output_pdf_file)
+        super(File, self).save(*args, **kwargs)
+
+    # @staticmethod
+    # def fix_pdf_file(input_file_path):
+    #     """「Microsoft Print to PDF」によるtitleの文字化けを修正する
+    #     https://note.nkmk.me/python-pypdf2-pdf-metadata/
+    #     - 保存したpdfファイルのmetadataを修正して保存する。
+    #     """
+    #     # file名
+    #     new_title = Path(input_file_path).name
+
+    #     # Open the original PDF
+    #     with open(input_file_path, "rb") as input_file_path:
+    #         # PDFファイルの読み込み
+    #         reader = PdfReader(input_file_path)
+    #         # PDF出力用のオブジェクトを用意
+    #         writer = PdfWriter()
+
+    #         # Copy all pages from the reader to the writer
+    #         for page_num in range(len(reader.pages)):
+    #             writer.add_page(reader.pages[page_num])
+
+    #         # metadataの「文字化けTitle」を「new_title」に修正する。
+    #         metadata = reader.metadata
+    #         new_metadata = {key: metadata[key] for key in metadata if key != "/Title"}
+    #         # 「/Title」を「new_title」に修正する。
+    #         new_metadata["/Title"] = new_title
+    #         # 「/Author」は除去する。
+    #         new_metadata["/Author"] = ""
+    #         # new_metadataをセットする。
+    #         writer.add_metadata(new_metadata)
+    #         # pdfオブジェクトを出力してみる。
+    #         print(writer)
+
+    #         # metadataを修正したファイルを保存する。
+    #         with open(input_file_path, "wb") as output_pdf_file:
+    #             writer.write(output_pdf_file)
 
 
 # django-cleanupモジュールを使うことにしたため不要。
