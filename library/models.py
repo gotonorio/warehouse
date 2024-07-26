@@ -94,10 +94,11 @@ class File(models.Model):
         return Path(self.src.name).name
 
     def save(self, *args, **kwargs):
-        """「Microsoft Print to PDF」によるtitleの文字化けを修正する
-        https://note.nkmk.me/python-pypdf2-pdf-metadata/
+        """保存処理をoverrideする。
         - 保存したpdfファイルのmetadataを修正して保存する。
+        - https://note.nkmk.me/python-pypdf2-pdf-metadata/
         """
+        # 保存処理の前にmetadataを修正する
         if self.src and not self.pk:
             # PDFファイルを読み込む
             reader = PdfReader(self.src)
@@ -106,10 +107,10 @@ class File(models.Model):
             for page in reader.pages:
                 writer.add_page(page)
 
-            # metadataの「文字化けTitle」を「new_title」に修正する。
+            # metadataの「文字化けTitle」を修正（削除）する
             metadata = reader.metadata
             new_metadata = {key: metadata[key] for key in metadata if key != "/Title"}
-            # 「/Title」を除去する。
+            # 「/Title」を除去する。（文字コードを変換するのは後回し）
             new_metadata["/Title"] = ""
             # 「/Author」を除去する。
             new_metadata["/Author"] = ""
@@ -119,48 +120,12 @@ class File(models.Model):
             pdf_io = io.BytesIO()
             # バイトIOオブジェクトにPDFを書き込む
             writer.write(pdf_io)
-            # ファイル名をセットしたpdfオブジェクト
+            # ファイル名をセットしたpdfオブジェクトを作成する
             pdf_content = ContentFile(pdf_io.getvalue(), name=self.src.name)
             # PDFファイルを修正されたものに置き換え
             self.src = pdf_content
-
+        # 保存処理を続行する
         super(File, self).save(*args, **kwargs)
-
-    # @staticmethod
-    # def fix_pdf_file(input_file_path):
-    #     """「Microsoft Print to PDF」によるtitleの文字化けを修正する
-    #     https://note.nkmk.me/python-pypdf2-pdf-metadata/
-    #     - 保存したpdfファイルのmetadataを修正して保存する。
-    #     """
-    #     # file名
-    #     new_title = Path(input_file_path).name
-
-    #     # Open the original PDF
-    #     with open(input_file_path, "rb") as input_file_path:
-    #         # PDFファイルの読み込み
-    #         reader = PdfReader(input_file_path)
-    #         # PDF出力用のオブジェクトを用意
-    #         writer = PdfWriter()
-
-    #         # Copy all pages from the reader to the writer
-    #         for page_num in range(len(reader.pages)):
-    #             writer.add_page(reader.pages[page_num])
-
-    #         # metadataの「文字化けTitle」を「new_title」に修正する。
-    #         metadata = reader.metadata
-    #         new_metadata = {key: metadata[key] for key in metadata if key != "/Title"}
-    #         # 「/Title」を「new_title」に修正する。
-    #         new_metadata["/Title"] = new_title
-    #         # 「/Author」は除去する。
-    #         new_metadata["/Author"] = ""
-    #         # new_metadataをセットする。
-    #         writer.add_metadata(new_metadata)
-    #         # pdfオブジェクトを出力してみる。
-    #         print(writer)
-
-    #         # metadataを修正したファイルを保存する。
-    #         with open(input_file_path, "wb") as output_pdf_file:
-    #             writer.write(output_pdf_file)
 
 
 # django-cleanupモジュールを使うことにしたため不要。
