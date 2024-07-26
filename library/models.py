@@ -91,6 +91,7 @@ class File(models.Model):
     @staticmethod
     def fix_pdf_file(input_file_path):
         """「Microsoft Print to PDF」によるtitleの文字化けを修正する
+        https://note.nkmk.me/python-pypdf2-pdf-metadata/
         - 保存したpdfファイルのmetadataを修正して保存する。
         """
         # file名
