@@ -1,4 +1,3 @@
-# import os
 import io
 import logging
 from pathlib import Path
@@ -62,11 +61,6 @@ def get_upload_to(instance, filename):
     except Exception as e:
         _ = e
         path = Path("default") / filename
-    # try:
-    #     path = os.path.join(str(instance.category.path_name), filename)
-    # except Exception as e:
-    #     _ = e
-    #     path = os.path.join("default", filename)
     return path
 
 
@@ -95,15 +89,15 @@ class File(models.Model):
 
     def save(self, *args, **kwargs):
         """保存処理をoverrideする。
-        - 保存したpdfファイルのmetadataを修正して保存する。
+        - 保存する前にpdfファイルのmetadataを修正して保存する。
         - https://note.nkmk.me/python-pypdf2-pdf-metadata/
         """
-        # 保存処理の前にmetadataを修正する
+        # Update処理の場合はスルーさせる
         if self.src and not self.pk:
             # PDFファイルを読み込む
             reader = PdfReader(self.src)
             writer = PdfWriter()
-            # ページを修正（例えば全ページに透かしを追加）
+            # ページを修正する場合は下記で処理する
             for page in reader.pages:
                 writer.add_page(page)
 
