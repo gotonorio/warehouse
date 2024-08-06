@@ -91,6 +91,7 @@ class File(models.Model):
         """保存処理をoverrideする。
         - 保存する前にpdfファイルのmetadataを修正して保存する。
         - https://note.nkmk.me/python-pypdf2-pdf-metadata/
+        - 修正したデータを直接ファイルフィールドに保存するためにContentFileを利用する。
         """
         # Update処理の場合はスルーさせる
         if self.src and not self.pk:
@@ -99,6 +100,7 @@ class File(models.Model):
             writer = PdfWriter()
             # ページを修正する場合は下記で処理する
             for page in reader.pages:
+                # pageに対して処理をしてからwriterに追加していく
                 writer.add_page(page)
 
             # metadataの「文字化けTitle」を修正（削除）する
@@ -110,13 +112,14 @@ class File(models.Model):
             new_metadata["/Author"] = ""
             # new_metadataをセットする。
             writer.add_metadata(new_metadata)
-            # 修正されたPDFを保存するためにバイトIOオブジェクトに変換
+
+            # 修正されたPDFデータを保存するためにバイトIOオブジェクトインスタンスを作成
             pdf_io = io.BytesIO()
-            # バイトIOオブジェクトにPDFを書き込む
+            # バイトIOオブジェクトにPDFデータを書き込む
             writer.write(pdf_io)
             # ファイル名をセットしたpdfオブジェクトを作成する
             pdf_content = ContentFile(pdf_io.getvalue(), name=self.src.name)
-            # PDFファイルを修正されたものに置き換え
+            # PDFファイルを修正されたものに置き換える
             self.src = pdf_content
         # 保存処理を続行する
         super(File, self).save(*args, **kwargs)
