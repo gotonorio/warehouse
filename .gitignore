@@ -7,8 +7,8 @@
 *.sqlite3
 .DS_Store
 Dockerfile*
-docker-compose.yml
-local_docker-compose.yml
+compose.yml
+local_compose.yml
 local_settings.py
 private_settings.py
 __pycache__/
