@@ -8,12 +8,12 @@
 <div class="content">
   <section class="content has-text-centered">
     <div>
-        <h1>Oops!! 管理者に連絡してください。</h1>
+        <h1>想定外のミスが発生しました！ 管理者に連絡してください。</h1>
     </div>
     {% if exception %}
     <p style="color: red">{{ exception }}</p>
     {% endif %}
-      <h3><a href="javascript:history.back()">戻る</a></h3>
+    <a href="{% url 'notice:news_update' news.pk %}" class="is-size-5">戻る</a>
   </section>
 </div>
 {% endblock %}

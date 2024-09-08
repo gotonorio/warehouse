@@ -103,15 +103,16 @@ class File(models.Model):
                 # pageに対して処理をしてからwriterに追加していく
                 writer.add_page(page)
 
-            # # metadataの「文字化けTitle」を修正（削除）する ToDo 見直し
-            # metadata = reader.metadata
-            # new_metadata = {key: metadata[key] for key in metadata if key != "/Title"}
-            # # 「/Title」を除去する。（文字コードを変換するのは後回し）
-            # new_metadata["/Title"] = ""
-            # # 「/Author」を除去する。
-            # new_metadata["/Author"] = ""
-            # # new_metadataをセットする。
-            # writer.add_metadata(new_metadata)
+            # metadataの「文字化けTitle」を修正（削除）する。
+            metadata = reader.metadata
+            if metadata:
+                new_metadata = {key: metadata[key] for key in metadata if key != "/Title"}
+                # 「/Title」を除去する。（文字コードを変換するのは後回し）
+                new_metadata["/Title"] = ""
+                # 「/Author」を除去する。
+                new_metadata["/Author"] = ""
+                # new_metadataをセットする。
+                writer.add_metadata(new_metadata)
 
             # 修正されたPDFデータを保存するためにバイトIOオブジェクトインスタンスを作成
             pdf_io = io.BytesIO()
