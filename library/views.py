@@ -275,7 +275,7 @@ class BigCategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
 
 class BigCategoryView(generic.TemplateView):
     """メニューで選択された「BigCategory」に属するファイルを「Category」毎に表示する。
-    - 表示数は300に制限している。（増えたら settings.py で変更する）
+    - ファイル表示数はsettings.pyで変更する。
     - limit = settings.SELECT_LIMIT_NUM
     """
 

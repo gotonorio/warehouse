@@ -19,13 +19,25 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
+# セキュリティ関係の環境変数を読み込む。
+try:
+    from .private_settings import DB_NAME, MY_SECRET_KEY
+except ImportError:
+    pass
+# ローカル環境用の環境変数を読み込む。
+try:
+    from .local_settings import DEBUG
+except ImportError:
+    pass
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = MY_SECRET_KEY
 
 # Application definition
 
@@ -92,7 +104,7 @@ WSGI_APPLICATION = "warehouse.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "wh2.sqlite3"),
+        "NAME": os.path.join(BASE_DIR, DB_NAME),
     }
 }
 
@@ -142,7 +154,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2024-09-09"
+VERSION_NO = "2024-09-13"
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -173,21 +185,10 @@ MARKDOWN_EXTENSIONS = [
 
 # viewクラスでselectする時のlimit値を設定する。
 SELECT_LIMIT_NUM = 300
-# コメントを表示する件数。タイトル表示は20個、コメントも20タイトル分表示。
-COMMENT_LIMIT = 300
+# 1カテゴリ毎に表示するファイル件数。
+COMMENT_LIMIT = 50
 # DBバックアップ数
 BACKUP_NUM = 3
-
-# settings.pyの末尾
-try:
-    from .private_settings import *
-except ImportError:
-    pass
-
-try:
-    from .local_settings import *
-except ImportError:
-    pass
 
 # ログ出力先のディレクトリを設定する
 LOG_BASE_DIR = os.path.join(
