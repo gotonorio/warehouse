@@ -154,7 +154,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2024-09-13"
+VERSION_NO = "2024-12-18"
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -186,7 +186,7 @@ MARKDOWN_EXTENSIONS = [
 # viewクラスでselectする時のlimit値を設定する。
 SELECT_LIMIT_NUM = 300
 # 1カテゴリ毎に表示するファイル件数。
-COMMENT_LIMIT = 50
+COMMENT_LIMIT = 60
 # DBバックアップ数
 BACKUP_NUM = 3
 
