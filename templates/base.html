@@ -26,47 +26,48 @@
   <br>
   <!-- contents -->
   <div class="container is-fluid">
-  <!-- footerを設置する場合、<main>で囲む -->
-  <main>
-    <div class="columns">
-      <!-- 本体 -->
-      <div class="column is-four-fifths ">
-        {% block content %}
-        {% endblock %}
-      </div>
-      <!-- 右サイド -->
-      <div class="column">
-        <div class="content">
-          <table class="table table_nowrap is-bordered is-fullwidth">
-            <thead>
-              <tr class="has-background-dark">
-                <th class="has-text-centered has-text-white">文書資料</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for menu in menu_list %}
-              <tr>
-                <td class="has-text-left">
-                  <a href="{% url 'library:bigcategory' menu.pk %}" class="vmenu">{{menu}}</a>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-          <p>*：区分所有者専用</p>
+    <!-- footerを設置する場合、<main>で囲む -->
+    <main>
+      <div class="columns">
+        <!-- 本体 -->
+        <div class="column is-four-fifths ">
+          {% block content %}
+          {% endblock %}
         </div>
-        <p>検索キーワード</p>
-        <form method="GET" action="{% url 'library:search' %}">
-          <input type="search" class="input" placeholder="Search" name="keyword" value={{keyword}}>
-          <button type="submit" class="button is-small" style="display:none"></button>
-        </form>
-        <br>
-        <p>
-          <img src="{% static 'qr_code.png' %}" alt="URL" width="96" height="96">
-        </p>
+        <!-- 右サイド -->
+        <div class="column">
+          <div class="content">
+            <table class="table table_nowrap is-bordered is-fullwidth">
+              <thead>
+                <tr class="has-background-dark">
+                  <th class="has-text-centered has-text-white">文書資料</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for menu in menu_list %}
+                <tr>
+                  <td class="has-text-left">
+                    <a href="{% url 'library:bigcategory' menu.pk %}" class="vmenu">{{menu}}</a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <p>*：区分所有者専用</p>
+          </div>
+          <p>検索キーワード</p>
+          <form method="GET" action="{% url 'library:search' %}">
+            <input type="search" class="input" placeholder="Search" name="keyword" value={{keyword}}>
+            <button type="submit" class="button is-small" style="display:none"></button>
+          </form>
+          <br>
+          <p>
+            <img src="{% static 'qr_code.png' %}" alt="URL" width="96" height="96">
+          </p>
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
+  </div>
   <!-- フッタ -->
   {# bulmaのfooter #}
   <footer class="my_footer">
