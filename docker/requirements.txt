@@ -1,6 +1,6 @@
-django==5.1.5
+django==5.1.7
 gunicorn==22.0.0
 Markdown==3.7
 django-cleanup==9.0.0
 user_agents==2.2.0
-pypdf==5.2.0
+pypdf==5.3.1
