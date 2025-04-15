@@ -2,7 +2,8 @@
 Django==5.2
 gunicorn==23.0.0
 Markdown==3.8
+user_agents==2.2.0
 # special
 django-cleanup==9.0.0
-user_agents==2.2.0
 pypdf==5.4.0
+# django-debug-toolbar==4.4.6
