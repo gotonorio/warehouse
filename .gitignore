@@ -6,6 +6,7 @@
 *.png
 *.sqlite3
 .DS_Store
+.env
 Dockerfile*
 compose.yml
 local_compose.yml
