@@ -48,11 +48,19 @@
     <tbody>
       {% for info in information_list %}
       <tr>
-        <td class="has-text-left nowrap">{{ info.title }}</td>
-        <td class="has-text-left">{{ info.comment }}</td>
-        <td class="has-text-left">{{ info.display_info }}</td>
-        <td class="has-text-left">{{ info.type_name }}</td>
-        <td class="has-text-right">{{ info.sequense }}</td>
+        {% if info.display_info %}
+          <td class="has-text-left nowrap">{{ info.title }}</td>
+          <td class="has-text-left">{{ info.comment }}</td>
+          <td class="has-text-left">{{ info.display_info }}</td>
+          <td class="has-text-left">{{ info.type_name }}</td>
+          <td class="has-text-right">{{ info.sequense }}</td>
+        {% else %}
+          <td class="has-text-left nowrap has-text-danger">{{ info.title }}</td>
+          <td class="has-text-left has-text-danger">{{ info.comment }}</td>
+          <td class="has-text-left has-text-danger">{{ info.display_info }}</td>
+          <td class="has-text-left has-text-danger">{{ info.type_name }}</td>
+          <td class="has-text-right has-text-danger">{{ info.sequense }}</td>
+        {% endif %}
         <td class="has-text-right">
           <a href="{% url 'information:make_pdf' info.pk %}">出力</a>
         </td>
