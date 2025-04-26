@@ -40,7 +40,7 @@ class NewsListView(PermissionRequiredMixin, generic.ListView):
     # paginate_by = 50
     # 必要な権限
     permission_required = "notice.add_news"
-    queryset = News.objects.all().order_by("-created_at")
+    queryset = News.objects.all().order_by("-display_news", "-created_at")
 
 
 class NewsCreateView(PermissionRequiredMixin, generic.CreateView):

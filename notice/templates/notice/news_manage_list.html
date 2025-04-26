@@ -42,8 +42,13 @@
     <tbody>
       {% for news in news_list %}
       <tr>
-        <td class="has-text-left">{{ news.title}}</td>
-        <td class="has-text-center">{{ news.display_news }}</td>
+        {% if news.display_news %}
+          <td class="has-text-left">{{ news.title}}</td>
+          <td class="has-text-center">{{ news.display_news }}</td>
+        {% else %}
+          <td class="has-text-left has-text-danger">{{ news.title}}</td>
+          <td class="has-text-center has-text-danger">{{ news.display_news }}</td>
+        {% endif %}
         <td class="nowrap">
           <a href="{% url 'notice:news_update' news.pk %}" class="button is-primary is-small">更新</a>
           <a href="{% url 'notice:news_delete' news.pk %}" class="button is-danger is-small">削除</a>
