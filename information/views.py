@@ -37,11 +37,13 @@ class InformationView(LoginRequiredMixin, generic.TemplateView):
 
 
 class InfoListView(generic.ListView):
-    """情報一覧、編集時用"""
+    """
+    編集時用 情報一覧、
+    """
 
     model = Information
     template_name = "information/info_manage_list.html"
-    queryset = Information.objects.order_by("-sequense")
+    queryset = Information.objects.order_by("-display_info", "-sequense")
 
 
 class InformationCreateView(PermissionRequiredMixin, generic.CreateView):
