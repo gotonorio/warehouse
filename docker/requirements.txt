@@ -6,4 +6,5 @@ user_agents==2.2.0
 # special
 django-cleanup==9.0.0
 pypdf==5.4.0
+weasyprint==65.1
 # django-debug-toolbar==4.4.6

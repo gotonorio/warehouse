@@ -41,7 +41,7 @@
         <th class="has-text-centered">表示</th>
         <th class="has-text-centered">種別</th>
         <th class="has-text-centered">表示順</th>
-        {% comment %} <th class="has-text-centered">PDF出力</th> {% endcomment %}
+        <th class="has-text-centered">PDF出力</th> 
         <th class="has-text-centered">#</th>
       </tr>
     </thead>
@@ -61,11 +61,9 @@
           <td class="has-text-left has-text-danger">{{ info.type_name }}</td>
           <td class="has-text-right has-text-danger">{{ info.sequense }}</td>
         {% endif %}
-        {% comment %}
         <td class="has-text-right">
           <a href="{% url 'information:make_pdf' info.pk %}">出力</a>
         </td>
-        {% endcomment %}
         <td class="has-text-left nowrap">
           <a href="{% url 'information:info_update' info.pk %}" class="button is-primary is-small">更新</a>
           <a href="{% url 'information:info_delete' info.pk %}" class="button is-danger is-small">削除</a>
