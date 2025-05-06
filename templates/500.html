@@ -13,7 +13,7 @@
     {% if exception %}
     <p style="color: red">{{ exception }}</p>
     {% endif %}
-    <a href="{% url 'notice:news_update' news.pk %}" class="is-size-5">戻る</a>
+    <a href="{% url 'notice:news_card' %}" class="is-size-5">戻る</a>
   </section>
 </div>
 {% endblock %}
