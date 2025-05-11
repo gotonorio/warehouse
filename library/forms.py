@@ -81,6 +81,9 @@ class FileForm(forms.ModelForm):
                 }
             ),
         }
+        help_texts = {
+            "src": "※ fileサイズは300MB以下としてください。",
+        }
 
 
 class CategoryForm(forms.ModelForm):
