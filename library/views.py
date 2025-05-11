@@ -292,6 +292,8 @@ class BigCategoryView(generic.TemplateView):
         big_category = get_object_or_404(BigCategory, pk=self.kwargs["pk"])
         # user.idは、ログインしていないとNoneとなる。
         user = self.request.user
+        # 選択されたメニュー（BigCategory）を親とするCategoryオブジェクトを取得する。
+        # ユーザ権限によってrestrictフラグで取得できるCategoryを制限する。
         category_obj = Category.objects.filter(parent=big_category, alive=True)
         # ログイン制限(restrict=True)があるカテゴリはPermissionエラーを返す。
         if user.id is None:

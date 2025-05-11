@@ -26,6 +26,7 @@ class BigCategory(models.Model):
     rank = models.IntegerField("表示順", default=0)
     created_at = models.DateTimeField("作成日", default=timezone.now)
     alive = models.BooleanField("有効", default=True)
+    is_admin = models.BooleanField("管理者専用", default=False)
 
     def __str__(self):
         return self.name

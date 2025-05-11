@@ -1,0 +1,20 @@
+{% extends "base_single_page.html" %}
+{% load static %}
+
+{% block navbar %}
+<!-- navbar -->
+{% endblock %}
+{% block content %}
+<div class="content">
+  <section class="content has-text-centered">
+    <div>
+        <h1>指定されたページがありません。</h1>
+        戻るボタンが効かない場合はブラウザの戻るボタンを押してください。
+    </div>
+    {% if exception %}
+    <p style="color: red">{{ exception }}</p>
+    {% endif %}
+      <h3><a class='button is-primary' href='javascript:void(0);' onclick='window.history.back();'>戻る</a></h3>
+  </section>
+</div>
+{% endblock %}

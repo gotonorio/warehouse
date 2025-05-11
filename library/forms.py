@@ -132,7 +132,7 @@ class BigCategoryForm(forms.ModelForm):
 
     class Meta:
         model = BigCategory
-        fields = ("name", "rank", "created_at", "alive")
+        fields = ("name", "rank", "created_at", "alive", "is_admin")
         widgets = {
             "name": forms.TextInput(
                 attrs={
@@ -150,6 +150,11 @@ class BigCategoryForm(forms.ModelForm):
                 }
             ),
             "alive": forms.CheckboxInput(
+                attrs={
+                    "class": "checkboxinput",
+                }
+            ),
+            "is_admin": forms.CheckboxInput(
                 attrs={
                     "class": "checkboxinput",
                 }
