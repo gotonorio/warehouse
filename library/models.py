@@ -1,14 +1,15 @@
-import io
+# import io
 import logging
 from pathlib import Path
 
-from django.core.files.base import ContentFile
+# from django.core.files.base import ContentFile
 from django.db import models
 
 # from django.db.models.signals import post_delete
 # from django.dispatch import receiver
 from django.utils import timezone
-from pypdf import PdfReader, PdfWriter
+
+# from pypdf import PdfReader, PdfWriter
 
 logger = logging.getLogger(__name__)
 
@@ -88,43 +89,44 @@ class File(models.Model):
         # return os.path.basename(self.src.name)
         return Path(self.src.name).name
 
-    def save(self, *args, **kwargs):
-        """保存処理をoverrideする。
-        - 保存する前にpdfファイルのmetadataを修正して保存する。
-        - https://note.nkmk.me/python-pypdf2-pdf-metadata/
-        - 修正したデータを直接ファイルフィールドに保存するためにContentFileを利用する。
-        """
-        # Update処理の場合はスルーさせる
-        if self.src and not self.pk:
-            # PDFファイルを読み込む
-            reader = PdfReader(self.src)
-            writer = PdfWriter()
-            # ページを修正する場合は下記で処理する
-            for page in reader.pages:
-                # pageに対して処理をしてからwriterに追加していく
-                writer.add_page(page)
+    # # PDFファイルに決め打ちしているので、この処理をコメントアウトする。
+    # def save(self, *args, **kwargs):
+    #     """保存処理をoverrideする。
+    #     - 保存する前にpdfファイルのmetadataを修正して保存する。
+    #     - https://note.nkmk.me/python-pypdf2-pdf-metadata/
+    #     - 修正したデータを直接ファイルフィールドに保存するためにContentFileを利用する。
+    #     """
+    #     # Update処理の場合はスルーさせる
+    #     if self.src and not self.pk:
+    #         # PDFファイルを読み込む
+    #         reader = PdfReader(self.src)
+    #         writer = PdfWriter()
+    #         # ページを修正する場合は下記で処理する
+    #         for page in reader.pages:
+    #             # pageに対して処理をしてからwriterに追加していく
+    #             writer.add_page(page)
 
-            # # metadataの「文字化けTitle」を修正（削除）する。 ToDo
-            # metadata = reader.metadata
-            # if metadata:
-            #     new_metadata = {key: metadata[key] for key in metadata if key != "/Title"}
-            #     # 「/Title」を除去する。（文字コードを変換するのは後回し）
-            #     new_metadata["/Title"] = ""
-            #     # 「/Author」を除去する。
-            #     new_metadata["/Author"] = ""
-            #     # new_metadataをセットする。
-            #     writer.add_metadata(new_metadata)
+    #         # # metadataの「文字化けTitle」を修正（削除）する。 ToDo
+    #         # metadata = reader.metadata
+    #         # if metadata:
+    #         #     new_metadata = {key: metadata[key] for key in metadata if key != "/Title"}
+    #         #     # 「/Title」を除去する。（文字コードを変換するのは後回し）
+    #         #     new_metadata["/Title"] = ""
+    #         #     # 「/Author」を除去する。
+    #         #     new_metadata["/Author"] = ""
+    #         #     # new_metadataをセットする。
+    #         #     writer.add_metadata(new_metadata)
 
-            # 修正されたPDFデータを保存するためにバイトIOオブジェクトインスタンスを作成
-            pdf_io = io.BytesIO()
-            # バイトIOオブジェクトにPDFデータを書き込む
-            writer.write(pdf_io)
-            # ファイル名をセットしたpdfオブジェクトを作成する
-            pdf_content = ContentFile(pdf_io.getvalue(), name=self.src.name)
-            # PDFファイルを修正されたものに置き換える
-            self.src = pdf_content
-        # 保存処理を続行する
-        super(File, self).save(*args, **kwargs)
+    #         # 修正されたPDFデータを保存するためにバイトIOオブジェクトインスタンスを作成
+    #         pdf_io = io.BytesIO()
+    #         # バイトIOオブジェクトにPDFデータを書き込む
+    #         writer.write(pdf_io)
+    #         # ファイル名をセットしたpdfオブジェクトを作成する
+    #         pdf_content = ContentFile(pdf_io.getvalue(), name=self.src.name)
+    #         # PDFファイルを修正されたものに置き換える
+    #         self.src = pdf_content
+    #     # 保存処理を続行する
+    #     super(File, self).save(*args, **kwargs)
 
 
 # django-cleanupモジュールを使うことにしたため不要。

@@ -1,3 +1,5 @@
+import os
+
 from django import forms
 
 from library.models import BigCategory, Category, File
@@ -8,6 +10,13 @@ class FileForm(forms.ModelForm):
     ModelForm限定の方法としてclass Metaでwidgetを設定する。class以外も変更できる。
     https://narito.ninja/blog/detail/52/
     """
+
+    def clean_file(self):
+        uploaded_file = self.cleaned_data["file"]
+        ext = os.path.splitext(uploaded_file.name)[1].lower()
+        if ext not in [".pdf", ".zip"]:
+            raise forms.ValidationError("PDFまたはZIPファイルのみアップロード可能です。")
+        return uploaded_file
 
     class Meta:
         model = File
