@@ -1,4 +1,35 @@
-# 文書管理システム（warehouse）
+
+
+文書管理システム（warehouse）
+programming by Norio.Goto
+
+このプログラムは、MIT ライセンスのもとで公開されています。
+このライセンスにより、誰でも自由にこの文書をコピー、改変、再配布できますが、
+著作権表示（著者名）およびライセンス表示を保持する必要があります。
+
+ --- MIT License ---
+
+ Copyright (c) [2025] Norio.Goto
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ --- End MIT License ---
+
 
 ## 1. デフォルト設定
 
@@ -44,12 +75,11 @@
         - can view file
     - data_manager（データ管理）
         - can add file (library.add_file)
-        - can add news (notis.add_news)
+        - can add news (notice.add_news)
         - can view file
     - news_manager（ファイル管理以外のデータ管理）
-        - can add news (notis.add_news)
+        - can add news (notice.add_news)
         - can view file
     - sophiag（区分所有者）
         - can view file
 
-dd
