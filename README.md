@@ -1,17 +1,21 @@
 
+# 文書管理システム（warehouse）
 
-文書管理システム（warehouse）
+このアプリケーションは、ソフィア・ガーデンズ川崎 管理組合のWebベース文書管理システムです。
 
-- Django + Bulmaによる、マンション管理組合のホームページ
-- 「お知らせ」「PDF文書」管理のためのWebアプリケーションです
+## 機能概要
 
-programming by Norio.Goto
+- 「お知らせ」掲載機能（トップページに表示）
+- PDFファイル等の文書管理機能（アップロード・閲覧）
+- 権限ごとの閲覧・編集制御
 
-このプログラムは、MIT ライセンスのもとで公開されています。
+## ライセンス
+
+このソフトウェアは、MIT ライセンスのもとで公開されています。
 このライセンスにより、誰でも自由にこの文書をコピー、改変、再配布できますが、
 著作権表示（著者名）およびライセンス表示を保持する必要があります。
 
- --- MIT License ---
+### MIT License
 
  Copyright (c) 2025 Norio.Goto
 
@@ -32,10 +36,9 @@ programming by Norio.Goto
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- --- End MIT License ---
 
 
-## 1. デフォルト設定
+### 1. デフォルト設定
 
 1. ユーザ登録アプリ名は「register」に固定。  
 1. 居住者の閲覧用ログイン名は「sophiag」に固定。  
@@ -44,7 +47,7 @@ programming by Norio.Goto
 1. SECRET_KEYは別ファイルから読み込みます。settings.pyを確認してください。
 1. DBファイル名も別ファイルから読み込みます。settings.pyを確認してください。
 
-## 2. 文書管理システムの権限
+### 2. 文書管理システムの権限
 
 閲覧ユーザは下記の5グループに分類される。
 
@@ -71,7 +74,7 @@ programming by Norio.Goto
     - 管理規約、細則の閲覧
     - 管理組合資料の閲覧
 
-## 3. admin管理画面
+### 3. admin管理画面
 
 1. admin画面で以下のgroupを作成しておく。
     - chairman （プログラム管理者）
