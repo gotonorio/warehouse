@@ -1,6 +1,10 @@
 
 
 文書管理システム（warehouse）
+
+- Django + Bulmaによる、マンション管理組合のホームページ
+- 「お知らせ」「PDF文書」管理のためのWebアプリケーションです
+
 programming by Norio.Goto
 
 このプログラムは、MIT ライセンスのもとで公開されています。
@@ -37,6 +41,8 @@ programming by Norio.Goto
 1. 居住者の閲覧用ログイン名は「sophiag」に固定。  
 1. データ管理者は「data_manager」グループに設定する。  
 1. お知らせ管理者は「news_manager」グループに設定する。
+1. SECRET_KEYは別ファイルから読み込みます。settings.pyを確認してください。
+1. DBファイル名も別ファイルから読み込みます。settings.pyを確認してください。
 
 ## 2. 文書管理システムの権限
 
