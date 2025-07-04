@@ -22,15 +22,6 @@ env = environ.Env(
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG=(bool, False)
 )
-# ローカル環境用の環境変数を読み込む。
-try:
-    from .local_settings import DEBUG
-except ImportError:
-    pass
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
 # .envを読み込む
 environ.Env.read_env(os.path.join(BASE_DIR, "docker/.env"))
 
@@ -39,6 +30,16 @@ environ.Env.read_env(os.path.join(BASE_DIR, "docker/.env"))
 SECRET_KEY = env("SECRET_KEY")
 DB_NAME = env("DB_NAME")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+DEBUG = env.bool("DEBUG")
+
+# ローカル環境でDEBUGを上書き（local_settings.pyがあれば）
+try:
+    from .local_settings import DEBUG
+except ImportError:
+    pass
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 
 # Application definition
