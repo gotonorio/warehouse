@@ -37,7 +37,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 
-
 ### 1. デフォルト設定
 
 1. ユーザ登録アプリ名は「register」に固定。  
@@ -91,4 +90,3 @@
         - can view file
     - sophiag（区分所有者）
         - can view file
-
