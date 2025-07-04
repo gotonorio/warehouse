@@ -9,7 +9,6 @@
 .env
 local_compose.yml
 local_settings.py
-private_settings.py
 __pycache__/
 media/
 .vscode/
