@@ -10,34 +10,36 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+import environ
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
-
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ["*"]
-
-# セキュリティ関係の環境変数を読み込む。
-try:
-    from .private_settings import DB_NAME, MY_SECRET_KEY
-except ImportError:
-    pass
+# instanceを作成
+env = environ.Env(
+    # 初期値を設定
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG=(bool, False)
+)
 # ローカル環境用の環境変数を読み込む。
 try:
     from .local_settings import DEBUG
 except ImportError:
     pass
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = MY_SECRET_KEY
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+
+# .envを読み込む
+environ.Env.read_env(os.path.join(BASE_DIR, "docker/.env"))
+
+# セキュリティ関係の環境変数を読み込む。
+# 読み込む環境変数のタイプに合わせる必要があるので注意。
+SECRET_KEY = env("SECRET_KEY")
+DB_NAME = env("DB_NAME")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+
 
 # Application definition
 
@@ -154,7 +156,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2025-06-02"
+VERSION_NO = "2025-07-04"
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
