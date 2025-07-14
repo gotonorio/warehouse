@@ -333,14 +333,21 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
     # paginate_by = 10
 
     def get_queryset(self):
-        queryset = File.objects.order_by("-created_at")
         keyword = self.request.GET.get("keyword")
+        user = self.request.user
+
+        if not keyword:
+            return File.objects.none()  # 検索キーワードがないときは空のクエリセットを返す
+
         kw_list = keyword.split()
-        q_objects = self.mk_q_objects(kw_list)
-        if keyword:
-            queryset = queryset.filter(q_objects)
-            queryset = queryset.distinct()
-        return queryset
+        queryset = File.objects.order_by("-created_at")
+
+        # 権限がない場合、alive=True で絞る
+        if not (user.has_perm("library.add_file") or user.is_staff):
+            queryset = queryset.filter(alive=True)
+
+        q_objects = self.mk_q_objects(kw_list)  # Qオブジェクトを組み立てる独自関数
+        return queryset.filter(q_objects).distinct()
 
     # 検索ボックスに検索ワードを表示し続けるための処理。
     def get_context_data(self, **kwargs):
@@ -351,6 +358,10 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
 
     def mk_q_objects(self, kw_list):
         """and検索のためのQオブジェクトを生成する"""
+        # 空ならそのまま返す
+        if not kw_list:
+            return Q()
+
         q_obj = Q()
         for value in kw_list:
             q_obj &= (
