@@ -211,7 +211,9 @@ class CategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
             obj = self.get_object()
             obj.delete()
         except models.ProtectedError as e:
-            messages.error(request, f"「{obj}」はファイルに紐付けられているため削除できません。{e}")
+            protected_objects = list(e.protected_objects)
+            detail = ", ".join(str(obj) for obj in protected_objects[:5])  # 長い場合は最初の5件のみ
+            messages.error(request, f"削除できません: fファイルに参照されています。例: {detail}")
             return redirect("library:category_index")
 
 
@@ -269,7 +271,9 @@ class BigCategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
             obj = self.get_object()
             obj.delete()
         except models.ProtectedError as e:
-            messages.error(request, f"「{obj}」はカテゴリーに紐付けられているため削除できません。{e}")
+            protected_objects = list(e.protected_objects)
+            detail = ", ".join(str(obj) for obj in protected_objects[:5])  # 長い場合は最初の5件のみ
+            messages.error(request, f"削除できません: カテゴリーに参照されています。例: {detail}")
             return redirect("library:big_category_index")
 
 

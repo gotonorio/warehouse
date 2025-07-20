@@ -66,13 +66,13 @@
       {% for category in category_list %}
       <tr>
         {% if category.alive %}
-          <td class="has-text-left">{{ category.name }}</td>
+          <td class="has-text-left">{{ category.name|truncatechars:20 }}</td>
           <td class="has-text-left">{{ category.path_name }}</td>
           <td class="has-text-left">{{ category.parent }}</td>
           <td class="has-text-centered">{{ category.restrict }}</td>
           <td class="has-text-centered">{{ category.alive }}</td>
         {% else %}
-          <td class="has-text-left has-text-danger">{{ category.name }}</td>
+          <td class="has-text-left has-text-danger">{{ category.name|truncatechars:20 }}</td>
           <td class="has-text-left has-text-danger">{{ category.path_name }}</td>
           <td class="has-text-left has-text-danger">{{ category.parent }}</td>
           <td class="has-text-centered has-text-danger">{{ category.restrict }}</td>
