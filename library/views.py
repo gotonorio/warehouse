@@ -122,11 +122,17 @@ class FileDeleteView(PermissionRequiredMixin, generic.DeleteView):
     raise_exception = True
     success_url = reverse_lazy("library:file_index")
 
-    # 4.0以降delete()をオーバライドするのではなく、form_valid()をオーバライドするようだ。
-    # https://docs.djangoproject.com/ja/4.0/ref/class-based-views/generic-editing/#deleteview
-    def form_valid(self, form):
-        logger.warning(f"delete {self.object} by {self.request.user}")
-        return super().form_valid(form)
+    def post(self, request, *args, **kwargs):
+        """ファイルs削除処理を自前で処理する"""
+
+        self.object = self.get_object()
+        try:
+            self.object.delete()
+            logger.warning(f"delete {self.object} by {request.user}")
+            messages.success(request, f"{self.object}を削除しました。")
+        except models.ProtectedError as e:
+            messages.error(request, f"fファイル削除に失敗しました{e}」")
+        return redirect(self.get_success_url())
 
 
 class CategoryIndexView(PermissionRequiredMixin, generic.ListView):
@@ -206,15 +212,18 @@ class CategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("library:category_index")
 
     def post(self, request, *args, **kwargs):
-        """保護されたファイルが存在して削除失敗時の処理"""
+        """カテゴリ削除失敗時の処理"""
+
+        self.object = self.get_object()
         try:
-            obj = self.get_object()
-            obj.delete()
+            self.object.delete()
+            logger.warning(f"delete {self.object} by {request.user}")
+            messages.success(request, f"{self.object}を削除しました。")
         except models.ProtectedError as e:
             protected_objects = list(e.protected_objects)
             detail = ", ".join(str(obj) for obj in protected_objects[:5])  # 長い場合は最初の5件のみ
-            messages.error(request, f"削除できません: fファイルに参照されています。例: {detail}")
-            return redirect("library:category_index")
+            messages.error(request, f"先に次のファイルを削除してください。「{detail}」")
+        return redirect(self.get_success_url())
 
 
 class BigCategoryIndexView(PermissionRequiredMixin, generic.ListView):
@@ -266,15 +275,18 @@ class BigCategoryDeleteView(PermissionRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("library:big_category_index")
 
     def post(self, request, *args, **kwargs):
-        """保護されたカテゴリーが存在して削除失敗時の処理"""
+        """親カテゴリ削除を自前処理する"""
+
+        self.object = self.get_object()
         try:
-            obj = self.get_object()
-            obj.delete()
+            self.object.delete()
+            logger.warning(f"delete {self.object} by {request.user}")
+            messages.success(request, f"{self.object}を削除しました。")
         except models.ProtectedError as e:
             protected_objects = list(e.protected_objects)
             detail = ", ".join(str(obj) for obj in protected_objects[:5])  # 長い場合は最初の5件のみ
-            messages.error(request, f"削除できません: カテゴリーに参照されています。例: {detail}")
-            return redirect("library:big_category_index")
+            messages.error(request, f"先に次のkカテゴリを削除してください。「{detail}」")
+        return redirect(self.get_success_url())
 
 
 class BigCategoryView(generic.TemplateView):
