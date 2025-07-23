@@ -1,6 +1,7 @@
 import datetime
 import os
 import shutil
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -35,25 +36,53 @@ class ControlRecordUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
 
 def backupDB(request):
-    """DBのバックアップ処理
-    静的ページに戻さざるを得ない？
-    """
-    # DBコピー
-    now = datetime.datetime.now()
+    """DBのバックアップ処理"""
+    try:
+        now = datetime.datetime.now()
 
-    src_file = "./wh2.sqlite3"
-    dst_file = f"./backup/{now.year}-{now.month}-{now.day}-{request.user}.sqlite3"
-    shutil.copy(src_file, dst_file)
-    # backupファイルのリスト
-    file_list = os.listdir("./backup")
-    # もし20を超えたら古いバックアップを削除する。
-    if len(file_list) >= settings.BACKUP_NUM:
+        src_file = "./wh2.sqlite3"
+        backup_dir = "./backup"
+        if not os.path.exists(backup_dir):
+            os.makedirs(backup_dir)
+
+        # 認証されているユーザーかチェック
+        if request.user.is_authenticated:
+            username = request.user.username
+        else:
+            username = "anonymous"
+
+        # ファイル名に使用できるように一部文字を置換（/ や \ など）
+        safe_username = username.replace("/", "_").replace("\\", "_")
+
+        dst_file = os.path.join(backup_dir, f"{now.strftime('%Y-%m-%d')}-{safe_username}.sqlite3")
+
+        # 元DBファイルが存在するか確認
+        if not os.path.exists(src_file):
+            messages.error(request, f"バックアップ元のDBファイルが見つかりません: {src_file}")
+            return redirect("notice:news_card")
+
+        # コピー実行
+        shutil.copy(src_file, dst_file)
+        messages.info(request, f"DBをバックアップしました。 ファイル名: {dst_file}")
+
+        # バックアップファイルの一覧取得
+        file_list = [
+            f
+            for f in os.listdir(backup_dir)
+            if f.endswith(".sqlite3") and os.path.isfile(os.path.join(backup_dir, f))
+        ]
         file_list.sort()
-        # ソートした結果の最初（古い）ファイルを削除する。
-        os.remove("./backup/" + file_list[0])
 
-    # master_pageに戻る。
-    # https://docs.djangoproject.com/en/4.0/ref/contrib/messages/
-    # https://stackoverflow.com/questions/51155947/django-redirect-to-another-view-with-context
-    messages.info(request, f"DBをバックアップしました。 ファイル名:{dst_file}")
+        # 上限超過チェック（デフォルトは20）
+        if len(file_list) > getattr(settings, "BACKUP_NUM", 20):
+            old_file = os.path.join(backup_dir, file_list[0])
+            try:
+                os.remove(old_file)
+                messages.info(request, f"古いバックアップを削除しました: {old_file}")
+            except Exception as e:
+                messages.warning(request, f"古いバックアップの削除に失敗しました: {e}")
+
+    except Exception as e:
+        messages.error(request, f"バックアップ中にエラーが発生しました: {e}")
+
     return redirect("notice:news_card")

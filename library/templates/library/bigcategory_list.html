@@ -70,15 +70,9 @@
               <td class="has-text-centered has-text-danger">{{ pcategory.rank }}</td>
             {% endif %}
             <td>
-                </a>
-                <a href="{% url 'library:category_big' pcategory.pk %}" class="button is-primary is-small">
-                  カテゴリ一覧
-                </a>
-                <a href="{% url 'library:big_category_update' pcategory.pk %}" class="button is-primary is-small">
-                  更新
-                </a>
-                <a href="{% url 'library:big_category_delete' pcategory.pk %}" class="button is-danger is-small">
-                  削除 
+              <a href="{% url 'library:category_big' pcategory.pk %}" class="button is-primary is-small"> カテゴリ一覧 </a>
+              <a href="{% url 'library:big_category_update' pcategory.pk %}" class="button is-primary is-small"> 更新 </a>
+              <a href="{% url 'library:big_category_delete' pcategory.pk %}" class="button is-danger is-small"> 削除 </a>
             </td>
           </tr>
         {% endfor %}
