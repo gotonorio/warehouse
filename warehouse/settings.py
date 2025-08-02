@@ -189,9 +189,9 @@ MARKDOWN_EXTENSIONS = [
 ]
 
 # viewクラスでselectする時のlimit値を設定する。
-SELECT_LIMIT_NUM = 300
-# 1カテゴリ毎に表示するファイル件数。
-COMMENT_LIMIT = 60
+SELECT_LIMIT_NUM = 600
+# 1カテゴリ毎に表示するファイル件数。理事会議事録は1年で12件なので、600件に設定。
+COMMENT_LIMIT = 600
 # DBバックアップ数
 BACKUP_NUM = 3
 
