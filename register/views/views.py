@@ -5,7 +5,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views import generic
-from library.models import File
 
 from register.forms import LoginForm
 

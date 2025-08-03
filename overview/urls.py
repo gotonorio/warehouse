@@ -1,6 +1,6 @@
 from django.urls import path
 
-from overview.views import data_views, views
+from overview import views
 
 app_name = "overview"
 
@@ -11,12 +11,12 @@ urlpatterns = [
     # データ処理
     path(
         "overview/update/<int:pk>",
-        data_views.OverviewUpdateView.as_view(),
+        views.OverviewUpdateView.as_view(),
         name="overview_update",
     ),
     path(
         "roomtype/update/<int:pk>",
-        data_views.RoomTypeUpdateView.as_view(),
+        views.RoomTypeUpdateView.as_view(),
         name="roomtype_update",
     ),
 ]
