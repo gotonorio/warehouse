@@ -9,8 +9,6 @@ backgroundColor: #fff
 headingDivider: 2
 -->
 
-
-
 # 文書管理システム（warehouse）
 
 このアプリケーションは、ソフィア・ガーデンズ川崎 管理組合のWebベース文書管理システムです。
