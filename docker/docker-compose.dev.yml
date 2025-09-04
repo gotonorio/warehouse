@@ -1,0 +1,24 @@
+# 通帳監査システム
+services:
+  warehouse:
+    # 相対パスでDockerfileのpathを指定。
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    # image名:タグ
+    image: warehouse
+    # container名
+    container_name: warehouse
+    restart: always
+    # ホスト上のcalendar/ディレクトリをcode/としてコンテナにマウントする。
+    volumes:
+      - ../:/code
+    # 環境変数TZを設定。
+    environment:
+      TZ: "Asia/Tokyo"
+    # ローカル環境ではportをオープンする。
+    ports:
+      - "8100:8100"
+    command: python3 manage.py runserver 0.0.0.0:8100
+
+

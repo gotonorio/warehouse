@@ -15,13 +15,10 @@ tags
 # 機密関係
 .env
 local_settings.py
-local_compose.yml
 *.sqlite3
 
 # メディアファイルは巨大なためrsyncでバックアップする
 media/
-media/*.pdf
 
 # 国際化は考慮しない
 *.pot
-

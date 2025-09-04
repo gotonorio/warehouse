@@ -3,7 +3,9 @@ services:
   # 資料保管システム用コンテナ
   warehouse:
     # 相対パスでDockerfileのpathを指定。
-    build: ./
+    build:
+      context: ./
+      dockerfile: Dockerfile.prod
     # image名
     image: warehouse
     # 起動ユーザを指定する。ホストでGIDが設定されていない場合、.envファイルで[UID、GIDを設定すること]
