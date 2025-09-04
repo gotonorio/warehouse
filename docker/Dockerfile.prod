@@ -8,7 +8,6 @@ WORKDIR /code
 # システム依存関係のインストール（wheel ビルド用など）
 RUN apt-get -y update \
     && apt-get install -y \
-    # build-essential gcc libpango-1.0-0 libpangoft2-1.0-0 fonts-noto-cjk \
     build-essential gcc fonts-noto-cjk \
     && rm -rf /var/lib/apt/lists/*
 
@@ -17,7 +16,7 @@ COPY requirements /code/requirements
 
 # wheel にまとめてビルド
 RUN pip install --upgrade pip \
-    && pip wheel --no-cache-dir --no-deps --wheel-dir /wheels -r requirements/prod.txt
+    && pip wheel --no-cache-dir --wheel-dir /wheels -r requirements/prod.txt
 
 # -------------------------
 # Runtime stage
