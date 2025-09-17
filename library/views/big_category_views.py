@@ -108,14 +108,24 @@ class BigCategoryView(generic.TemplateView):
         else:
             # ログインの場合はカテゴリを表示する。
             category_obj = category_obj.order_by("parent__rank", "-rank")
-        # settings.pyでSELECT構文のLIMIT値を設定してある。
+
         limit = settings.SELECT_LIMIT_NUM
         category_list = []
         for i in category_obj:
-            file_obj = (
-                File.objects.filter(category=i.pk).filter(alive=True).order_by("-rank", "-created_at")[:limit]
-            )
-            # alive=True).order_by('-rank', '-created_at')
+            # 各カテゴリ毎にファイルを取得する。（権限によって表示するファイルを制限することも考慮する）
+            if user.has_perm("library.add_file"):
+                file_obj = (
+                    File.objects.filter(category=i.pk)
+                    .filter(alive=True)
+                    .order_by("-rank", "-created_at")[:limit]
+                )
+            else:
+                file_obj = (
+                    File.objects.filter(category=i.pk)
+                    .filter(alive=True)
+                    .filter(is_confidential=False)
+                    .order_by("-rank", "-created_at")[:limit]
+                )
             file_list = []
             for j in file_obj:
                 file_list.append(j)

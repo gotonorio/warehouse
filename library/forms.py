@@ -30,6 +30,7 @@ class FileForm(forms.ModelForm):
             "created_at",
             "alive",
             "download",
+            "is_confidential",
         )
         # field毎に異なるclassを設定する場合には、この方法を取る。
         widgets = {
@@ -53,7 +54,6 @@ class FileForm(forms.ModelForm):
                     "class": "textarea",
                 }
             ),
-            # 'src': forms.ClearableFileInput(attrs={
             "src": forms.FileInput(
                 attrs={
                     # 'class': "file",
@@ -70,16 +70,16 @@ class FileForm(forms.ModelForm):
                     "class": "input",
                 }
             ),
-            "alive": forms.NullBooleanSelect(
-                attrs={
-                    "class": "select-css",
-                }
-            ),
-            "download": forms.NullBooleanSelect(
-                attrs={
-                    "class": "select-css",
-                }
-            ),
+            # "alive": forms.NullBooleanSelect(
+            #     attrs={
+            #         "class": "select-css",
+            #     }
+            # ),
+            # "download": forms.NullBooleanSelect(
+            #     attrs={
+            #         "class": "select-css",
+            #     }
+            # ),
         }
         help_texts = {
             "src": "※ fileサイズは300MB以下としてください。",
