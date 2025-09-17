@@ -78,6 +78,7 @@ class File(models.Model):
     created_at = models.DateTimeField(verbose_name="作成日", default=timezone.now)
     alive = models.BooleanField(verbose_name="表示", default=True)
     download = models.BooleanField(verbose_name="ダウンロード", default=False)
+    is_confidential = models.BooleanField(verbose_name="機密", default=False)
 
     def __str__(self):
         return self.title
