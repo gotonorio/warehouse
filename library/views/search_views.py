@@ -31,7 +31,7 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
 
         # 権限がない場合、alive=True で絞る
         if not (user.has_perm("library.add_file") or user.is_staff):
-            queryset = queryset.filter(alive=True)
+            queryset = queryset.filter(alive=True).filter(is_confidential=False)
 
         q_objects = self.mk_q_objects(kw_list)  # Qオブジェクトを組み立てる独自関数
         return queryset.filter(q_objects).distinct()
