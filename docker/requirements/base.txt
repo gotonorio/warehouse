@@ -1,9 +1,8 @@
 # common
-Django==5.2.5
+Django==5.2.6
 django-environ==0.12.0
 Markdown==3.8.2
 user-agents==2.2.0
-# special
 # special
 django-cleanup==9.0.0
 jpholiday==1.0.2
