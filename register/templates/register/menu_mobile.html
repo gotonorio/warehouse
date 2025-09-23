@@ -11,35 +11,11 @@
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="{% url 'notice:news_card' %}">ホーム</a>
-    {% comment %}
-    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-    {% endcomment %}
   </div>
-  {% comment %}
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-    </div>
-    <div class="navbar-end">
-      <a class="navbar-item" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
-    </div>
-  </div>
-  {% endcomment %}
 </nav>
 {% endblock %}
 
 {% block content %}
-{% comment %} <section class="hero is-dark">
-  <div class="hero-body">
-    <div class="has-text-centered">
-      <div class="title is-size-5"> ソフィア・ガーデンズ川崎 </div>
-      <div class="subtitle is-size-6">管理組合 メニュー</div>
-    </div>
-  </div>
-</section> {% endcomment %}
 <br>
 <div class="container is-fluid">
   <section class="sectionbox">
@@ -50,7 +26,7 @@
     <div class="columns">
       <div class="column">
         <div class="menubox has-text-centered">
-          <a href="{% url 'overview:overview' %}" class="white_color">マンション概要</a>
+          <a href="{% url 'overview:overview' %}" class="white_color">マンション公開情報</a>
         </div>
       </div>
       <div class="column">
@@ -73,13 +49,6 @@
           <a class="white_color" href="https://keijiban.sophiagardens.org" target="_blank">掲示板</a>
         </div>
       </div>
-      {% comment %}
-      <div class="column">
-        <div class="menubox has-text-centered">
-          <a class="white_color" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a>
-        </div>
-      </div>
-      {% endcomment %}
     {% endif %}
       <div class="column">
         <div class="menubox has-text-centered">

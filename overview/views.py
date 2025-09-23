@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 class OverviewUpdateView(PermissionRequiredMixin, generic.UpdateView):
-    """マンション概要データアップデートView
+    """マンション公開情報データアップデート
     - 概要は変化しないので、管理画面で初期データを登録する。
     - 駐車場台数や法規制は変更の可能性があるので、修正画面を作成する。
     """
@@ -46,7 +46,7 @@ class RoomTypeUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
 
 class Overview(generic.TemplateView):
-    """マンション概要"""
+    """マンション公開情報"""
 
     model = OverView
 
