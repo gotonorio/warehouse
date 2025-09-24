@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models import F, Sum
-
-# from django.utils import timezone
+from django.utils import timezone
 
 
 class OverView(models.Model):
@@ -79,12 +78,13 @@ class RoomType(models.Model):
         return qs
 
 
-# class PublicInformation(models.Model):
-#     """公開情報"""
+class PublicInformation(models.Model):
+    """公開情報"""
 
-#     pub_infomation = models.TextField(verbose_name="公開情報", blank=True, null=True)
-#     is_published = models.BooleanField(verbose_name="表示", default=True)
-#     created_at = models.DateTimeField(verbose_name="作成日", default=timezone.now)
+    year = models.IntegerField(verbose_name="年度")
+    pub_infomation = models.TextField(verbose_name="公開情報", blank=True, null=True)
+    is_published = models.BooleanField(verbose_name="表示", default=True)
+    created_at = models.DateTimeField(verbose_name="作成日", default=timezone.now)
 
-#     def __str__(self):
-#         return self.pub_infomation[:20]
+    def __str__(self):
+        return f"{self.year}年度 公開情報"
