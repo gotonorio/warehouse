@@ -4,11 +4,30 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import F
 from django.urls import reverse_lazy
 from django.views import generic
-
 from overview.forms import OverviewForm, RoomTypeForm
 from overview.models import OverView, RoomType
 
 logger = logging.getLogger(__name__)
+
+
+class Overview(generic.TemplateView):
+    """マンション公開情報"""
+
+    model = OverView
+
+    def get_template_names(self):
+        """templateファイルを切り替える"""
+        if self.request.user_agent_flag == "mobile":
+            template_name = "overview/overview_mobile.html"
+        else:
+            template_name = "overview/overview_pc.html"
+        return [template_name]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        qs = OverView.objects.all()
+        context["ov"] = qs[0]
+        return context
 
 
 class OverviewUpdateView(PermissionRequiredMixin, generic.UpdateView):
@@ -43,26 +62,6 @@ class RoomTypeUpdateView(PermissionRequiredMixin, generic.UpdateView):
     permission_required = "library.add_file"
     # 保存が成功した場合に遷移するurl
     success_url = reverse_lazy("overview:overview")
-
-
-class Overview(generic.TemplateView):
-    """マンション公開情報"""
-
-    model = OverView
-
-    def get_template_names(self):
-        """templateファイルを切り替える"""
-        if self.request.user_agent_flag == "mobile":
-            template_name = "overview/overview_mobile.html"
-        else:
-            template_name = "overview/overview_pc.html"
-        return [template_name]
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        qs = OverView.objects.all()
-        context["ov"] = qs[0]
-        return context
 
 
 class RoomTypeView(generic.TemplateView):

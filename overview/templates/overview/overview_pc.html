@@ -20,6 +20,7 @@
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
       <a class="navbar-item" href="{% url 'overview:roomtype_list' %}">管理費等</a>
+      <a class="navbar-item" href="{% url 'overview:pubinfo' %}">公開情報</a>
       <a href="{% static 'pamphlet.pdf' %}" target="_blank" class="white_color navbar-item">パンフレット</a>
     </div>
     <div class="navbar-end">
@@ -36,7 +37,7 @@
 <br>
 <div class="container is-fluid">
   <div class="content has-text-centered">
-    <h4>{{ov.name}} マンション公開情報</h4>
+    <h4>{{ov.name}} マンション概要</h4>
   </div>
   <table class="table table_center_nowrap is-narrow is-responsible is-bordered">
     <tbody>

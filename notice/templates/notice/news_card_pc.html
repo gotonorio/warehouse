@@ -26,10 +26,6 @@
     <div class="navbar-start">
       <a class="navbar-item" href="{% url 'register:menu' %}">管理組合メニュー</a>
       <a class="navbar-item" href="{% url 'overview:overview' %}">マンション公開情報</a>
-      {% if perms.library.view_file %}
-        {% comment %} <a class="navbar-item" href="https://calendar.sophiagardens.org" target="_blank">カレンダー</a> {% endcomment %}
-        <a class="navbar-item" href="https://keijiban.sophiagardens.org" target="_blank">掲示板</a>
-      {% endif %}
     </div>
     <div class="navbar-end">
       {% if perms.notice.add_news %}
