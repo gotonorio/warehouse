@@ -41,6 +41,7 @@
       <tr>
         <th class="has-text-centered">西暦</th>
         <th class="has-text-centered">概要</th>
+        <th class="has-text-centered">表示</th>
         <th class="has-text-centered">#</th>
       </tr>
     </thead>
@@ -49,6 +50,7 @@
       <tr>
         <td class="has-text-right">{{info.year}} </td>
         <td class="has-text-left">{{info.pub_information|markdown_to_html}} </td>
+        <td class="has-text-left">{{info.is_published}} </td>
         <td class="has-text-left nowrap">
           <a href="{% url 'overview:pub_update' info.pk %}" class="button is-primary is-small">修正</a>
         </td>
