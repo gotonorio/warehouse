@@ -1,6 +1,6 @@
 from django import forms
 
-from overview.models import OverView, RoomType
+from overview.models import OverView, PublicInformation, RoomType
 
 
 class OverviewForm(forms.ModelForm):
@@ -64,4 +64,17 @@ class RoomTypeForm(forms.ModelForm):
             "ryokuchi": forms.NumberInput(attrs={"class": "input"}),
             "niwa": forms.NumberInput(attrs={"class": "input"}),
             "number_unit": forms.NumberInput(attrs={"class": "input"}),
+        }
+
+
+class PublicInformationForm(forms.ModelForm):
+    """公開情報データ編集用フォーム"""
+
+    class Meta:
+        model = PublicInformation
+        fields = ("year", "pub_information", "is_published")
+        widgets = {
+            "year": forms.TextInput(attrs={"class": "input"}),
+            "pub_information": forms.Textarea(attrs={"class": "textarea"}),
+            "is_published": forms.CheckboxInput(attrs={"class": "checkbox"}),  # チェックボックス
         }

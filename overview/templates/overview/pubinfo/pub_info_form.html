@@ -1,10 +1,4 @@
 {% extends "base_single_page.html" %}
-{% load static %}
-{% load mytag %}
-
-{% block head %}
-  <link href="{% static 'mycss/my_markdown.css' %}" rel="stylesheet">
-{% endblock head%}
 
 <!-- navbar -->
 {% block navbar %}
@@ -25,24 +19,32 @@
     </div>
   </div>
 </nav>
-{% endblock %}
+{% endblock navbar %}
 
 <!-- content -->
 {% block content %}
 <div class="container is-fluid">
-  {% for item in pubinfo %}
-    <div class="card content">
-      <header class="card-header">
-        {% comment %} <p class="card-header-title has-background-black has-text-white"> {% endcomment %}
-        <p class="card-header-title has-background-white has-text-black">
-          {{item.year}}年度公開情報
-        </p>
-      </header>
-      <div class="card-content markdown table is-bordered is-narrow">
-        {{item.pub_information| markdown_to_html}}
-      </div>
-    </div>
-  {% endfor %}
   <br>
+  <form method='POST' enctype='multipart/form-data'>
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <div class='field'>
+        <div class='control'>
+          <div class='label'>{{ field.label_tag }}</div>
+          <div class='my_field'>{{ field }}</div>
+          {% if field.help_text %}
+            <span class='helptext'>{{ field.help_text }}</span>
+          {% endif %}
+          {{ field.errors }}
+        </div>
+      </div>
+    {% endfor %}
+    {% csrf_token %}
+    <br>
+    <div class='content has-text-centered my_button'>
+      <button type='submit' class='button is-primary'>読込み</button>
+      <a class='button is-danger' href='javascript:void(0);' onclick='window.history.back();'>キャンセル</a>
+    </div>
+  </form>
 </div>
 {% endblock %}

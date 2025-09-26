@@ -8,46 +8,19 @@ class InformationForm(forms.ModelForm):
 
     class Meta:
         model = Information
-        fields = "__all__"
+        # fields = "__all__"
         fields = ("title", "comment", "information", "display_info", "created_at", "type_name", "sequense")
         widgets = {
-            "title": forms.TextInput(
-                attrs={
-                    "class": "input",
-                }
-            ),
-            "comment": forms.TextInput(
-                attrs={
-                    "class": "input",
-                }
-            ),
-            "information": forms.Textarea(
-                attrs={
-                    "class": "textarea",
-                }
-            ),
-            "display_info": forms.CheckboxInput(
-                attrs={
-                    "class": "checkbox",
-                }
-            ),
-            "created_at": forms.DateTimeInput(
-                attrs={
-                    "class": "input",
-                }
-            ),
-            "type_name": forms.Select(
-                attrs={
-                    "class": "select-css",
-                }
-            ),
-            "sequense": forms.NumberInput(
-                attrs={
-                    "class": "input",
-                }
-            ),
+            "title": forms.TextInput(attrs={"class": "input"}),
+            "comment": forms.TextInput(attrs={"class": "input"}),
+            "information": forms.Textarea(attrs={"class": "textarea"}),
+            "display_info": forms.CheckboxInput(attrs={"class": "checkbox"}),
+            "created_at": forms.DateTimeInput(attrs={"class": "input"}),
+            "type_name": forms.Select(attrs={"class": "select-css"}),
+            "sequense": forms.NumberInput(attrs={"class": "input"}),
         }
 
+    # 各フィールドに対して「初期値(initial)」を決定する処理をカスタマイズするためのメソッド
     def get_initial_for_field(self, field, field_name):
         initial_id = InformationType.objects.get(type_name="情報")
         if field_name == "type_name":
