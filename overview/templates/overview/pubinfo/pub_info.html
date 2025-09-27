@@ -28,11 +28,12 @@
 <!-- content -->
 {% block content %}
 <div class="container is-fluid">
+  <br>
   {% for item in pubinfo %}
     <div class="card content">
       <header class="card-header">
-        {% comment %} <p class="card-header-title has-background-black has-text-white"> {% endcomment %}
-        <p class="card-header-title has-background-white has-text-black">
+        <p class="card-header-title has-background-grey-dark has-text-white">
+        {% comment %} <p class="card-header-title has-background-white has-text-black"> {% endcomment %}
           {{item.year}}年度公開情報
         </p>
       </header>

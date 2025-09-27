@@ -18,9 +18,9 @@ class Overview(generic.TemplateView):
     def get_template_names(self):
         """templateファイルを切り替える"""
         if self.request.user_agent_flag == "mobile":
-            template_name = "overview/overview_mobile.html"
+            template_name = "overview/overview/overview_mobile.html"
         else:
-            template_name = "overview/overview_pc.html"
+            template_name = "overview/overview/overview_pc.html"
         return [template_name]
 
     def get_context_data(self, **kwargs):
@@ -38,7 +38,7 @@ class OverviewUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
     model = OverView
     form_class = OverviewForm
-    template_name = "overview/overview_form.html"
+    template_name = "overview/overview/overview_form.html"
     permission_required = "library.add_file"
     # 保存が成功した場合に遷移するurl
     success_url = reverse_lazy("overview:overview")
@@ -59,6 +59,7 @@ class RoomTypeUpdateView(PermissionRequiredMixin, generic.UpdateView):
 
     model = RoomType
     form_class = RoomTypeForm
+    template_name = "overview/overview/roomtype_form.html"
     permission_required = "library.add_file"
     # 保存が成功した場合に遷移するurl
     success_url = reverse_lazy("overview:overview")
@@ -68,7 +69,7 @@ class RoomTypeView(generic.TemplateView):
     """住戸タイプデータ"""
 
     model = RoomType
-    template_name = "overview/roomtype_list.html"
+    template_name = "overview/overview/roomtype_list.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
