@@ -27,11 +27,31 @@ class InformationView(LoginRequiredMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         """最新の日付データをタイトルとして表示する"""
         context = super().get_context_data(**kwargs)
-        qs = (
-            Information.objects.filter(display_info=True)
-            .filter(type_name__type_name="情報")
-            .order_by("-sequense")
-        )
+        # userのgroup権限によって、表示を変える
+        user = self.request.user
+        if user.is_authenticated:
+            # 権限での判定例
+            if user.has_perm("library.add_file"):
+                qs = Information.objects.filter(display_info=True).order_by("-sequense")
+            elif user.has_perm("notice.add_news"):
+                qs = Information.objects.filter(display_info=True).order_by("-sequense")
+            else:
+                # sophiagユーザ（loginユーザ）で、上記権限がない場合
+                qs = (
+                    Information.objects.filter(display_info=True)
+                    .filter(type_name__type_name="情報")
+                    .order_by("-sequense")
+                )
+            # グループ名での判定例
+            # if user.groups.filter(name="chairman").exists():
+            #     logger.debug("you are chairman")
+            # elif user.groups.filter(name="data_manager").exists():
+            #     logger.debug("you are data_manager")
+            # elif user.groups.filter(name="news_manager").exists():
+            #     logger.debug("you are news_manager")
+            # else:
+            #     logger.debug("you are normal user")
+
         context["information_list"] = qs
         return context
 
@@ -43,7 +63,7 @@ class InfoListView(generic.ListView):
 
     model = Information
     template_name = "information/info_manage_list.html"
-    queryset = Information.objects.order_by("-display_info", "-sequense")
+    queryset = Information.objects.all().order_by("-display_info", "-type_name", "-sequense")
 
 
 class InformationCreateView(PermissionRequiredMixin, generic.CreateView):
