@@ -42,7 +42,7 @@ class FileCategoryView(PermissionRequiredMixin, generic.ListView):
     def get_queryset(self):
         """カテゴリでfilter."""
         category_pk = self.kwargs["category_pk"]
-        return File.objects.filter(category__pk=category_pk).order_by("-alive", "-rank")
+        return File.objects.filter(category__pk=category_pk).order_by("-alive", "is_confidential", "-rank")
 
     def get_context_data(self, *args, **kwargs):
         """カテゴリのpkをテンプレートへ渡す."""

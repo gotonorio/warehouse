@@ -40,6 +40,11 @@
   {% endif %}
   <div class="content">
     <h3>ファイル一覧</h3>
+    <ul class="has-text-danger">
+      <li>金額等を含む資料は「機密」とする。</li>
+      <li>「機密」ファイルはデータ管理者のみ閲覧可能。</li>
+    </ul>
+
     {% if category_pk %}
       <!-- カテゴリ一覧からカテゴリ別のファイル一覧で表示 -->
       <a href="{% url 'library:file_create' category_pk %}" class="button is-primary">新規アップロード</a>
@@ -61,6 +66,7 @@
           <th class="has-text-centered">登録日</th>
           <th class="has-text-centered">表示</th>
           <th class="has-text-centered">rank</th>
+          <th class="has-text-centered">機密</th>
           <th class="has-text-centered">#</th>
         </tr>
       </thead>
@@ -75,6 +81,7 @@
             <td class="has-text-left">{{file.created_at|date:"Y-m-d"}}</td>
             <td class="has-text-centered">{{ file.alive }}</td>
             <td class="has-text-centered">{{ file.rank }}</td>
+            <td class="has-text-centered">{{ file.is_confidential }}</td>
           {% else %}
             <td class="has-text-left has-text-danger">{{file.title}}</td>
             <td class="has-text-left has-text-danger">{{file.category.parent}}</td>
@@ -83,6 +90,7 @@
             <td class="has-text-left has-text-danger">{{file.created_at|date:"Y-m-d"}}</td>
             <td class="has-text-centered has-text-danger">{{ file.alive }}</td>
             <td class="has-text-centered has-text-danger">{{ file.rank }}</td>
+            <td class="has-text-centered has-text-dander">{{ file.is_confidential }}</td>
           {% endif %}
           <td class="nowrap">
             <a href="{% url 'library:file_update' file.pk %}" class="button is-primary is-small">
