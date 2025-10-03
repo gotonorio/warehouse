@@ -6,6 +6,12 @@ from information.models import Information, InformationType
 class InformationForm(forms.ModelForm):
     """Information登録用のフォーム."""
 
+    type_name = forms.ModelChoiceField(
+        queryset=InformationType.objects.all(),
+        empty_label="選択してください",
+        widget=forms.Select(attrs={"class": "select-css is-primary"}),
+    )
+
     class Meta:
         model = Information
         # fields = "__all__"
@@ -16,13 +22,5 @@ class InformationForm(forms.ModelForm):
             "information": forms.Textarea(attrs={"class": "textarea"}),
             "display_info": forms.CheckboxInput(attrs={"class": "checkbox"}),
             "created_at": forms.DateTimeInput(attrs={"class": "input"}),
-            "type_name": forms.Select(attrs={"class": "select-css"}),
             "sequense": forms.NumberInput(attrs={"class": "input"}),
         }
-
-    # 各フィールドに対して「初期値(initial)」を決定する処理をカスタマイズするためのメソッド
-    def get_initial_for_field(self, field, field_name):
-        initial_id = InformationType.objects.get(type_name="情報")
-        if field_name == "type_name":
-            return initial_id
-        return super().get_initial_for_field(field, field_name)
