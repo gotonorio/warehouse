@@ -82,6 +82,7 @@ class PublicInformation(models.Model):
     """公開情報"""
 
     year = models.IntegerField(verbose_name="年度")
+    title = models.CharField(verbose_name="タイトル", max_length=64, blank=True, null=True)
     pub_information = models.TextField(verbose_name="公開情報", blank=True, null=True)
     is_published = models.BooleanField(verbose_name="表示", default=True)
     created_at = models.DateTimeField(verbose_name="作成日", default=timezone.now)

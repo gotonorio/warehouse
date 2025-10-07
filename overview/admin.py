@@ -12,7 +12,7 @@ class RoomTypeAdmin(admin.ModelAdmin):
 
 
 class PublicInfoAdmin(admin.ModelAdmin):
-    list_display = ("year", "is_published")
+    list_display = ("year", "title", "is_published")
 
 
 admin.site.register(OverView, OverViewAdmin)

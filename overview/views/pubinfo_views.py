@@ -24,9 +24,7 @@ class PublicInfoView(generic.TemplateView):
 
 
 class PublicInfoListView(generic.ListView):
-    """
-    編集時用 情報一覧、
-    """
+    """編集時用 情報一覧"""
 
     model = PublicInformation
     template_name = "overview/pubinfo/pub_info_list.html"
