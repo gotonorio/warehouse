@@ -75,6 +75,6 @@ class PublicInformationForm(forms.ModelForm):
         fields = ("year", "pub_information", "is_published")
         widgets = {
             "year": forms.TextInput(attrs={"class": "input"}),
-            "pub_information": forms.Textarea(attrs={"class": "textarea"}),
+            "pub_information": forms.Textarea(attrs={"class": "textarea", "rows": 18}),
             "is_published": forms.CheckboxInput(attrs={"class": "checkbox"}),  # チェックボックス
         }
