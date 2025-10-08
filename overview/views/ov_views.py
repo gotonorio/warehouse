@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class Overview(generic.TemplateView):
-    """マンション公開情報"""
+    """公開情報 トップページ"""
 
     model = OverView
 

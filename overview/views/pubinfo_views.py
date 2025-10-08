@@ -13,7 +13,14 @@ class PublicInfoView(generic.TemplateView):
     """公開情報表示View"""
 
     model = PublicInformation
-    template_name = "overview/pubinfo/pub_info.html"
+
+    def get_template_names(self):
+        """templateファイルを切り替える"""
+        if self.request.user_agent_flag == "mobile":
+            template_name = "overview/pubinfo/pub_info_mobile.html"
+        else:
+            template_name = "overview/pubinfo/pub_info.html"
+        return [template_name]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

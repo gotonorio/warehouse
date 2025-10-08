@@ -25,7 +25,7 @@
   <div id="navbarMypage" class="navbar-menu">
     <div class="navbar-start">
       <a class="navbar-item" href="{% url 'register:menu' %}">管理組合メニュー</a>
-      <a class="navbar-item" href="{% url 'overview:overview' %}">マンション公開情報</a>
+      <a class="navbar-item" href="{% url 'overview:overview' %}">公開メニュー</a>
     </div>
     <div class="navbar-end">
       {% if perms.notice.add_news %}

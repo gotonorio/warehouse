@@ -1,0 +1,48 @@
+{% extends "base_single_page.html" %}
+{% load mytag %}
+
+{% block head %}
+{% endblock head%}
+
+<!-- navbar -->
+{% block navbar %}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{% url 'notice:news_card' %}">ホーム</a>
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <a href="{% url 'notice:news_card' %}" class="navbar-item">戻る</a>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+{% comment %} <div class="container is-fluid"> {% endcomment %}
+<div class="container">
+  <br>
+  {% for item in pubinfo %}
+    <div class="card content">
+      <header class="card-header">
+        <p class="card-header-title has-background-grey-dark has-text-white">
+        {% comment %} <p class="card-header-title has-background-white has-text-black"> {% endcomment %}
+          {{item.year}}年度 {{item.title}}
+        </p>
+      </header>
+      <div class="card-content markdown table is-bordered is-narrow">
+        {{item.pub_information|markdown_to_html}}
+      </div>
+    </div>
+  {% endfor %}
+  <br>
+</div>
+{% endblock %}
