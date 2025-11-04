@@ -1,10 +1,10 @@
+from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (
     AuthenticationForm,
     PasswordChangeForm,
     UserCreationForm,
 )
-from django import forms
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 
 # from register.models import ControlRecord
@@ -72,26 +72,7 @@ class UserUpdateForm(forms.ModelForm):
 class PasswordUpdateForm(PasswordChangeForm):
     """ユーザーが自分のパスワードを更新するためのフォーム"""
 
-    # class Meta:
-    #     model = MyUser
-    #     fields = ('username', 'email', )
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs["class"] = "input is-size-6"
-
-
-# class UpdateTempUserFlgForm(forms.ModelForm):
-#     """ 仮登録メニューの表示/非表示を設定 """
-#     class Meta:
-#         model = ControlRecord
-#         fields = ('tmp_user_flg',)
-#         labels = {
-#             'tmp_user_flg': '仮登録表示',
-#         }
-#         widgets = {
-#             'tmp_user_flg': forms.CheckboxInput(attrs={
-#                 'class': 'checkbox',
-#             }),
-#         }

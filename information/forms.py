@@ -20,7 +20,7 @@ class InformationForm(forms.ModelForm):
             "title": forms.TextInput(attrs={"class": "input"}),
             "comment": forms.TextInput(attrs={"class": "input"}),
             "information": forms.Textarea(attrs={"class": "textarea"}),
-            "display_info": forms.CheckboxInput(attrs={"class": "checkbox"}),
+            "display_info": forms.CheckboxInput(),
             "created_at": forms.DateTimeInput(attrs={"class": "input"}),
             "sequense": forms.NumberInput(attrs={"class": "input"}),
         }

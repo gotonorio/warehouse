@@ -77,5 +77,5 @@ class PublicInformationForm(forms.ModelForm):
             "year": forms.TextInput(attrs={"class": "input"}),
             "title": forms.TextInput(attrs={"class": "input"}),
             "pub_information": forms.Textarea(attrs={"class": "textarea", "rows": 18}),
-            "is_published": forms.CheckboxInput(attrs={"class": "checkbox"}),  # チェックボックス
+            "is_published": forms.CheckboxInput(),  # bulmaではcheckboxにclass不要
         }
