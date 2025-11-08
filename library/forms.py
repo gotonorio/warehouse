@@ -14,8 +14,8 @@ class FileForm(forms.ModelForm):
     https://narito.ninja/blog/detail/52/
     """
 
-    def clean_file(self):
-        uploaded_file = self.cleaned_data["file"]
+    def clean_src(self):
+        uploaded_file = self.cleaned_data["src"]
         # (1) ファイルの拡張子をチェック
         ext = os.path.splitext(uploaded_file.name)[1].lower()
         if ext not in [".pdf", ".zip"]:
@@ -92,7 +92,7 @@ class FileForm(forms.ModelForm):
             # ),
         }
         help_texts = {
-            "src": "※ fileサイズは300MB以下としてください。",
+            "src": "※ fileサイズは50MB以下にしてください。",
         }
 
 
