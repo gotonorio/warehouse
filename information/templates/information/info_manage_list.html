@@ -62,7 +62,7 @@
           <td class="has-text-right has-text-danger">{{ info.sequense }}</td>
         {% endif %}
         <td class="has-text-right">
-          <a href="{% url 'information:make_pdf' info.pk %}">出力</a>
+          {% comment %} <a href="{% url 'information:make_pdf' info.pk %}">出力</a> {% endcomment %}
         </td>
         <td class="has-text-left nowrap">
           <a href="{% url 'information:info_update' info.pk %}" class="button is-primary is-small">更新</a>

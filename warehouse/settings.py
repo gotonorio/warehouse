@@ -96,9 +96,7 @@ TEMPLATES = [
                 "warehouse.context_processors.version_no",
                 "warehouse.context_processors.is_debug",
             ],
-            "libraries": {
-                "mytag": "notice.templatetags.mytag",
-            },
+            "libraries": {},
         },
     },
 ]
