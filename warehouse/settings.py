@@ -256,8 +256,10 @@ LOGGING = {
 
 # For debugging
 if DEBUG:
+    # static filesはcommonアプリに移したので、空にする。
+    STATICFILES_DIRS = []
     # 開発環境における静的ファイルの場所を指定する。
-    STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+    # STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
     # for django-debug-toolbar
     # INTERNAL_IPS = ["127.0.0.1"]
     # INSTALLED_APPS += ["debug_toolbar"]
