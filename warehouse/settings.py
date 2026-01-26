@@ -81,7 +81,8 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(BASE_DIR, "templates"),
+            BASE_DIR / "templates",  # プロジェクト直下の共通設定用テンプレートフォルダ
+            BASE_DIR / "common" / "templates",  # commonアプリ用テンプレートフォルダ
         ],
         "APP_DIRS": True,
         "OPTIONS": {

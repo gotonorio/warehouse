@@ -11,6 +11,7 @@ logs/
 .DS_Store
 .vscode/
 tags
+0fuyou_*
 
 # 機密関係
 .env
