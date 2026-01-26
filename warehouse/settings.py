@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "django_cleanup.apps.CleanupConfig",
     "overview.apps.OverviewConfig",
     "control.apps.ControlConfig",
+    "common",
 ]
 
 MIDDLEWARE = [
