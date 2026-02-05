@@ -9,7 +9,7 @@ services:
     image: warehouse
     # container名
     container_name: warehouse
-    restart: always
+    restart: unless-stopped
     # ホスト上のcalendar/ディレクトリをcode/としてコンテナにマウントする。
     volumes:
       - ../:/code

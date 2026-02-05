@@ -12,7 +12,7 @@ services:
     container_name: warehouse
     # 起動ユーザを指定する。ホストでGIDが設定されていない場合、.envファイルで[UID、GIDを設定すること]
     user: "${UID}:${GID}"
-    restart: always
+    restart: unless-stopped
     # ホスト上のwh2/ディレクトリをcode/としてコンテナにマウントする。
     volumes:
       - ../:/code

@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html class="has-navbar-fixed-top" lang="ja">
+<html lang="ja">
 
 <head>
   <meta charset="utf-8">
@@ -23,7 +23,8 @@
   {% block head %}
   {% endblock %}
 </head>
-<body>
+
+<body class="has-navbar-fixed-top" >
   {% block navbar %}
   {% endblock%}
   <!-- ヘッダー（hero) -->
@@ -75,20 +76,9 @@
     </main>
   </div>
   <!-- フッタ -->
-  {# bulmaのfooter #}
-  <footer class="my_footer">
-    <div class="container">
-      <div class="content has-text-centered">
-        &copy; 2020- 
-        <script language="JavaScript" type="text/javascript">
-        document.write(new Date().getFullYear());
-        </script>
-        {% if debug %}
-          N.Goto Ver-{{VERSION_NO}} 開発版
-        {% else %}
-          N.Goto Ver-{{VERSION_NO}} 運用版
-        {% endif %}
-      </div>
+  <footer class="my-footer">
+    <div class="content has-text-centered is-size-7">
+      &copy; {% now "Y" %} ソフィア・ガーデンズ川崎 管理組合 {{ VERSION_NO }}
     </div>
   </footer>
 
