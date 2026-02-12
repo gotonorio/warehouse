@@ -15,7 +15,7 @@ services:
 
     # ここで指定した中身が、OSの環境変数としてDjangoに渡される（settings.py
     env_file:
-      - ../.env_dev
+      - ../.env
 
     # ディレクトリ全体をマウントしない方が良いようだ。
     # ホスト上のcollectstaticで作成されたstaticディレクトリを/code/staticとしてマウントする。
