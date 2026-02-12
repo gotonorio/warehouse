@@ -26,12 +26,18 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, []),
 )
 
-# .envを読み込む (ファイルが存在する場合のみ読み込む設定)
-# 本番環境では、.dockerignoreファイルで.envをコンテナにコピーせず、compose.ymlで環環変数に取り込む。
-# env_file = os.path.join(BASE_DIR, "docker/.env")
-env_file = os.path.join(BASE_DIR, ".env_dev")
+# 1. まずOS自体の環境変数（またはデフォルト値）からモードを取得
+# OS側に何もなければ 'production' とみなす
+app_env = os.environ.get("APP_ENV", "production")
+
+if app_env == "development":
+    env_file = os.path.join(BASE_DIR, ".env_dev")
+else:
+    env_file = os.path.join(BASE_DIR, ".env")
+
+# 読み込み実行
 if os.path.exists(env_file):
-    environ.Env.read_env(env_file)
+    env.read_env(env_file)
 
 # あとは共通：環境変数（OS由来 または .envファイル由来）から読み込む
 SECRET_KEY = env("SECRET_KEY")
