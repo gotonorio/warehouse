@@ -16,7 +16,7 @@ config:
 
 # 静的ファイルを変更した時にcollectstaticを実行する
 collectstatic:
-	docker compose -f docker/compose.yml exec facility python manage.py collectstatic --noinput
+	docker compose -f docker/compose.yml exec warehouse python manage.py collectstatic --noinput
 
 # 開発環境では、常にキャッシュクリアする
 up-dev:
