@@ -20,30 +20,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # instanceを作成
 env = environ.Env(
-    # 初期値を設定
-    # SECURITY WARNING: don't run with debug turned on in production!
-    # DEBUG=(bool, False)
+    # キャスト（型指定）とデフォルト値を設定
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, ""),
+    ALLOWED_HOSTS=(list, []),
 )
-# .envを読み込む
-environ.Env.read_env(os.path.join(BASE_DIR, "docker/.env"))
 
-# セキュリティ関係の環境変数を読み込む。
-# 読み込む環境変数のタイプに合わせる必要があるので注意。
+# .envを読み込む (ファイルが存在する場合のみ読み込む設定)
+# 本番環境では、.dockerignoreファイルで.envをコンテナにコピーせず、compose.ymlで環環変数に取り込む。
+# env_file = os.path.join(BASE_DIR, "docker/.env")
+env_file = os.path.join(BASE_DIR, ".env_dev")
+if os.path.exists(env_file):
+    environ.Env.read_env(env_file)
+
+# あとは共通：環境変数（OS由来 または .envファイル由来）から読み込む
 SECRET_KEY = env("SECRET_KEY")
 DB_NAME = env("DB_NAME")
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
-
-# デフォルトはFalseとする。
-DEBUG = False
-# ローカル環境でDEBUGを上書き（local_settings.pyがあれば）
-try:
-    from .local_settings import DEBUG
-except ImportError:
-    pass
+ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+DEBUG = env("DEBUG")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
 
 # Application definition
 
@@ -160,7 +157,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2026-01-27"
+VERSION_NO = "2026-02-12"
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -254,10 +251,20 @@ LOGGING = {
     },
 }
 
-# For debugging
+# -----------------------------------------------------------------------------
+# static files settings
+# -----------------------------------------------------------------------------
+# 常に定義する
+STATIC_ROOT = "/code/static"
+
 if DEBUG:
-    # static filesはcommonアプリに移したので、空にする。
+    # 開発時に追加で参照したい場合のみ
     STATICFILES_DIRS = []
-else:
-    # for nginx
-    STATIC_ROOT = "/code/static"
+
+# # For debugging
+# if DEBUG:
+#     # static filesはcommonアプリに移したので、空にする。
+#     STATICFILES_DIRS = []
+# else:
+#     # for nginx
+#     STATIC_ROOT = "/code/static"

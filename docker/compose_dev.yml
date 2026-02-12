@@ -1,0 +1,41 @@
+# 通帳監査システム
+services:
+  warehouse:
+    # 相対パスでDockerfileのpathを指定。contextは一つ上の階層にする。
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    # image名:タグ
+    image: warehouse
+    # 起動ユーザを指定する
+    user: "${UID}:${GID}"
+    # container名
+    container_name: warehouse
+    restart: unless-stopped
+
+    # ここで指定した中身が、OSの環境変数としてDjangoに渡される（settings.py
+    env_file:
+      - ../.env_dev
+
+    # ディレクトリ全体をマウントしない方が良いようだ。
+    # ホスト上のcollectstaticで作成されたstaticディレクトリを/code/staticとしてマウントする。
+    # （settings.pyで STATIC_ROOT = "/code/static"としている）
+    # （/codeはDockerfileでWORKDIRとしている）
+    # ホスト上のwh2.sqlite3、media/を/code/にマウントする。
+    volumes:
+      - ../static:/code/static
+      - ../wh2.sqlite3:/code/wh2.sqlite3
+      - ../media:/code/media
+
+    # # ホスト上のcalendar/ディレクトリをcode/としてコンテナにマウントする。
+    # volumes:
+    #   - ../:/code
+
+    # 環境変数TZを設定。
+    environment:
+      TZ: "Asia/Tokyo"
+
+    # ローカル環境ではportをオープンする。
+    ports:
+      - "8100:8100"
+    command: python3 manage.py runserver 0.0.0.0:8100

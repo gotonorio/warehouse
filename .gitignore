@@ -1,4 +1,3 @@
-
 # キャッシュ関係
 *.pyc
 __pycache__/
@@ -11,15 +10,19 @@ logs/
 .DS_Store
 .vscode/
 tags
+venv/
 0fuyou_*
 
 # 機密関係
 .env
-local_settings.py
+.env_dev
 *.sqlite3
+local_settings.py
 
 # メディアファイルは巨大なためrsyncでバックアップする
 media/
+*.pdf
+*.png
 
 # 国際化は考慮しない
 *.pot
