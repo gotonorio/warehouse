@@ -5,29 +5,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" type="image/png" href="{{STATIC_URL}}/static/common/favicon.ico"/>
+  <link rel="shortcut icon" type="image/png" href="{% static 'common/favicon.ico' %}"/>
   <link rel="apple-touch-icon-precomposed" href="{{STATIC_URL}}/static/apple-touch-icon-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="{% static 'common/apple-touch-icon-precomposed.png' %}">
   {# css #}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
   <link href="{% static 'common/mycss/mycss.css' %}" rel="stylesheet">
 
   <title>{% block title %}ソフィア・ガーデンズ川崎{% endblock %}</title>
+  <script src="{% static 'common/js/navbar.js' %}" defer></script>
   {% block head %}
   {% endblock %}
 </head>
-<body class="has-navbar-fixed-top" >
+<body>
   <div class="site-wrapper">
     {% block navbar %}
     {% endblock%}
     <!-- ヘッダー（hero) -->
     {% block header %}
     {% endblock %}
-    <!-- footerを設置する場合、<main>で囲む -->
-  <main>
-    {% block content %}
-    {% endblock %}
-  </main>
-
+    <!-- メインコンテンツ -->
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+    <!-- footerを設置 -->
     <footer class="my-footer">
       <div class="content has-text-centered is-size-7">
         &copy; {% now "Y" %} ソフィア・ガーデンズ川崎 管理組合 {{ VERSION_NO }}
@@ -36,7 +38,7 @@
   
     {# 参考： https://bulma.io/documentation/components/navbar/ #}
     {# ToDo ハンバーガアイコン用のjs。staticから読み込むことはできないか？ #}
-    <script>
+    {% comment %} <script>
         // notificationを×押下で閉じれるように。
       for (const element of document.querySelectorAll('.notification > .delete')) {
           element.addEventListener('click', e => {
@@ -62,7 +64,7 @@
           });
         }
       });
-    </script>
+    </script> {% endcomment %}
   </div>
 </body>
 </html>

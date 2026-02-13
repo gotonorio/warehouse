@@ -5,129 +5,77 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" type="image/png" href="{{STATIC_URL}}/static/common/favicon.ico"/>
+  <link rel="shortcut icon" type="image/png" href="{% static 'common/favicon.ico' %}"/>
   <link rel="apple-touch-icon-precomposed" href="{{STATIC_URL}}/static/apple-touch-icon-precomposed.png">
-  {# web font #}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon-precomposed" href="{% static 'common/apple-touch-icon-precomposed.png' %}">
   {# css #}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
   <link href="{% static 'common/mycss/mycss.css' %}" rel="stylesheet">
   <link href="{% static 'common/mycss/side_menu.css' %}" rel="stylesheet">
 
-  <title>
-  {% block title %}
-  {% endblock %}
-  </title>
+  <title>{% block title %}ソフィア・ガーデンズ川崎{% endblock %}</title>
+  <script src="{% static 'common/js/navbar.js' %}" defer></script>
   {% block head %}
   {% endblock %}
 </head>
 
-<body class="has-navbar-fixed-top" >
-  {% block navbar %}
-  {% endblock%}
-  <!-- ヘッダー（hero) -->
-  {% block header %}
-  {% endblock %}
-  <br>
-  <!-- contents -->
-  <div class="container is-fluid">
-    <!-- footerを設置する場合、<main>で囲む -->
-    <main>
-      <div class="columns">
-        <!-- 本体 -->
-        <div class="column is-four-fifths ">
-          {% block content %}
-          {% endblock %}
-        </div>
-        <!-- 右サイド -->
-        <div class="column">
-          <div class="content">
-            <table class="table table_nowrap is-bordered is-fullwidth">
-              <thead>
-                <tr class="has-background-dark">
-                  <th class="has-text-centered has-text-white">文書資料</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for menu in menu_list %}
-                <tr>
-                  <td class="has-text-left">
-                    <a href="{% url 'library:bigcategory' menu.pk %}" class="vmenu">{{menu}}</a>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            <p>*：区分所有者専用</p>
+<body>
+  <div class="site-wrapper">
+    {% block navbar %}
+    {% endblock%}
+    <!-- ヘッダー（hero) -->
+    {% block header %}
+    {% endblock %}
+    <br>
+    <!-- contents -->
+    <div class="container is-fluid">
+      <!-- footerを設置する場合、<main>で囲む -->
+      <main>
+        <div class="columns">
+          <!-- 本体 -->
+          <div class="column is-four-fifths ">
+            {% block content %}
+            {% endblock %}
           </div>
-          <p>検索キーワード</p>
-          <form method="GET" action="{% url 'library:search' %}">
-            <input type="search" class="input" placeholder="Search" name="keyword" value={{keyword}}>
-            <button type="submit" class="button is-small" style="display:none"></button>
-          </form>
-          <br>
-          <p>
-            <img src="{% static 'common/qr_code.png' %}" alt="URL" width="96" height="96">
-          </p>
+          <!-- 右サイド -->
+          <div class="column">
+            <div class="content">
+              <table class="table table_nowrap is-bordered is-fullwidth">
+                <thead>
+                  <tr class="has-background-dark">
+                    <th class="has-text-centered has-text-white">文書資料</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for menu in menu_list %}
+                  <tr>
+                    <td class="has-text-left">
+                      <a href="{% url 'library:bigcategory' menu.pk %}" class="vmenu">{{menu}}</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <p>*：区分所有者専用</p>
+            </div>
+            <p>検索キーワード</p>
+            <form method="GET" action="{% url 'library:search' %}">
+              <input type="search" class="input" placeholder="Search" name="keyword" value={{keyword}}>
+              <button type="submit" class="button is-small" style="display:none"></button>
+            </form>
+            <br>
+            <p>
+              <img src="{% static 'common/qr_code.png' %}" alt="URL" width="96" height="96">
+            </p>
+          </div>
         </div>
-      </div>
-    </main>
-  </div>
-  <!-- フッタ -->
-  <footer class="my-footer">
-    <div class="content has-text-centered is-size-7">
-      &copy; {% now "Y" %} ソフィア・ガーデンズ川崎 管理組合 {{ VERSION_NO }}
+      </main>
     </div>
-  </footer>
-
-  {# 参考： https://bulma.io/documentation/components/navbar/ #}
-  <script>
-    // notificationを閉じれるように。
-    for (const element of document.querySelectorAll('.notification > .delete')) {
-        element.addEventListener('click', e => {
-            e.target.parentElement.classList.add('is-hidden');
-        });
-    }
-    // navbar-burgerのボタン処理。https://bulma.io/documentation/components/navbar/
-    document.addEventListener('DOMContentLoaded', () => {
-      // Get all "navbar-burger" elements
-      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-      // Check if there are any navbar burgers
-      if ($navbarBurgers.length > 0) {
-        // Add a click event on each of them
-        $navbarBurgers.forEach( el => {
-          el.addEventListener('click', () => {
-              // Get the target from the "data-target" attribute
-            const target = el.dataset.target;
-            const $target = document.getElementById(target);
-            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-            el.classList.toggle('is-active');
-            $target.classList.toggle('is-active');
-          });
-        });
-      }
-    });
-
-    // mobile画面でのメニュー折りたたみ用
-    // https://github.com/jgthms/bulma/issues/1567
-    // mycss.cssへの追加も必要。
-    const $navDropdowns = Array.prototype.slice.call(document.querySelectorAll(".navbar-item.has-dropdown"), 0);
-    if ($navDropdowns.length > 0) {
-        // Add a click event on each of them
-        $navDropdowns.forEach((el) => {
-            el.addEventListener("click", () => {
-                if (document.documentElement.clientWidth < 960) {
-                    // Get the target from the "data-target" attribute
-                    const target = el.dataset.target;
-                    const $target = document.getElementById(target);
-                
-                    el.classList.toggle("is-active");
-                }
-            });
-        });
-    }   
-  </script>
+    <!-- フッタ -->
+    <footer class="my-footer">
+      <div class="content has-text-centered is-size-7">
+        &copy; {% now "Y" %} ソフィア・ガーデンズ川崎 管理組合 {{ VERSION_NO }}
+      </div>
+    </footer>
 </body>
 </html>

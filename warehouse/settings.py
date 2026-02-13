@@ -27,13 +27,13 @@ env = environ.Env(
 )
 
 # 1. まずOS自体の環境変数（またはデフォルト値）からモードを取得
-# OS側に何もなければ 'production' とみなす
-app_env = os.environ.get("APP_ENV", "production")
+# OS側に何もなければ 'development' とみなす
+app_env = os.environ.get("APP_ENV", "development")
 
-if app_env == "development":
-    env_file = os.path.join(BASE_DIR, ".env_dev")
-else:
+if app_env == "product":
     env_file = os.path.join(BASE_DIR, ".env")
+else:
+    env_file = os.path.join(BASE_DIR, ".env_dev")
 
 # 読み込み実行
 if os.path.exists(env_file):
@@ -163,7 +163,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2026-02-12"
+VERSION_NO = "2026-02-13"
 # ファイルアップロードアプリuploder用
 # https://qiita.com/okoppe8/items/86776b8df566a4513e96
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
