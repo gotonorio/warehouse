@@ -1,8 +1,11 @@
 # warehouse用Dockerfile by N.Goto
 # warehouseコンテナの作成
-# 1. appuser（UID=1001、GID=1001）を作成する。
+# 1. slimイメージを使うので、コンパイル用ライブラリをインストールする。
 # 2. コンテナ内に /code ディレクトリを作成し、ルートディレクトリのファイルをコピーする。
-# 3.  
+# 3. pythonライブラリをインストールする。
+# 4. appuser（UID=1001、GID=1001）を作成し、/code の権限者にする。
+# 5. 最後にユーザを root から appuser に切り替える。
+# 6. 最後の最後に collectstatic を実行するためのシェルスクリプトを entrypointに設定する。
 
 # 使用するベースイメージ。（最新版の一つ前のバージョンとする）
 FROM python:3.13-slim
