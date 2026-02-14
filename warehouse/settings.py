@@ -256,6 +256,11 @@ LOGGING = {
 
 # -----------------------------------------------------------------------------
 # static files settings
+# 1. Dockerfileの "WORKDIR: /code"　、"COPY . /code"で code/ディレクトリにソースをコピー
+#    dockerignoreファイルで、/static、/media、.env関連の機密ファイルはコピーから除外する
+#    代わりにcompose.yml で /static、DBファイルはマウントして利用する
+# 2. STATIC_ROOT はコピーした/code に static/ に colletstatic した結果を集約させる
+#    static/ は STATIC_URL = "/static" で指定している
 # -----------------------------------------------------------------------------
 
 # 開発時に追加で参照するディレクトリ（共通のCSS/JSなど）
@@ -263,13 +268,25 @@ STATICFILES_DIRS = [
     BASE_DIR / "common" / "static",
 ]
 
-# 常に定義する
-# DEBUG=TrueではDjangoはこの設定を無視して、アプリ内のstatic/、STATICFILES_DIRSを直接参照する
-STATIC_ROOT = "/code/static"
+# 開発（ローカル）ではプロジェクト直下の static フォルダに集める
+if not DEBUG:
+    # 本番環境
+    # collectstatic で集約した静的ファイルのPath
+    STATIC_ROOT = "/code/static"
+else:
+    # 開発環境
+    # DEBUG=TrueではDjangoはこの設定を無視して、アプリ内のstatic/、STATICFILES_DIRSを直接参照する
+    # ただし、開発環境で collectstatic を行う場合に必要となるため設定する
+    STATIC_ROOT = BASE_DIR / "static"
 
-if DEBUG:
-    # 開発時に追加で参照したい場合のみ
-    STATICFILES_DIRS = []
+
+# # 常に定義する
+# # DEBUG=TrueではDjangoはこの設定を無視して、アプリ内のstatic/、STATICFILES_DIRSを直接参照する
+# STATIC_ROOT = "/code/static"
+
+# if DEBUG:
+#     # 開発時に追加で参照したい場合のみ
+#     STATICFILES_DIRS = []
 
 # # ファイルアップロードアプリuploder用
 # # https://qiita.com/okoppe8/items/86776b8df566a4513e96
