@@ -263,43 +263,22 @@ STATICFILES_DIRS = [
     BASE_DIR / "common" / "static",
 ]
 
-STATIC_ROOT = BASE_DIR / "static"
+# 常に定義する
+# DEBUG=TrueではDjangoはこの設定を無視して、アプリ内のstatic/、STATICFILES_DIRSを直接参照する
+STATIC_ROOT = "/code/static"
 
+if DEBUG:
+    # 開発時に追加で参照したい場合のみ
+    STATICFILES_DIRS = []
 
-# 【重要】collectstatic の集約先
-# 本番（Docker）ではコンテナ内の /code_xxx/static に集める
-# 開発（ローカル）ではプロジェクト直下の static フォルダに集める
-if not DEBUG:
-    # Nginxの設定に合わせて /code_アプリ名/static に固定する場合
-    # ※各アプリごとにこのパスを微調整するか、環境変数で渡すと汎用的です
-    # STATIC_ROOT = "/code_warehouse/static/"
-    STATIC_ROOT = "/code/static/"
-else:
-    # 開発環境
-    # DEBUG=TrueではDjangoはこの設定を無視して、アプリ内のstatic/、STATICFILES_DIRSを直接参照する
-    # ただし、collectstaticを行う場合に必要となるため設定する
-    STATIC_ROOT = BASE_DIR / "static"
+# # ファイルアップロードアプリuploder用
+# # https://qiita.com/okoppe8/items/86776b8df566a4513e96
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# MEDIA_URL = "/media/"
 
-# ファイルアップロードアプリuploder用
 MEDIA_URL = "/media/"
 if not DEBUG:
     # MEDIA_ROOT = "/code_warehouse/media/"
     MEDIA_ROOT = "/code/media/"
 else:
     MEDIA_ROOT = BASE_DIR / "media"
-
-## 常に定義する
-## DEBUG=TrueではDjangoはこの設定を無視して、アプリ内のstatic/、STATICFILES_DIRSを直接参照する
-# STATIC_ROOT = "/code/static"
-#
-# if DEBUG:
-#    # 開発時に追加で参照したい場合のみ
-#    STATICFILES_DIRS = []
-#
-## # For debugging
-## if DEBUG:
-##     # static filesはcommonアプリに移したので、空にする。
-##     STATICFILES_DIRS = []
-## else:
-##     # for nginx
-##     STATIC_ROOT = "/code/static"
