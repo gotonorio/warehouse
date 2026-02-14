@@ -269,7 +269,8 @@ STATICFILES_DIRS = [
 if not DEBUG:
     # Nginxの設定に合わせて /code_アプリ名/static に固定する場合
     # ※各アプリごとにこのパスを微調整するか、環境変数で渡すと汎用的です
-    STATIC_ROOT = "/code_warehouse/static"
+    # STATIC_ROOT = "/code_warehouse/static/"
+    STATIC_ROOT = "/code/static/"
 else:
     # 開発環境
     # DEBUG=TrueではDjangoはこの設定を無視して、アプリ内のstatic/、STATICFILES_DIRSを直接参照する
@@ -279,7 +280,8 @@ else:
 # ファイルアップロードアプリuploder用
 MEDIA_URL = "/media/"
 if not DEBUG:
-    MEDIA_ROOT = "/code_warehouse/media"
+    # MEDIA_ROOT = "/code_warehouse/media/"
+    MEDIA_ROOT = "/code/media/"
 else:
     MEDIA_ROOT = BASE_DIR / "media"
 
