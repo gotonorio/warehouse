@@ -263,6 +263,9 @@ STATICFILES_DIRS = [
     BASE_DIR / "common" / "static",
 ]
 
+STATIC_ROOT = BASE_DIR / "static"
+
+
 # 【重要】collectstatic の集約先
 # 本番（Docker）ではコンテナ内の /code_xxx/static に集める
 # 開発（ローカル）ではプロジェクト直下の static フォルダに集める
