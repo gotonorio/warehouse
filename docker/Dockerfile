@@ -39,8 +39,14 @@ RUN pip install --upgrade pip \
 # COPYコマンドでは、親ディテクトリはコピーできないので、compose.ymlのcontextをソース階層にする。
 COPY . /code/
 
-# 7. /codeの所有者をrootからappuserに変更する。
+# 8. collectstatic実行スクリプトに実行権限を付与
+RUN chmod +x /code/entrypoint.sh
+
+# 9. エントリポイントとして登録
+ENTRYPOINT ["/code/entrypoint.sh"]
+
+# 10. /codeの所有者をrootからappuserに変更する。
 RUN chown -R ${UID}:${GID} /code
 
-# 8. 最後にユーザの切り替え（COPYの後に切り替える)
+# 11. 最後にユーザの切り替え（COPYの後に切り替える)
 USER appuser

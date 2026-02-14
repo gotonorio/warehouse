@@ -16,6 +16,7 @@ from pathlib import Path
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# プロジェクトのルート
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # instanceを作成
@@ -153,7 +154,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
+# ブラウザから見たURL
 STATIC_URL = "/static/"
 
 # ------------------------------------------------------------------
@@ -163,11 +164,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2026-02-13"
-# ファイルアップロードアプリuploder用
-# https://qiita.com/okoppe8/items/86776b8df566a4513e96
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"
+VERSION_NO = "2026-02-14"
 
 # アップロードファイルのpermissionとサイズを設定
 # https://qiita.com/y-oota/items/8d6d0068abca8e26ab04
@@ -260,17 +257,44 @@ LOGGING = {
 # -----------------------------------------------------------------------------
 # static files settings
 # -----------------------------------------------------------------------------
-# 常に定義する
-STATIC_ROOT = "/code/static"
 
-if DEBUG:
-    # 開発時に追加で参照したい場合のみ
-    STATICFILES_DIRS = []
+# 開発時に追加で参照するディレクトリ（共通のCSS/JSなど）
+STATICFILES_DIRS = [
+    BASE_DIR / "common" / "static",
+]
 
-# # For debugging
+# 【重要】collectstatic の集約先
+# 本番（Docker）ではコンテナ内の /code_xxx/static に集める
+# 開発（ローカル）ではプロジェクト直下の static フォルダに集める
+if not DEBUG:
+    # Nginxの設定に合わせて /code_アプリ名/static に固定する場合
+    # ※各アプリごとにこのパスを微調整するか、環境変数で渡すと汎用的です
+    STATIC_ROOT = "/code_warehouse/static"
+else:
+    # 開発環境
+    # DEBUG=TrueではDjangoはこの設定を無視して、アプリ内のstatic/、STATICFILES_DIRSを直接参照する
+    # ただし、collectstaticを行う場合に必要となるため設定する
+    STATIC_ROOT = BASE_DIR / "static"
+
+# ファイルアップロードアプリuploder用
+MEDIA_URL = "/media/"
+if not DEBUG:
+    MEDIA_ROOT = "/code_warehouse/media"
+else:
+    MEDIA_ROOT = BASE_DIR / "media"
+
+## 常に定義する
+## DEBUG=TrueではDjangoはこの設定を無視して、アプリ内のstatic/、STATICFILES_DIRSを直接参照する
+# STATIC_ROOT = "/code/static"
+#
 # if DEBUG:
-#     # static filesはcommonアプリに移したので、空にする。
-#     STATICFILES_DIRS = []
-# else:
-#     # for nginx
-#     STATIC_ROOT = "/code/static"
+#    # 開発時に追加で参照したい場合のみ
+#    STATICFILES_DIRS = []
+#
+## # For debugging
+## if DEBUG:
+##     # static filesはcommonアプリに移したので、空にする。
+##     STATICFILES_DIRS = []
+## else:
+##     # for nginx
+##     STATIC_ROOT = "/code/static"
