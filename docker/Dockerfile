@@ -8,7 +8,7 @@
 # 6. 最後の最後に collectstatic を実行するためのシェルスクリプトを entrypointに設定する。
 
 # 使用するベースイメージ。（最新版の一つ前のバージョンとする）
-FROM python:3.13-slim
+FROM python:3.12-slim
 
 # 1. 環境変数の設定
 # stdoutへの出力をバッファリングさせない。(errorやlogを直ちに出力して欲しいから)

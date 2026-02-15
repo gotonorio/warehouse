@@ -279,20 +279,6 @@ else:
     # ただし、開発環境で collectstatic を行う場合に必要となるため設定する
     STATIC_ROOT = BASE_DIR / "static"
 
-
-# # 常に定義する
-# # DEBUG=TrueではDjangoはこの設定を無視して、アプリ内のstatic/、STATICFILES_DIRSを直接参照する
-# STATIC_ROOT = "/code/static"
-
-# if DEBUG:
-#     # 開発時に追加で参照したい場合のみ
-#     STATICFILES_DIRS = []
-
-# # ファイルアップロードアプリuploder用
-# # https://qiita.com/okoppe8/items/86776b8df566a4513e96
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-# MEDIA_URL = "/media/"
-
 MEDIA_URL = "/media/"
 if not DEBUG:
     # MEDIA_ROOT = "/code_warehouse/media/"
