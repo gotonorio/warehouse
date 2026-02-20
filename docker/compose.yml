@@ -26,6 +26,8 @@ services:
       - ../static:/code/static
       - ../wh2.sqlite3:/code/wh2.sqlite3
       - ../media:/code/media
+      - /home/sophiag_master/bulma/opt/shared_data/parking_maps:/code/inputs/parking_maps:ro,z
+      - /home/sophiag_master/bulma/opt/shared_data/balance_sheets:/code/inputs/balance_sheets:ro,z
 
     # # ホスト上のcalendar/ディレクトリをcode/としてコンテナにマウントする。
     # volumes:

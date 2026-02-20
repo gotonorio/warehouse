@@ -23,6 +23,7 @@ local_settings.py
 media/
 *.pdf
 *.png
+inputs/
 
 # 国際化は考慮しない
 *.pot
