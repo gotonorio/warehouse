@@ -18,12 +18,12 @@ venv/
 .env_dev
 *.sqlite3
 local_settings.py
+inputs/balance_sheets/*.html
 
 # メディアファイルは巨大なためrsyncでバックアップする
 media/
 *.pdf
 *.png
-inputs/
 
 # 国際化は考慮しない
 *.pot
