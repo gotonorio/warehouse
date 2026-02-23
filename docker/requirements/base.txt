@@ -3,5 +3,6 @@ Django==6.0.2
 django-environ==0.12.1
 Markdown==3.10.2
 user-agents==2.2.0
+setuptools
 # special
 django-cleanup==9.0.0

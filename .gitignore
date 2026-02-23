@@ -23,7 +23,6 @@ inputs/balance_sheets/*.html
 # メディアファイルは巨大なためrsyncでバックアップする
 media/
 *.pdf
-*.png
 
 # 国際化は考慮しない
 *.pot
