@@ -37,7 +37,6 @@ class FileForm(forms.ModelForm):
             "key_word",
             "src",
             "rank",
-            "created_at",
             "alive",
             "download",
             "is_confidential",
@@ -101,32 +100,26 @@ class CategoryForm(forms.ModelForm):
 
     def clean_path_name(self):
         path_name = self.cleaned_data["path_name"]
-        # 英数字のみ許可（大文字・小文字・数字）
-        if not re.fullmatch(r"[A-Za-z0-9]+", path_name):
-            raise forms.ValidationError("パス名は英数字のみ使用できます。")
+        # validation
+        if not re.fullmatch(r"[A-Za-z0-9_-]+", path_name):
+            raise forms.ValidationError("英数字・ハイフン・アンダースコアのみ使用可能です。")
 
         return path_name
 
     def clean_name(self):
+        """カテゴリ名の重複チェックと正規化
+        - モデルクラスでnameにuniqueを設定し忘れたため、更新処理で重複チェックが必要
+        - 新規作成か更新かに応じて self.instance の状態が変わる
+        """
         category_name = self.cleaned_data["name"]
         # カテゴリ名の正規化
-        category_name.name = unicodedata.normalize("NFKC", category_name.name)
-        # 重複チェック
-        if Category.objects.filter(name=category_name).exists():
-            raise forms.ValidationError("このカテゴリ名は既に使用されています。別の名前を指定してください。")
+        category_name = unicodedata.normalize("NFKC", category_name)
+
         return category_name
 
     class Meta:
         model = Category
-        fields = (
-            "name",
-            "path_name",
-            "parent",
-            "rank",
-            "created_at",
-            "restrict",
-            "alive",
-        )
+        fields = ("name", "path_name", "parent", "rank", "restrict", "alive")
         widgets = {
             "name": forms.TextInput(
                 attrs={

@@ -21,7 +21,7 @@ def default_category():
 class BigCategory(models.Model):
     """親カテゴリ"""
 
-    name = models.CharField("親カテゴリ名", max_length=128)
+    name = models.CharField("親カテゴリ名", max_length=128, unique=True)
     rank = models.IntegerField("表示順", default=0)
     created_at = models.DateTimeField("作成日", default=timezone.now)
     alive = models.BooleanField("有効", default=True)
@@ -36,9 +36,9 @@ class Category(models.Model):
     - カテゴリ毎に閲覧制限することを考えて、restric要素を追加しておく。
     """
 
-    name = models.CharField("カテゴリ名", max_length=128)
-    path_name = models.CharField("ディレクトリ名", max_length=128)
-    parent = models.ForeignKey(BigCategory, verbose_name="親カテゴリ", on_delete=models.PROTECT, default=1)
+    name = models.CharField("カテゴリ名", max_length=128, unique=True)
+    path_name = models.CharField("ディレクトリ名", max_length=128, unique=True)
+    parent = models.ForeignKey(BigCategory, verbose_name="親カテゴリ", on_delete=models.PROTECT)
     rank = models.IntegerField("表示順", default=0)
     created_at = models.DateTimeField("作成日", default=timezone.now)
     restrict = models.BooleanField("制限", default=False)
@@ -70,7 +70,7 @@ class File(models.Model):
     """
 
     title = models.CharField(verbose_name="タイトル", max_length=128)
-    category = models.ForeignKey(Category, verbose_name="カテゴリ", on_delete=models.PROTECT, default=1)
+    category = models.ForeignKey(Category, verbose_name="カテゴリ", on_delete=models.PROTECT)
     summary = models.TextField(verbose_name="概要", blank=True, null=True)
     key_word = models.TextField(verbose_name="キーワード", blank=True, null=True)
     src = models.FileField(verbose_name="ファイル", upload_to=get_upload_to)
