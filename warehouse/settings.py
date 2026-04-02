@@ -8,6 +8,14 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
+
+
+環境変数の利用について
+「django-environ」の env() メソッドは、以下の優先順位で値を探します。
+第1優先： 実際のOS環境変数（compose.ymlにより設定されたもの）
+第2優先： read_env() で読み込んだファイル内の値
+- Dockerではない開発環境の場合、read_env()で.envファイルを読み込む
+- Docker環境では、compose.yml（composw_dev.yml）の「env_file」で指定した.envファイルの環境変数
 """
 
 import os
