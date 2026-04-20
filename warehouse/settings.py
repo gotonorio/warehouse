@@ -172,7 +172,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2026-03-31"
+VERSION_NO = "2026-04-20"
 
 # アップロードファイルのpermissionとサイズを設定
 # https://qiita.com/y-oota/items/8d6d0068abca8e26ab04
@@ -190,6 +190,8 @@ LOGOUT_REDIRECT_URL = "notice:news_card"
 
 # ブラウザを閉じたらログアウトさせる。
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# ログイン状態を維持する秒数（24x60x60 = 86,400）
+SESSION_COOKIE_AGE = 86400
 
 # マークダウンの拡張
 MARKDOWN_EXTENSIONS = [
