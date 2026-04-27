@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.db import models
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -15,62 +15,66 @@ from library.models import BigCategory, Category, File
 logger = logging.getLogger(__name__)
 
 
-class BigCategoryView(generic.TemplateView):
-    """メニューで選択された「BigCategory」に属するファイルを「Category」毎に表示する。
+class BigCategoryView(generic.DetailView):
+    """
+    BigCategoryに基づき、配下のCategoryとFileを構造化して表示する。
     - ファイル表示数はsettings.pyで変更する。
     - limit = settings.SELECT_LIMIT_NUM
     """
 
+    model = BigCategory
+    context_object_name = "big_category"  # templateで {{ big_category.name }} が使用可能
+
     def get_template_names(self):
-        """templateファイルを切り替える"""
-        if self.request.user_agent_flag == "mobile":
-            template_name = "library/main_category_mobile.html"
-        else:
-            template_name = "library/main_category.html"
-        return [template_name]
+        if getattr(self.request, "user_agent_flag", None) == "mobile":
+            return ["library/main_category_mobile.html"]
+        return ["library/main_category.html"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        big_category = get_object_or_404(BigCategory, pk=self.kwargs["pk"])
-        # user.idは、ログインしていないとNoneとなる。
+        # TemplateViewの場合、get_object_or_404()が必要となる
+        # big_category = get_object_or_404(BigCategory, pk=self.kwargs["pk"])
+        # DetailViewがURLのpkから自動取得したBigCategory
+        big_category = self.object
         user = self.request.user
-        # 選択されたメニュー（BigCategory）を親とするCategoryオブジェクトを取得する。
-        # ユーザ権限によってrestrictフラグで取得できるCategoryを制限する。
-        category_obj = Category.objects.filter(parent=big_category, alive=True)
-        # ログイン制限(restrict=True)があるカテゴリはPermissionエラーを返す。
-        if user.id is None:
-            category_obj = category_obj.filter(restrict=False).order_by("parent__rank", "-rank")
-            if len(category_obj) < 1:
-                raise PermissionDenied()
-        else:
-            # ログインの場合はカテゴリを表示する。
-            category_obj = category_obj.order_by("parent__rank", "-rank")
-
         limit = settings.SELECT_LIMIT_NUM
+
+        # 1. カテゴリの取得と閲覧制限の判定
+        # ログインしていない場合(user.id is None)の処理を整理
+        category_qs = Category.objects.filter(parent=big_category, alive=True)
+
+        if not user.is_authenticated:
+            # 未ログイン時は制限(restrict)がないカテゴリのみ
+            category_qs = category_qs.filter(restrict=False)
+            if not category_qs.exists():
+                raise PermissionDenied()
+
+        category_obj = category_qs.order_by("parent__rank", "-rank")
+
+        # 2. カテゴリごとのファイルリストを作成
         category_list = []
-        for i in category_obj:
-            # 各カテゴリ毎にファイルを取得する。（権限によって表示するファイルを制限することも考慮する）
-            if user.has_perm("library.add_file"):
-                file_obj = (
-                    File.objects.filter(category=i.pk)
-                    .filter(alive=True)
-                    .order_by("-rank", "-created_at")[:limit]
-                )
-            else:
-                file_obj = (
-                    File.objects.filter(category=i.pk)
-                    .filter(alive=True)
-                    .filter(is_confidential=False)
-                    .order_by("-rank", "-created_at")[:limit]
-                )
-            file_list = []
-            for j in file_obj:
-                file_list.append(j)
-            category_list.append(file_list)
-        # templatesデータ設定
+        has_add_perm = user.has_perm("library.add_file")
+
+        for cat in category_obj:
+            # クエリの組み立て
+            file_qs = File.objects.filter(category=cat, alive=True)
+
+            # 権限がない場合は機密ファイル(is_confidential)を除外
+            if not has_add_perm:
+                file_qs = file_qs.filter(is_confidential=False)
+
+            # 並び替えとリミット適用
+            # 既存の forループで append する処理を list() で簡略化
+            files = list(file_qs.order_by("-rank", "-created_at")[:limit])
+
+            # 既存テンプレートに合わせて「ファイルのリスト」をリストに追加
+            category_list.append(files)
+
+        # 3. テンプレートへ渡すデータ
         context["category_list"] = category_list
         context["big_category_name"] = big_category.name
         context["comment_limit"] = settings.COMMENT_LIMIT + 1
+
         return context
 
 

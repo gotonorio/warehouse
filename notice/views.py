@@ -10,26 +10,23 @@ from notice.models import News
 logger = logging.getLogger(__name__)
 
 
-class NewsCardView(generic.TemplateView):
-    """お知らせのcardによる一覧。 表示・非表示を考慮する。"""
+class NewsCardListView(generic.ListView):
+    """お知らせのcardによる一覧。表示・非表示を考慮する。"""
 
     model = News
+    # テンプレート内での変数名を既存の "news_list" に合わせる
+    context_object_name = "news_list"
 
     def get_template_names(self):
-        """templateファイルを切り替える"""
-        if self.request.user_agent_flag == "mobile":
-            template_name = "notice/news_card_mobile.html"
-        else:
-            template_name = "notice/news_card_pc.html"
-        return [template_name]
+        """デバイスによってテンプレートを切り替える (getattrで安全に取得)"""
+        if getattr(self.request, "user_agent_flag", None) == "mobile":
+            return ["notice/news_card_mobile.html"]
+        return ["notice/news_card_pc.html"]
 
-    def get_context_data(self, **kwargs):
-        """最新の日付データをタイトルとして表示する"""
-        context = super().get_context_data(**kwargs)
-        # 有効な「お知らせ」を呼び出す。
-        qs = News.get_news_qs(True)
-        context["news_list"] = qs
-        return context
+    def get_queryset(self):
+        """モデルクラスメソッドを利用してクエリセットを取得"""
+        # News.get_news_qs(True) を呼び出す
+        return News.get_news_qs(disp_flg=True)
 
 
 class NewsListView(PermissionRequiredMixin, generic.ListView):

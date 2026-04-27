@@ -7,7 +7,7 @@ app_name = "overview"
 urlpatterns = [
     # 公開情報
     path("overview", ov_views.Overview.as_view(), name="overview"),
-    path("roomtype/list", ov_views.RoomTypeView.as_view(), name="roomtype_list"),
+    path("roomtype/list", ov_views.RoomTypeListView.as_view(), name="roomtype_list"),
     # データ処理
     path(
         "overview/update/<int:pk>",

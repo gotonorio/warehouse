@@ -48,9 +48,9 @@
         </tr>
       </thead>
       <tbody>
-        {% for d in roomtypelist %}
+        {% for d in object_list %}
         <tr>
-          <td class="has-text-centered">
+          <td class="has-text-left">
             {% if perms.library.add_file %}
               <a href="{% url 'overview:roomtype_update' d.pk %}">{{d.type_name}}</a>
             {% else %}

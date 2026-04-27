@@ -15,18 +15,18 @@ class Overview(generic.TemplateView):
 
     model = OverView
 
+    # getattrを使用してテンプレートを切り替える
     def get_template_names(self):
-        """templateファイルを切り替える"""
-        if self.request.user_agent_flag == "mobile":
-            template_name = "overview/overview/overview_mobile.html"
-        else:
-            template_name = "overview/overview/overview_pc.html"
-        return [template_name]
+        if getattr(self.request, "user_agent_flag", None) == "mobile":
+            return ["overview/overview/overview_mobile.html"]
+        return ["overview/overview/overview_pc.html"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        qs = OverView.objects.all()
-        context["ov"] = qs[0]
+
+        # .first() を使うことで、データが0件の場合でもエラー（IndexError）にならず None を返してくれる
+        context["ov"] = OverView.objects.first()
+
         return context
 
 
@@ -65,30 +65,29 @@ class RoomTypeUpdateView(PermissionRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy("overview:overview")
 
 
-class RoomTypeView(generic.TemplateView):
-    """住戸タイプデータ"""
-
+class RoomTypeListView(generic.ListView):
     model = RoomType
     template_name = "overview/overview/roomtype_list.html"
 
+    def get_queryset(self):
+        # 一覧表示に必要なアノテーションをここで一括で行う
+        return RoomType.objects.annotate(total=F("kanrihi") + F("shuuzenhi") + F("ryokuchi") + F("niwa"))
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        qs = RoomType.objects.all()
-        qs = qs.annotate(total=F("kanrihi") + F("shuuzenhi") + F("ryokuchi") + F("niwa"))
-        context["roomtypelist"] = qs
-        # 管理費の合計
-        total_kanrihi = RoomType.total_kanrihi("kanrihi")["total__sum"]
-        context["total_kanrihi"] = total_kanrihi
-        # 修繕費の合計
-        total_shuuzenhi = RoomType.total_kanrihi("shuuzenhi")["total__sum"]
-        context["total_shuuzenhi"] = total_shuuzenhi
-        # 専用庭使用料の合計
-        total_niwa = RoomType.total_kanrihi("niwa")["total__sum"]
-        context["total_niwa"] = total_niwa
-        # 緑地維持管理費の合計
-        total_ryokuchi = RoomType.total_kanrihi("ryokuchi")["total__sum"]
-        context["total_ryokuchi"] = total_ryokuchi
-        # 合計
-        context["total_all"] = total_kanrihi + total_shuuzenhi + total_niwa + total_ryokuchi
+
+        # 集計処理
+        # 各項目の合計を計算して、contextに追加（update）する
+        metrics = {
+            "total_kanrihi": RoomType.total_kanrihi("kanrihi")["total__sum"] or 0,
+            "total_shuuzenhi": RoomType.total_kanrihi("shuuzenhi")["total__sum"] or 0,
+            "total_niwa": RoomType.total_kanrihi("niwa")["total__sum"] or 0,
+            "total_ryokuchi": RoomType.total_kanrihi("ryokuchi")["total__sum"] or 0,
+        }
+
+        context.update(metrics)
+
+        # 全体合計の算出
+        context["total_all"] = sum(metrics.values())
 
         return context

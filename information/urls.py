@@ -6,8 +6,8 @@ app_name = "information"
 
 urlpatterns = [
     # Informationの表示
-    path("", views.InformationView.as_view(), name="information"),
-    path("information/", views.InformationView.as_view(), name="information"),
+    path("", views.InformationListView.as_view(), name="information"),
+    path("information/", views.InformationListView.as_view(), name="information"),
     # 編集用のtitle一覧表示
     path("info_list/", views.InfoListView.as_view(), name="info_list"),
     # 情報の作成
