@@ -72,7 +72,9 @@
             <td>
               <a href="{% url 'library:category_big' pcategory.pk %}" class="button is-primary is-small"> カテゴリ一覧 </a>
               <a href="{% url 'library:big_category_update' pcategory.pk %}" class="button is-primary is-small"> 更新 </a>
-              <a href="{% url 'library:big_category_delete' pcategory.pk %}" class="button is-danger is-small"> 削除 </a>
+              {% if perms.register.add_user %}
+                <a href="{% url 'library:big_category_delete' pcategory.pk %}" class="button is-danger is-small"> 削除 </a>
+              {% endif %}
             </td>
           </tr>
         {% endfor %}

@@ -23,7 +23,7 @@
     <div class="navbar-start">
     </div>
     <div class="navbar-end">
-      {% if perms.user.add_user %}
+      {% if perms.register.add_user %}
         <a class="navbar-item" href="{% url 'register:user_list' %}">ユーザ管理</a>
       {% endif %}
       {% if perms.notice.add_news or perms.library.add_file %}
