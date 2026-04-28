@@ -60,17 +60,17 @@ Copyright (c) 2025 Norio.Goto
 1. chairmanグループ（プログラム管理者）
 
    - ユーザ管理。
-   - 文書ファイルの登録・削除
+   - 文書ファイルの登録・更新・削除
 
 2. data_managerグループ（データ管理者）
 
-   - 文書ファイルの登録・削除
+   - 文書ファイルの登録・更新
 
 3. news_managerグループ（お知らせデータ管理者）
 
    - トップページのお知らせ編集権限
 
-4. loginグループ（区分所有者）
+4. sophiagグループ（区分所有者）
 
    - 全ての文書ファイルの閲覧権限（総会議案書、理事会議事録等）
 
@@ -91,7 +91,7 @@ Copyright (c) 2025 Norio.Goto
 admin画面で以下のgroupを作成しておく。
 
     - chairman （プログラム管理者）
-        - can add user (user.add_user)
+        - can add user (register.add_user)
         - can add file (library.add_file)
         - can add news (notice.add_news)
         - can view file
