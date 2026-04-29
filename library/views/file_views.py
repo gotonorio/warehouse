@@ -149,7 +149,6 @@ def pdf_view(request, pk):
 
     # 配信するファイル名
     filename = urllib.parse.quote(os.path.basename(fn.src.name))
-    logger.debug(filename)
 
     # ファイル名から MIME タイプを推測 (例: 'application/zip', 'application/pdf')
     # fn.src.name が "example.zip" なら 'application/zip' が返る
@@ -171,7 +170,15 @@ def pdf_view(request, pk):
         # 本番環境：nginxが HttpResponse で配信する
         # パスの作成： "/media/" + "path/to/file.pdf"
         # fn.src は FileField なので str(fn.src) で相対パスが取れます
-        protected_path = os.path.join(settings.MEDIA_URL, str(fn.src))
+        # protected_path = os.path.join(settings.MEDIA_URL, str(fn.src))
+
+        # 1. パスの作成： "/media/" + "path/to/file.pdf"
+        # fn.src は FileField なので str(fn.src) で相対パスが取れます
+        raw_path = os.path.join(settings.MEDIA_URL, str(fn.src))
+
+        # 2. パスをURLエンコードする（重要！）
+        # quoteを使いますが、スラッシュ '/' までエンコードされないように safe='/' を指定します
+        protected_path = urllib.parse.quote(raw_path, safe="/")
 
         response = HttpResponse()
         response["X-Accel-Redirect"] = protected_path
