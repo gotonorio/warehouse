@@ -160,40 +160,26 @@ def pdf_view(request, pk):
     if settings.DEBUG:
         # ローカル環境：Djangoが FileResponse で直接ファイルを配信する
         response = FileResponse(fn.src)
-        response["Content-Type"] = content_type
-        if fn.download:
-            response["Content-Disposition"] = f'attachment; filename="{filename}"'
-        else:
-            response["Content-Disposition"] = f'inline; filename="{filename}"'
-        return response
     else:
         # 本番環境：nginxが HttpResponse で配信する
-        # パスの作成： "/media/" + "path/to/file.pdf"
-        # fn.src は FileField なので str(fn.src) で相対パスが取れます
-        # protected_path = os.path.join(settings.MEDIA_URL, str(fn.src))
-
-        # 1. パスの作成： "/media/" + "path/to/file.pdf"
-        # fn.src は FileField なので str(fn.src) で相対パスが取れます
+        # パスを作成する。"/media/" + "path/to/file.pdf"
+        # fn.src は FileField なので str(fn.src) で相対パスが取れる
         raw_path = os.path.join(settings.MEDIA_URL, str(fn.src))
 
-        # 2. パスをURLエンコードする（重要！）
-        # quoteを使いますが、スラッシュ '/' までエンコードされないように safe='/' を指定します
+        # パスをURLエンコードする。スラッシュ '/' までエンコードされないように safe='/' を指定する
         protected_path = urllib.parse.quote(raw_path, safe="/")
 
         response = HttpResponse()
         response["X-Accel-Redirect"] = protected_path
-        # コンテンツタイプの設定（PDFなど）
-        response["Content-Type"] = "application/pdf"  # 必要に応じて mimetypes で動的に取得
 
-        # ダウンロードかインライン表示かの制御
-        # ZIPファイルの場合、ブラウザは「ブラウザ内で表示」することができないため、
-        # inline（ブラウザで開く）を指定していても、結果的にダウンロードする。
-        if fn.download:
-            response["Content-Disposition"] = f'attachment; filename="{filename}"'
-        else:
-            response["Content-Disposition"] = f'inline; filename="{filename}"'
+    # 共通ヘッダーのセット
+    response["Content-Type"] = content_type
+    if fn.download:
+        response["Content-Disposition"] = f'attachment; filename="{filename}"'
+    else:
+        response["Content-Disposition"] = f'inline; filename="{filename}"'
 
-        return response
+    return response
 
 
 # FileResponse をそのまま返すと Django がファイルを読み込んで配信するが効率が非常に悪い。
