@@ -138,8 +138,9 @@ class FileDeleteView(PermissionRequiredMixin, generic.DeleteView):
 
 def pdf_view(request, pk):
     """ファイル配信処理
-    - ローカル環境：Djangoが FileResponse で直接ファイルを配信する
-    - 本番環境：nginxが HttpResponse で配信する
+    - ローカル環境：Djangoが FileResponse で直接ファイルを配信する。
+    - 本番環境：  nginxが HttpResponse で配信することで、nginxの設定（internal）で
+                外部からのURL直打ちを防止できる。
     """
     fn = get_object_or_404(File, pk=pk)
 
@@ -167,6 +168,7 @@ def pdf_view(request, pk):
         raw_path = os.path.join(settings.MEDIA_URL, str(fn.src))
 
         # パスをURLエンコードする。スラッシュ '/' までエンコードされないように safe='/' を指定する
+        # Nginx（HTTPヘッダー）は本来ASCII文字しか想定していないため。
         protected_path = urllib.parse.quote(raw_path, safe="/")
 
         response = HttpResponse()
