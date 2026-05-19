@@ -1,6 +1,6 @@
 # common
-Django==6.0.4
-django-environ==0.12.1
+Django==6.0.5
+django-environ==0.13.0
 Markdown==3.10.2
 user-agents==2.2.0
 setuptools
