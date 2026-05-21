@@ -1,0 +1,53 @@
+
+/**********************************************************************/
+/* 769px（iPad Airの縦向きサイズ以上）の時に、PC用の表示を強制する */
+/**********************************************************************/
+@media screen and (min-width: 769px) {
+    .navbar-menu {
+    display: flex !important;
+    box-shadow: none;
+    padding: 0;
+    background-color: transparent;
+    
+    /* ★追加：メニュー全体の高さをnavbarに合わせ、上下中央に揃える */
+    align-items: center !important;
+    }
+
+    .navbar-burger {
+    display: none !important;
+    }
+
+    /* 
+    ★修正：各コンテナの中身を上下中央（center）で統一します。
+    （以前の stretch だと、フォームの高さによって上に引っ張られることがありました）
+    */
+    .navbar,
+    .navbar-start,
+    .navbar-end {
+        display: flex !important;
+        align-items: center !important; 
+    }
+
+    .navbar-start {
+        flex-grow: 1;
+    }
+
+    /* ★追加：フォームを囲むnavbar-item自体も上下中央に配置 */
+    .navbar-item {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    /* ★追加：フォームの送信ボタンやセレクトボックスが縦にズレるのを防ぐ */
+    .navbar-item form {
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar-dropdown {
+        display: none;
+    }
+    .navbar-item.has-dropdown:hover .navbar-dropdown {
+        display: block;
+    }
+}
