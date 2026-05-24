@@ -10,10 +10,13 @@
   <link rel="icon" href="{% static 'common/favicon.ico' %}" sizes="any">
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'common/apple-touch-icon.png' %}">
   {# css #}
+  {% comment %}
+  Bulmaは　iPadAir　のnavbar対策として、$desktop=769px、$gap=16pxとしたcustom-bulma.cssを使用する。
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  {% endcomment %}
+  <link href="{% static 'common/mycss/custom-bulma.css' %}" rel="stylesheet">
   <link href="{% static 'common/mycss/mycss.css' %}" rel="stylesheet">
   <link href="{% static 'common/mycss/side_menu.css' %}" rel="stylesheet">
-  <link href="{% static 'common/mycss/ipad.css' %}" rel="stylesheet">
 
   <title>{% block title %}ソフィア・ガーデンズ川崎{% endblock %}</title>
   <script src="{% static 'common/js/navbar.js' %}" defer></script>

@@ -10,7 +10,8 @@
   <link rel="icon" href="{% static 'common/favicon.ico' %}" sizes="any">
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'common/apple-touch-icon.png' %}">
   {# css #}
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"> {% endcomment %}
+  <link href="{% static 'common/mycss/custom-bulma.css' %}" rel="stylesheet">
   <link href="{% static 'common/mycss/mycss.css' %}" rel="stylesheet">
   <link href="{% static 'common/mycss/ipad.css' %}" rel="stylesheet">
 
