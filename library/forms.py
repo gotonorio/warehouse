@@ -94,6 +94,10 @@ class FileForm(forms.ModelForm):
             "src": "※ fileサイズは50MB以下にしてください。",
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["category"].queryset = Category.objects.filter(alive=True).order_by("name")
+
 
 class CategoryForm(forms.ModelForm):
     """Categoryモデルのフォーム"""

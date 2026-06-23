@@ -1,16 +1,9 @@
 
-/* iPad(768px)まではmarginを20pxにする */
+/* 要素の横幅が指定範囲（親要素の幅など）を超えた場合に、自動的にスクロールバーを表示 */
 .markdown {
   overflow-x: auto;
   margin:0px;
 }
-
-/* .markdown strong {
-  background-color: yellow;
-  color: var(--main-bg);
-  background-color: var(--main-text);
-} */
-
 /* 767px以下ではmargin-leftを4pxにする */
 @media screen and (max-width: 767px) {
   .markdown {
@@ -19,7 +12,6 @@
     padding:2px;
   }
 }
-
 .markdown table {
   /* 表の外枠表示 */
   border: dotted 1px;
