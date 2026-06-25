@@ -1,17 +1,16 @@
-{% extends "common/base_single_page.html" %}
+{% extends "common/base_mobile.html" %}
 {% load static %}
 {% load mytag %}
 
 {% block head %}
   <link href="{% static 'common/mycss/mobile_markdown.css' %}" rel="stylesheet">
-  <link href="{% static 'common/mycss/mobile.css' %}" rel="stylesheet">
 {% endblock head%}
 
 <!-- navbar -->
 {% block navbar %}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="{% url 'notice:news_card' %}">ホーム</a>
+    <a class="navbar-item" href="{% url 'notice:news_card' %}">マンション情報</a>
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -30,16 +29,6 @@
 
 <!-- content -->
 {% block content %}
-<section class="hero is-dark">
-  <div class="hero-body">
-    <div class="has-text-centered">
-      <div class="title is-size-5">ソフィア・ガーデンズ川崎</div>
-      <div class="subtitle">マンション情報</div>
-    </div>
-  </div>
-</section>
-<br>
-<div class="mobile_container">
   {% for item in object_list %}
     <div class="card content">
       <header class="card-header">
@@ -48,11 +37,10 @@
         </p>
       </header>
       {{item.created_at|date}}
-      <div class="card-content markdown table is-bordered is-narrow">
+      <div class="card-content mobile_markdown table is-bordered is-narrow">
         {{item.information| markdown_to_html}}
       </div>
     </div>
   {% endfor %}
   <br>
-</div>
 {% endblock %}

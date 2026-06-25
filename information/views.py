@@ -11,10 +11,11 @@ logger = logging.getLogger(__name__)
 
 
 class InformationListView(LoginRequiredMixin, generic.ListView):
-    """情報一覧。 権限と表示フラグを考慮する"""
+    """情報一覧 権限と表示フラグを考慮する"""
 
     model = Information
     # context_object_name = "information_list"
+    # template_name = "information/pc_information.html"
 
     def get_template_names(self):
         """デバイスによってテンプレートを切り替える"""

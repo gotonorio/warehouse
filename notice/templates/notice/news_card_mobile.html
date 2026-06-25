@@ -4,7 +4,6 @@
 
 {% block head %}
   <link href="{% static 'common/mycss/mobile_markdown.css' %}" rel="stylesheet">
-  <link href="{% static 'common/mycss/mobile.css' %}" rel="stylesheet">
 {% endblock head %}
 
 <!-- navbar -->
@@ -61,19 +60,16 @@
 {% endblock header %}
 
 {% block content %}
-<div class="mobile_container">
-{% for news in news_list %}
-<div class="card content">
-  <header class="card-header">
-    <p class="card-header-title has-background-dark has-text-white">{{news.title}}</p>
-  </header>
-  <p>{{ news.created_at | date }}</p>
-  <div class="card-content markdown table is-bordered">
-    {{news.comment | markdown_to_html}}
+  {% for news in news_list %}
+  <div class="card content">
+    <header class="card-header">
+      <p class="card-header-title has-background-dark has-text-white">{{news.title}}</p>
+    </header>
+    <p>{{ news.created_at | date }}</p>
+    <div class="card-content mobile_markdown is-bordered">
+      {{news.comment | markdown_to_html}}
+    </div>
   </div>
-</div>
-<br>
-{% endfor %}
-</div>
-{% include 'common/page.html' %}
+  {% endfor %}
+  <br>
 {% endblock %}

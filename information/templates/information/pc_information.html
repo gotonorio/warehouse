@@ -46,8 +46,10 @@
         </p>
       </header>
       {{item.created_at|date}}
-      <div class="card-content table is-bordered is-narrow">
-        {{item.information| markdown_to_html}}
+      <div class="table-container">
+        <div class="card-content table table_nowrap is-bordered is-narrow">
+          {{item.information| markdown_to_html}}
+        </div>
       </div>
     </div>
   {% endfor %}

@@ -8,7 +8,7 @@
 {% block navbar %}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="{% url 'notice:news_card' %}">【SG川崎】</a>
+    <a class="navbar-item" href="{% url 'overview:overview' %}">公開情報</a>
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -37,8 +37,10 @@
           {{item.year}}年度 {{item.title}}
         </p>
       </header>
-      <div class="card-content markdown table is-bordered is-narrow">
-        {{item.pub_information|markdown_to_html}}
+      <div class="table-container">
+        <div class="card-content table is-bordered is-narrow">
+          {{item.pub_information|markdown_to_html}}
+        </div>
       </div>
     </div>
   {% endfor %}
