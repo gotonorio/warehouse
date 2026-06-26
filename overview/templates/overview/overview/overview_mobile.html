@@ -1,5 +1,4 @@
-{% extends "common/base_mobile.html" %}
-{% comment %} {% extends 'common/base_single_page.html' %} {% endcomment %}
+{% extends 'common/base_single_page.html' %}
 {% load static %}
 {% load humanize %}
 
@@ -222,6 +221,14 @@
     </header>
     <div class="card-content has-background-grey-lighter has-text-black is-size-5">
       {{ov.private_water_equipment}}
+    </div>
+  </div>
+  <div class="card content">
+    <header class="card-header">
+      <div class="card-header-title has-background-dark has-text-white">専有部縦排水管</div>
+    </header>
+    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
+      {{ov.private_drainage_equipment}}
     </div>
   </div>
   <div class="card content">

@@ -3,7 +3,6 @@
 {% load mytag %}
 
 {% block head %}
-  <link href="{% static 'common/mycss/mobile_markdown.css' %}" rel="stylesheet">
 {% endblock head %}
 
 <!-- navbar -->
@@ -66,7 +65,7 @@
       <p class="card-header-title has-background-dark has-text-white">{{news.title}}</p>
     </header>
     <p>{{ news.created_at | date }}</p>
-    <div class="card-content mobile_markdown is-bordered">
+    <div class="card-content mobile_table is-bordered">
       {{news.comment | markdown_to_html}}
     </div>
   </div>

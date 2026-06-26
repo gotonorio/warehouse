@@ -38,7 +38,7 @@
       <thead>
         <tr>
           <th class="has-text-centered">住戸<br>タイプ</th>
-          <th class="has-text-centered">住戸数</th>
+          {% comment %} <th class="has-text-centered">住戸数</th> {% endcomment %}
           <th class="has-text-centered">専有面積<br>(m2)</th>
           <th class="has-text-centered">管理費<br>(円/月)</th>
           <th class="has-text-centered">修繕積立費<br>(円/月)</th>
@@ -57,7 +57,7 @@
               {{d.type_name}}
             {% endif %}
           </td>
-          <td class="has-text-right">{{d.number_unit}}</td>
+          {% comment %} <td class="has-text-right">{{d.number_unit}}</td> {% endcomment %}
           <td class="has-text-centered nowrap">{{d.area|floatformat:2}}</td>
           <td class="has-text-right">{{d.kanrihi|intcomma}}</td>
           <td class="has-text-right">{{d.shuuzenhi|intcomma}}</td>
@@ -66,14 +66,14 @@
           <td class="has-text-right">{{d.total|intcomma}}</td>
         </tr>
         {% endfor %}
-        <td></td>
+        {% comment %} <td></td>
         <td></td>
         <td></td>
         <td class="has-text-right">{{total_kanrihi|intcomma}}</td>
         <td class="has-text-right">{{total_shuuzenhi|intcomma}}</td>
         <td class="has-text-right">{{total_ryokuchi|intcomma}}</td>
         <td class="has-text-right">{{total_niwa|intcomma}}</td>
-        <td class="has-text-right">{{total_all|intcomma}}</td>
+        <td class="has-text-right">{{total_all|intcomma}}</td> {% endcomment %}
       </tbody>
     </table>
   </div>

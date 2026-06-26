@@ -1,9 +1,8 @@
-{% extends "common/base_mobile.html" %}
+{% extends "common/base_single_page.html" %}
 {% load static %}
 {% load mytag %}
 
 {% block head %}
-  <link href="{% static 'common/mycss/mobile_markdown.css' %}" rel="stylesheet">
 {% endblock head%}
 
 <!-- navbar -->
@@ -37,7 +36,7 @@
         </p>
       </header>
       {{item.created_at|date}}
-      <div class="card-content mobile_markdown table is-bordered is-narrow">
+      <div class="card-content mobile_table table is-bordered is-narrow">
         {{item.information| markdown_to_html}}
       </div>
     </div>

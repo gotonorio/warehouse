@@ -82,6 +82,8 @@
 {% endblock header %}
 
 {% block content %}
+{% comment %} <div class="container is-fluid"> {% endcomment %}
+<div class="container is-fluid">
 {% for news in news_list %}
 <div class="card content">
   <header class="card-header">
@@ -94,5 +96,6 @@
 </div>
 <br>
 {% endfor %}
+</div>
 {% include 'common/page.html' %}
 {% endblock %}
