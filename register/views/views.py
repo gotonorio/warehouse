@@ -37,6 +37,6 @@ class MenuView(LoginRequiredMixin, generic.TemplateView):
 
     def get_template_names(self):
         """デバイスによってテンプレートを切り替える"""
-        if getattr(self.request, "user_agent_flag", None) == "mobile":
+        if self.request.user_agent.is_mobile:
             return ["register/menu_mobile.html"]
         return ["register/menu_pc.html"]

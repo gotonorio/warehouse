@@ -26,9 +26,15 @@ class BigCategoryView(generic.DetailView):
     context_object_name = "big_category"  # templateで {{ big_category.name }} が使用可能
 
     def get_template_names(self):
-        if getattr(self.request, "user_agent_flag", None) == "mobile":
+        """デバイスによってテンプレートを切り替える (getattrで安全に取得)"""
+        if self.request.user_agent.is_mobile:
             return ["library/main_category_mobile.html"]
         return ["library/main_category.html"]
+
+    # def get_template_names(self):
+    #     if getattr(self.request, "user_agent_flag", None) == "mobile":
+    #         return ["library/main_category_mobile.html"]
+    #     return ["library/main_category.html"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -15,11 +15,17 @@ class Overview(generic.TemplateView):
 
     model = OverView
 
-    # getattrを使用してテンプレートを切り替える
+    # テンプレートを切り替える
     def get_template_names(self):
-        if getattr(self.request, "user_agent_flag", None) == "mobile":
+        """デバイスによってテンプレートを切り替える"""
+        if self.request.user_agent.is_mobile:
             return ["overview/overview/overview_mobile.html"]
         return ["overview/overview/overview_pc.html"]
+
+    # def get_template_names(self):
+    #     if getattr(self.request, "user_agent_flag", None) == "mobile":
+    #         return ["overview/overview/overview_mobile.html"]
+    #     return ["overview/overview/overview_pc.html"]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

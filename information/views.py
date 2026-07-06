@@ -15,13 +15,13 @@ class InformationListView(LoginRequiredMixin, generic.ListView):
 
     model = Information
     # context_object_name = "information_list"
-    # template_name = "information/pc_information.html"
+    template_name = "information/pc_information.html"
 
-    def get_template_names(self):
-        """デバイスによってテンプレートを切り替える"""
-        if getattr(self.request, "user_agent_flag", None) == "mobile":
-            return ["information/mobile_information.html"]
-        return ["information/pc_information.html"]
+    # def get_template_names(self):
+    #     """デバイスによってテンプレートを切り替える (getattrで安全に取得)"""
+    #     if self.request.user_agent.is_mobile:
+    #         return ["information/mobile_information.html"]
+    #     return ["information/pc_information.html"]
 
     def get_queryset(self):
         """ユーザー権限に基づいてクエリセットをフィルタリングする"""

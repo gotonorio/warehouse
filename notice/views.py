@@ -18,8 +18,8 @@ class NewsCardListView(generic.ListView):
     context_object_name = "news_list"
 
     def get_template_names(self):
-        """デバイスによってテンプレートを切り替える (getattrで安全に取得)"""
-        if getattr(self.request, "user_agent_flag", None) == "mobile":
+        """デバイスによってテンプレートを切り替える"""
+        if self.request.user_agent.is_mobile:
             return ["notice/news_card_mobile.html"]
         return ["notice/news_card_pc.html"]
 

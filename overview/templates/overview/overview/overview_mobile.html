@@ -31,253 +31,130 @@
 
 {% block content %}
 <br>
-<div class="content text_mobile">
-  <div class="has-text-centered is-size-4">建物概要</div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">建築確認認可年月</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.kenchiku_kakunin}}
-    </div>
+<div class="container is-fluid">
+  <div class="has-text-centered is-size-3 has-text-weight-bold">建物概要</div>
+  <div class="box overview-box">
+    <p class="heading">建築確認認可年月</p>
+    <p class="title is-5">{{ ov.kenchiku_kakunin }}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">竣工年</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.shunkou}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">竣工年</p>
+    <p class="title is-5">{{ov.shunkou}} 年</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">総戸数</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.soukosu}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">総戸数</p>
+    <p class="title is-5">{{ov.soukosu}} 戸</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">構造</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.kouzou}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">構造</p>
+    <p class="title is-5">{{ov.kouzou}}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">平置き駐車場</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.flat_parking}} 台
-    </div>
+  <div class="box overview-box">
+    <p class="heading">平置き駐車場</p>
+    <p class="title is-5">{{ov.flat_parking}} 台</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">機械式駐車場</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.machine_parking}} 台
-    </div>
+  <div class="box overview-box">
+    <p class="heading">機械式駐車場</p>
+    <p class="title is-5">{{ov.machine_parking}} 台</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">駐輪場</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.bicycle_parking}} 台
-    </div>
+  <div class="box overview-box">
+    <p class="heading">駐輪場</p>
+    <p class="title is-5">{{ov.bicycle_parking}} 台</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">バイク置場</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.bike_parking}} 台
-    </div>
+  <div class="box overview-box">
+    <p class="heading">バイク置き場</p>
+    <p class="title is-5">{{ov.bike_parking}} 台</p>
   </div>
-
-  <div class="has-text-centered is-size-4">面積等</div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">敷地面積</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.site_area|intcomma}} m2
-    </div>
+  <div class="has-text-centered is-size-3 has-text-weight-bold">面積等</div>
+  <div class="box overview-box">
+    <p class="heading">敷地面積</p>
+    <p class="title is-5">{{ov.site_area|intcomma}} m2</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">容積率</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.floor_area_ratio}} %
-    </div>
+  <div class="box overview-box">
+    <p class="heading">容積率</p>
+    <p class="title is-5">{{ov.floor_area_ratio}} %</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">建築面積</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.building_area|intcomma}} m2
-    </div>
+  <div class="box overview-box">
+    <p class="heading">建築面積</p>
+    <p class="title is-5">{{ov.building_area|intcomma}} m2</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">建ぺい率</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.building_coverage_ratio}} %
-    </div>
+  <div class="box overview-box">
+    <p class="heading">建ぺい率</p>
+    <p class="title is-5">{{ov.building_coverage_ratio}} %</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">延べ床面積</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.total_floor_area|intcomma}} m2
-    </div>
+  <div class="box overview-box">
+    <p class="heading">延べ床面積</p>
+    <p class="title is-5">{{ov.total_floor_area|intcomma}} m2</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">容積対象面積</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.volume_target_area|intcomma}} m2
-    </div>
+  <div class="box overview-box">
+    <p class="heading">容積対象面積</p>
+    <p class="title is-5">{{ov.volume_target_area|intcomma}} m2</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">基準階階高</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.standard_floor_height}} m
-    </div>
+  <div class="box overview-box">
+    <p class="heading">基準階高さ</p>
+    <p class="title is-5">{{ov.standard_floor_height|intcomma}} m</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">最高高さ</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.max_height}} m
-    </div>
+  <div class="box overview-box">
+    <p class="heading">最高高さ</p>
+    <p class="title is-5">{{ov.max_height|intcomma}} m</p>
   </div>
-
-  <div class="has-text-centered is-size-4">法規制</div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">用途地域</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.youto_chiiki}}
-    </div>
+  <div class="has-text-centered is-size-3 has-text-weight-bold">法規制</div>
+  <div class="box overview-box">
+    <p class="heading">用途地域</p>
+    <p class="title is-5">{{ov.youto_chiiki}}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">指定容積率</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.specified_floor_area_ratio}} %
-    </div>
+  <div class="box overview-box">
+    <p class="heading">指定容積率</p>
+    <p class="title is-5">{{ov.specified_floor_area_ratio}} %</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">防火地域</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.bouka_chiiki}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">防火地域</p>
+    <p class="title is-5">{{ov.bouka_chiiki}}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">指定建ぺい率</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.specified_building_coverage_ratio}} %
-    </div>
+  <div class="box overview-box">
+    <p class="heading">指定建ぺい率</p>
+    <p class="title is-5">{{ov.specified_building_coverage_ratio}} %</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">高度制限</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.height_limit}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">高度制限</p>
+    <p class="title is-5">{{ov.height_limit}}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">必要駐車場台数</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.required_parking}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">必要駐車場台数</p>
+    <p class="title is-5">{{ov.required_parking}}</p>
   </div>
-
-  <div class="has-text-centered is-size-4">設備概要</div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">専有部給水設備</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.private_water_equipment}}
-    </div>
+  <div class="has-text-centered is-size-3 has-text-weight-bold">設備概要</div>
+  <div class="box overview-box">
+    <p class="heading">専有部給水設備</p>
+    <p class="title is-5">{{ov.private_water_equipment}}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">専有部縦排水管</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.private_drainage_equipment}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">専有部縦排水管</p>
+    <p class="title is-5">{{ov.private_drainage_equipment}}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">共用部給水設備</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.public_water_equipment}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">共用部給水設備</p>
+    <p class="title is-5">{{ov.public_water_equipment}}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">共用部エントランス</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.entrance}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">共用部エントランス</p>
+    <p class="title is-5">{{ov.entrance}}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">防犯カメラ</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.security}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">防犯カメラ</p>
+    <p class="title is-5">{{ov.security}}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">トランクルーム</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.trunk_room}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">トランクルーム</p>
+    <p class="title is-5">{{ov.trunk_room}}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">宅配ボックス</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.delivery_box}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">宅配ボックス</p>
+    <p class="title is-5">{{ov.delivery_box}}</p>
   </div>
-  <div class="card content">
-    <header class="card-header">
-      <div class="card-header-title has-background-dark has-text-white">インターネット</div>
-    </header>
-    <div class="card-content has-background-grey-lighter has-text-black is-size-5">
-      {{ov.network}}
-    </div>
+  <div class="box overview-box">
+    <p class="heading">インターネット</p>
+    <p class="title is-5">{{ov.network}}</p>
   </div>
 </div>
   <br>

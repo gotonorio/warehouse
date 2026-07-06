@@ -13,7 +13,7 @@
   {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"> {% endcomment %}
   <link href="{% static 'common/mycss/custom-bulma.css' %}" rel="stylesheet">
   <link href="{% static 'common/mycss/mycss.css' %}" rel="stylesheet">
-  <link href="{% static 'common/mycss/ipad.css' %}" rel="stylesheet">
+  {% comment %} <link href="{% static 'common/mycss/ipad.css' %}" rel="stylesheet"> {% endcomment %}
 
   <title>{% block title %}ソフィア・ガーデンズ川崎{% endblock %}</title>
   <script src="{% static 'common/js/navbar.js' %}" defer></script>
@@ -38,36 +38,6 @@
         &copy; {% now "Y" %} ソフィア・ガーデンズ川崎 管理組合 {{ VERSION_NO }}
       </div>
     </footer>
-  
-    {# 参考： https://bulma.io/documentation/components/navbar/ #}
-    {# ToDo ハンバーガアイコン用のjs。staticから読み込むことはできないか？ #}
-    {% comment %} <script>
-        // notificationを×押下で閉じれるように。
-      for (const element of document.querySelectorAll('.notification > .delete')) {
-          element.addEventListener('click', e => {
-              e.target.parentElement.classList.add('is-hidden');
-          });
-      }
-      // navbar-burgerのボタン処理。https://bulma.io/documentation/components/navbar/
-      document.addEventListener('DOMContentLoaded', () => {
-        // Get all "navbar-burger" elements
-        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-        // Check if there are any navbar burgers
-        if ($navbarBurgers.length > 0) {
-          // Add a click event on each of them
-          $navbarBurgers.forEach( el => {
-            el.addEventListener('click', () => {
-                // Get the target from the "data-target" attribute
-              const target = el.dataset.target;
-              const $target = document.getElementById(target);
-              // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-              el.classList.toggle('is-active');
-              $target.classList.toggle('is-active');
-            });
-          });
-        }
-      });
-    </script> {% endcomment %}
   </div>
 </body>
 </html>

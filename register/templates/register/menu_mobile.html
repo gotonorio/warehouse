@@ -16,13 +16,11 @@
 {% endblock %}
 
 {% block content %}
-<br>
 <div class="container is-fluid">
   <section class="sectionbox">
     <div class="is-size-5 has-text-weight-bold">
     <p>公開情報</p>
     </div>
-    <br>
     <div class="columns">
       <div class="column">
         <div class="menubox has-text-centered">
@@ -41,7 +39,6 @@
     <div class="is-size-5 has-text-weight-bold">
     <p>管理組合専用</p>
     </div>
-    <br>
     <div class="columns">
     {% if perms.library.view_file %}
       <div class="column">

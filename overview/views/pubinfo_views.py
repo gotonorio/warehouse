@@ -15,11 +15,17 @@ class PublicInfoView(generic.ListView):
     model = PublicInformation
     context_object_name = "pubinfo"
 
-    # getattrを使用してテンプレートを切り替える
     def get_template_names(self):
-        if getattr(self.request, "user_agent_flag", None) == "mobile":
+        """デバイスによってテンプレートを切り替える"""
+        if self.request.user_agent.is_mobile:
             return ["overview/pubinfo/pub_info_mobile.html"]
         return ["overview/pubinfo/pub_info.html"]
+
+    # # getattrを使用してテンプレートを切り替える
+    # def get_template_names(self):
+    #     if getattr(self.request, "user_agent_flag", None) == "mobile":
+    #         return ["overview/pubinfo/pub_info_mobile.html"]
+    #     return ["overview/pubinfo/pub_info.html"]
 
     def get_queryset(self):
         return PublicInformation.objects.all().filter(is_published=True).order_by("-year")
