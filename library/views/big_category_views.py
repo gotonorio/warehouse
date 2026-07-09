@@ -31,11 +31,6 @@ class BigCategoryView(generic.DetailView):
             return ["library/main_category_mobile.html"]
         return ["library/main_category.html"]
 
-    # def get_template_names(self):
-    #     if getattr(self.request, "user_agent_flag", None) == "mobile":
-    #         return ["library/main_category_mobile.html"]
-    #     return ["library/main_category.html"]
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # TemplateViewの場合、get_object_or_404()が必要となる

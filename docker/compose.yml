@@ -7,31 +7,28 @@ services:
       dockerfile: docker/Dockerfile
     # image名:タグ
     image: warehouse
-    # 起動ユーザを指定する
-    user: "${UID}:${GID}"
+
+    # 起動ユーザはDockerfileで指定済み
+
     # container名
     container_name: warehouse
     restart: unless-stopped
 
-    # ここで指定した中身が、OSの環境変数としてDjangoに渡される（settings.py
+    # ここで指定した中身が、OSの環境変数としてDjangoに渡される
     env_file:
       - ../.env
 
-    # ディレクトリ全体をマウントしない方が良いようだ。
     # ホスト上のcollectstaticで作成されたstaticディレクトリを/code/staticとしてマウントする。
     # （settings.pyで STATIC_ROOT = "/code/static"としている）
     # （/codeはDockerfileでWORKDIRとしている）
-    # ホスト上のwh2.sqlite3、media/を/code/にマウントする。
+    # ディレクトリ全体をマウントしない方が良いようだ。
+    # ホスト上のwh2.sqlite3、media/だけを/code/にマウントする。
     volumes:
       - ../static:/code/static
       - ../wh2.sqlite3:/code/wh2.sqlite3
       - ../media:/code/media
       - /home/sophiag_master/bulma/opt/shared_data/parking_maps:/code/inputs/parking_maps:ro,z
       - /home/sophiag_master/bulma/opt/shared_data/balance_sheets:/code/inputs/balance_sheets:ro,z
-
-    # # ホスト上のcalendar/ディレクトリをcode/としてコンテナにマウントする。
-    # volumes:
-    #   - ../:/code
 
     # 環境変数TZを設定。
     environment:
