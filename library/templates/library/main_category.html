@@ -41,6 +41,7 @@
     <div class="content">
       <h3>{{category.0.category}}</h3>
     </div>
+    <div class="content">
     <table class="table is-narrow is-striped is-bordered">
       <thead>
         <tr class="has-background-dark">
@@ -52,16 +53,12 @@
         {% for file in category %}
         <tr>
           {% if file.download %}
-            {% comment %} nginxで配布させると効率的だが、表示urlのコピーでログイン無しで再表示できてしまうので、file_view()を使う {% endcomment %}
-            {% comment %} <td class="has-text-left"><a href="{{file.src.url}}" target="_blank" rel="noopener noreferrer" download>{{file.title}}</a></td> {% endcomment %}
             <td class="has-text-left"><a href="{% url 'library:file_view' file.pk %}" download>{{file.title}}</a></td>
           {% else %}
-            {% comment %} nginxで配布させると効率的だが、表示urlのコピーでログイン無しで再表示できてしまう {% endcomment %}
-            {% comment %} <td class="has-text-left"><a href="{{file.src.url}}" target="_blank" rel="noopener noreferrer">{{file.title}}</a></td> {% endcomment %}
             <td class="has-text-left"><a href="{% url 'library:file_view' file.pk %}" target="_blank">{{file.title}}</a></td>
           {% endif %}
           {% if forloop.counter < comment_limit %}
-            <td class="has-text-left">{{file.summary|escape|linebreaksbr|urlize}}</td>
+            <td class="has-text-left">{{file.summary|escape|linebreaksbr}}</td>
           {% else %}
             <td class="has-text-left is-size-7">1カテゴリー当たりの表示件数上限を超えました。</td>
           {% endif %}
@@ -69,6 +66,7 @@
         {% endfor %}
       </tbody>
     </table>
+  </div>
   {% endif %}
   <br>
 {% endfor %}

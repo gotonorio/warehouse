@@ -1,4 +1,4 @@
-# 通帳監査システム
+# 文書保管システム
 services:
   warehouse:
     # 相対パスでDockerfileのpathを指定。contextは一つ上の階層にする。
