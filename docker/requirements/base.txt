@@ -1,8 +1,9 @@
-# common
+asgiref==3.12.1
 Django==6.0.7
+django-cleanup==9.0.0
 django-environ==0.14.0
 Markdown==3.10.2
+sqlparse==0.5.5
+ua-parser==1.0.2
+ua-parser-builtins==202606
 user-agents==2.2.0
-setuptools
-# special
-django-cleanup==9.0.0
