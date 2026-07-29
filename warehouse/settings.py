@@ -19,6 +19,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -75,6 +76,15 @@ INSTALLED_APPS = [
     "overview.apps.OverviewConfig",
     "control.apps.ControlConfig",
     "common",
+    "axes",
+]
+
+# django-axesのため追加（2026-07-29）
+AUTHENTICATION_BACKENDS = [
+    # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    "axes.backends.AxesStandaloneBackend",
+    # Django ModelBackend is the default authentication backend.
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 MIDDLEWARE = [
@@ -86,6 +96,15 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "warehouse.middleware.UAmiddleware",
+    # AxesMiddleware should be the last middleware in the MIDDLEWARE list.
+    # It only formats user lockout messages and renders Axes lockout responses
+    # on failed user authentication attempts from login views.
+    # If you do not want Axes to override the authentication response
+    # you can skip installing the middleware and use your own views.
+    # AxesMiddleware runs during the reponse phase. It does not conflict
+    # with middleware that runs in the request phase like
+    # django.middleware.cache.FetchFromCacheMiddleware.
+    "axes.middleware.AxesMiddleware",
 ]
 
 ROOT_URLCONF = "warehouse.urls"
@@ -172,7 +191,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2026-07-23"
+VERSION_NO = "2026-07-29"
 
 # アップロードファイルのpermissionとサイズを設定
 # https://qiita.com/y-oota/items/8d6d0068abca8e26ab04
@@ -266,8 +285,8 @@ LOGGING = {
 
 # -----------------------------------------------------------------------------
 # static files settings
-# 1. Dockerfileの "WORKDIR: /code"　、"COPY . /code"で code/ディレクトリにソースをコピー
-#    dockerignoreファイルで、/static、/media、.env関連の機密ファイルはコピーから除外する
+# 1. Dockerfileの「"WORKDIR: /code"」と「"COPY . /code"」で code/ディレクトリにソースをコピー。
+#    dockerignoreファイルで、/static、/media、.env関連の機密ファイルはコピーから除外する。
 #    代わりにcompose.yml で /static、DBファイルはマウントして利用する
 # 2. STATIC_ROOT はコピーした/code に static/ に colletstatic した結果を集約させる
 #    static/ は STATIC_URL = "/static" で指定している
@@ -295,3 +314,35 @@ if not DEBUG:
     MEDIA_ROOT = "/code/media/"
 else:
     MEDIA_ROOT = BASE_DIR / "media"
+
+
+# ------------------------------------------------------------------------------
+# django-axes設定
+# ------------------------------------------------------------------------------
+
+# ipアドレス単位でロック
+AXES_LOCKOUT_PARAMETERS = ["ip_address"]
+
+# # Classic: 3 failures -> 30 min lockout
+# AXES_FAILURE_LIMIT = 3
+# AXES_COOLOFF_TIME = timedelta(minutes=30)
+
+# # Rolling window: max 5 failures in any 15-minute period
+# AXES_FAILURE_LIMIT = 5
+# AXES_COOLOFF_TIME = timedelta(minutes=15)
+# AXES_USE_ATTEMPT_EXPIRATION = True
+
+# Hard lockout (manual reset only)
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = None
+
+# refer to the Django request and response objects documentation
+# https://django-axes.readthedocs.io/en/stable/4_configuration.html
+AXES_IPWARE_META_PRECEDENCE_ORDER = [
+    "HTTP_X_FORWARDED_FOR",
+    "REMOTE_ADDR",
+]
+# 管理画面のみでロックを有効化する設定
+# ログイン制限すると、sophiagアカウントは区分所有者共通なので、
+# 一人がログイン失敗すると全員ログイン不可能になってしまう。
+AXES_ONLY_ADMIN_SITE = True

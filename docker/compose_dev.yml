@@ -26,6 +26,9 @@ services:
       - ../static:/code/static
       - ../wh2.sqlite3:/code/wh2.sqlite3
       - ../media:/code/media
+      # 下記は自分の開発環境に合わせて修正する
+      - /Users/gotonorio/Development/sophiag/opt/shared_data/parking_maps:/code/inputs/parking_maps:ro,z
+      - /Users/gotonorio/Development/sophiag/opt/shared_data/balance_sheets:/code/inputs/balance_sheets:ro,z
 
     # # ホスト上のcalendar/ディレクトリをcode/としてコンテナにマウントする。
     # volumes:
