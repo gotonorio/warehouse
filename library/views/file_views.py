@@ -149,7 +149,8 @@ def pdf_view(request, pk):
         return redirect("notice:news_card")
 
     # 配信するファイル名
-    filename = urllib.parse.quote(os.path.basename(fn.src.name))
+    filename = os.path.basename(fn.src.name)
+    quoted = urllib.parse.quote(filename)
 
     # ファイル名から MIME タイプを推測 (例: 'application/zip', 'application/pdf')
     # fn.src.name が "example.zip" なら 'application/zip' が返る
@@ -175,11 +176,11 @@ def pdf_view(request, pk):
         response["X-Accel-Redirect"] = protected_path
 
     # 共通ヘッダーのセット
+    # 日本語ファイル名に対応するため RFC 6266 (filename*) を使用する。
+    # 古いブラウザ向けの filename= は付与しない。
     response["Content-Type"] = content_type
-    if fn.download:
-        response["Content-Disposition"] = f'attachment; filename="{filename}"'
-    else:
-        response["Content-Disposition"] = f'inline; filename="{filename}"'
+    disposition = "attachment" if fn.download else "inline"
+    response["Content-Disposition"] = f"{disposition}; filename*=UTF-8''{quoted}"
 
     return response
 
