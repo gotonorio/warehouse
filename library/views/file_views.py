@@ -150,6 +150,7 @@ def pdf_view(request, pk):
 
     # 配信するファイル名
     filename = os.path.basename(fn.src.name)
+    # ファイル名のエンコード
     quoted = urllib.parse.quote(filename)
 
     # ファイル名から MIME タイプを推測 (例: 'application/zip', 'application/pdf')
@@ -173,6 +174,7 @@ def pdf_view(request, pk):
         protected_path = urllib.parse.quote(raw_path, safe="/")
 
         response = HttpResponse()
+        # 本番環境ではnginxによるリダイレクト
         response["X-Accel-Redirect"] = protected_path
 
     # 共通ヘッダーのセット
