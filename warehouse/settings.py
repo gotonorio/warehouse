@@ -198,7 +198,8 @@ VERSION_NO = "2026-07-30"
 # https://docs.djangoproject.com/en/2.2/ref/settings/#file-upload-max-memory-size
 # nginxの調整で行うが、FileFormクラスでもチェックする.
 FILE_UPLOAD_PERMISSIONS = 0o755
-FILE_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50MB
+# FILE_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 262144000  # 250MB
 
 AUTH_USER_MODEL = "register.User"
 NUMBER_GROUPING = 3
