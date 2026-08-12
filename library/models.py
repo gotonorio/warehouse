@@ -46,17 +46,19 @@ class Category(models.Model):
 def get_upload_to(instance, filename):
     """upload_toを動的(カテゴリのpath毎)に指定する
     https://docs.djangoproject.com/ja/5.0/ref/models/fields/
-    ここで、ファイルをuploadするパスを設定する。
-    media/カテゴリのpath/filename
+
+    media/カテゴリのpath/filename として保存する相対パスを返す
     """
-    # ToDo
-    directory_path = Path(str(instance.category.path_name))
     try:
-        path = directory_path / filename
+        # category や path_name が取得できない場合に備えて try ブロック内に入れる
+        category_path = instance.category.path_name
+        if not category_path:
+            category_path = "default"
     except Exception as e:
-        _ = e
-        path = Path("default") / filename
-    return path
+        logger.warning(f"Failed to get category path: {e}")
+        category_path = "default"
+
+    return Path(str(category_path)) / filename
 
 
 class File(models.Model):

@@ -72,11 +72,11 @@ INSTALLED_APPS = [
     "library.apps.LibraryConfig",
     "notice.apps.NoticeConfig",
     "information.apps.InformationConfig",
-    "django_cleanup.apps.CleanupConfig",
     "overview.apps.OverviewConfig",
     "control.apps.ControlConfig",
     "common",
     "axes",
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 # django-axesのため追加（2026-07-29）
@@ -191,7 +191,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2026-08-02"
+VERSION_NO = "2026-08-12"
 
 # アップロードファイルのpermissionとサイズを設定
 # https://qiita.com/y-oota/items/8d6d0068abca8e26ab04
@@ -319,6 +319,8 @@ else:
 
 # ------------------------------------------------------------------------------
 # django-axes設定
+# 管理画面へのログインを5回続けて失敗した場合、その接続IPアドレスをロックする
+# ロック解除は管理画面から行うので、管理者は注意が必要
 # ------------------------------------------------------------------------------
 
 # ipアドレス単位でロック

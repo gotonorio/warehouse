@@ -12,12 +12,17 @@ from .category_views import (
     CategoryIndexView,
     CategoryUpdateView,
 )
-from .file_views import (
-    FileCategoryView,
+from .file_operate import (
     FileCreateView,
     FileDeleteView,
-    FileIndexView,
     FileUpdateView,
+)
+from .file_views import (
+    FileCategoryView,
+    # FileCreateView,
+    # FileDeleteView,
+    FileIndexView,
+    # FileUpdateView,
     pdf_view,
 )
 from .search_views import SearchlistView
