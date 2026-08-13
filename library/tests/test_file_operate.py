@@ -17,7 +17,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from .models import BigCategory, Category, File
+from ..models import BigCategory, Category, File
 
 User = get_user_model()
 
