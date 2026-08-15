@@ -10,8 +10,13 @@ class ControlRecord(models.Model):
 
     # 仮登録メニューの表示/非表示コントロール
     tmp_user_flg = models.BooleanField(verbose_name="仮登録", default=False)
-    # add your control variable
 
     @classmethod
-    def show_tmp_user_menu(cls):
-        return cls.objects.get("tmp_user_flg")
+    def get_tmp_user_flg(cls):
+        config, created = cls.objects.get_or_create(
+            pk=1,
+            defaults={
+                "tmp_user_flg": False,
+            },
+        )
+        return config.tmp_user_flg

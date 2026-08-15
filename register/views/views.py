@@ -1,5 +1,3 @@
-# import logging
-
 from control.models import ControlRecord
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -21,8 +19,7 @@ class Login(LoginView):
     def get_context_data(self, **kwargs):
         """ログインページで仮登録メニューを表示させる"""
         context = super().get_context_data(**kwargs)
-        qs = ControlRecord.objects.values("tmp_user_flg")
-        context["tmp_user_flg"] = qs[0]["tmp_user_flg"]
+        context["tmp_user_flg"] = ControlRecord.get_tmp_user_flg()
         return context
 
 
