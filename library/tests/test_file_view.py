@@ -1,3 +1,5 @@
+import urllib
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -8,8 +10,13 @@ from library.models import BigCategory, Category, File
 
 User = get_user_model()
 
+"""
+アプリ単位のテスト：python manage.py test library
+関数単位でのテスト：python manage.py test library.tests.test_file_view.FileViewTest.test_chairman_can_view_all
+"""
 
-class PdfViewTest(TestCase):
+
+class FileViewTest(TestCase):
     def setUp(self):
         # グループ作成
         self.chairman = Group.objects.create(name="chairman")
@@ -160,3 +167,38 @@ class PdfViewTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertIn("X-Accel-Redirect", response)
+
+    # ---------------------------------------------------------
+    # nginx internal 設定を想定したテスト。
+    # ---------------------------------------------------------
+    @override_settings(DEBUG=False, MEDIA_URL="/media/")
+    def test_nginx_internal_redirect_path(self):
+        """
+        nginx internal 設定を想定したテスト。
+        DEBUG=False の場合、X-Accel-Redirect が正しい形式で設定されることを確認する。
+        """
+        self.client.force_login(self.user_dm)
+
+        url = reverse("library:file_view", args=[self.file_normal.pk])
+        response = self.client.get(url)
+
+        # 1. ステータスコードは 200
+        self.assertEqual(response.status_code, 200)
+
+        # 2. X-Accel-Redirect が存在する
+        self.assertIn("X-Accel-Redirect", response)
+
+        accel = response["X-Accel-Redirect"]
+
+        # 3. /media/ で始まる（nginx internal のパス）
+        self.assertTrue(accel.startswith("/media/"))
+
+        # 4. ファイルパスが URL エンコードされている
+        #    日本語ファイル名などが含まれる場合に備えてチェック
+        original_path = f"/media/{self.file_normal.src.name}"
+        encoded_expected = urllib.parse.quote(original_path, safe="/")
+
+        self.assertEqual(accel, encoded_expected)
+
+        # 5. Content-Disposition が inline/attachment のいずれかで設定されている
+        self.assertIn("Content-Disposition", response)
