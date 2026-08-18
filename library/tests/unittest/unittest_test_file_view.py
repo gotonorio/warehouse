@@ -12,7 +12,7 @@ User = get_user_model()
 
 """
 アプリ単位のテスト：python manage.py test library
-関数単位でのテスト：python manage.py test library.tests.test_file_view.FileViewTest.test_chairman_can_view_all
+関数単位でのテスト：python manage.py test library.tests.test_pdf_view.FileViewTest.test_chairman_can_view_all
 """
 
 
@@ -89,7 +89,7 @@ class FileViewTest(TestCase):
         """パーミッションがないユーザーは403"""
         self.client.force_login(self.user_no_perm)
 
-        url = reverse("library:file_view", args=[self.file_normal.pk])
+        url = reverse("library:pdf_view", args=[self.file_normal.pk])
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 403)
@@ -102,7 +102,7 @@ class FileViewTest(TestCase):
         self.client.force_login(self.user_chairman)
 
         for f in [self.file_normal, self.file_restrict, self.file_confidential]:
-            url = reverse("library:file_view", args=[f.pk])
+            url = reverse("library:pdf_view", args=[f.pk])
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
             self.assertIn("Content-Disposition", response)
@@ -114,7 +114,7 @@ class FileViewTest(TestCase):
     def test_data_manager_can_view_restrict(self):
         self.client.force_login(self.user_dm)
 
-        url = reverse("library:file_view", args=[self.file_restrict.pk])
+        url = reverse("library:pdf_view", args=[self.file_restrict.pk])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
@@ -124,7 +124,7 @@ class FileViewTest(TestCase):
     def test_normal_user_cannot_view_restrict(self):
         self.client.force_login(self.user_normal)
 
-        url = reverse("library:file_view", args=[self.file_restrict.pk])
+        url = reverse("library:pdf_view", args=[self.file_restrict.pk])
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 302)
@@ -136,7 +136,7 @@ class FileViewTest(TestCase):
     def test_normal_user_cannot_view_confidential(self):
         self.client.force_login(self.user_normal)
 
-        url = reverse("library:file_view", args=[self.file_confidential.pk])
+        url = reverse("library:pdf_view", args=[self.file_confidential.pk])
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 302)
@@ -149,7 +149,7 @@ class FileViewTest(TestCase):
     def test_debug_returns_fileresponse(self):
         self.client.force_login(self.user_dm)
 
-        url = reverse("library:file_view", args=[self.file_normal.pk])
+        url = reverse("library:pdf_view", args=[self.file_normal.pk])
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
@@ -162,7 +162,7 @@ class FileViewTest(TestCase):
     def test_production_returns_accel_redirect(self):
         self.client.force_login(self.user_dm)
 
-        url = reverse("library:file_view", args=[self.file_normal.pk])
+        url = reverse("library:pdf_view", args=[self.file_normal.pk])
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
@@ -179,7 +179,7 @@ class FileViewTest(TestCase):
         """
         self.client.force_login(self.user_dm)
 
-        url = reverse("library:file_view", args=[self.file_normal.pk])
+        url = reverse("library:pdf_view", args=[self.file_normal.pk])
         response = self.client.get(url)
 
         # 1. ステータスコードは 200

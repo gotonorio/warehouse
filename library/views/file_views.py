@@ -52,8 +52,9 @@ class FileCategoryView(PermissionRequiredMixin, generic.ListView):
         return context
 
 
-# グループ名による閲覧制御（最低限view_fileパーミッションを持つ必要がある）
-@permission_required("library.view_file", raise_exception=True)
+# ファイル閲覧はanonymousユーザーにも許可する場合があるので、関数全体での閲覧制御は行わない
+# # グループ名による閲覧制御（最低限view_fileパーミッションを持つ必要がある）
+# @permission_required("library.view_file", raise_exception=True)
 def pdf_view(request, pk):
     """ファイル配信処理
     - ローカル環境：Djangoが FileResponse で直接ファイルを配信する。
@@ -65,7 +66,7 @@ def pdf_view(request, pk):
     # ログインユーザのグループ名を取得する
     groups = set(request.user.groups.values_list("name", flat=True))
 
-    # グループによる閲覧制御
+    # グループと「カテゴリ権限」「ファイル権限」による閲覧制御
     if "chairman" not in groups:
         if fn.is_confidential:
             return redirect("notice:news_card")

@@ -29,5 +29,5 @@ urlpatterns = [
     # 検索結果表示
     path("search/", views.SearchlistView.as_view(), name="search"),
     # djangoでpdfファイルを配信する。（静的ファイルの配信はnginxで行うべきだが。）
-    path("file_view/<int:pk>", views.pdf_view, name="file_view"),
+    path("pdf_view/<int:pk>", views.pdf_view, name="pdf_view"),
 ]
