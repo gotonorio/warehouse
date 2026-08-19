@@ -42,13 +42,19 @@ def test_user_chairman(db, test_group_chairman, test_permission_view_file):
     return user_chairman
 
 
+# @pytest.fixture
+# def test_user_data_manager(db, test_group_data_manager, test_permission_view_file):
+#     """data_managerユーザー"""
+#     user_data_manager = User.objects.create_user(username="data_manager", password="pass")
+#     user_data_manager.groups.add(test_group_data_manager)
+#     user_data_manager.user_permissions.add(test_permission_view_file)
+#     return user_data_manager
+
+
 @pytest.fixture
-def test_user_data_manager(db, test_group_data_manager, test_permission_view_file):
+def test_user_data_manager(db):
     """data_managerユーザー"""
-    user_data_manager = User.objects.create_user(username="data_manager", password="pass")
-    user_data_manager.groups.add(test_group_data_manager)
-    user_data_manager.user_permissions.add(test_permission_view_file)
-    return user_data_manager
+    return User.objects.create_user(username="dm", password="pass")
 
 
 # -----------------------------------------------------------------------------
@@ -61,6 +67,7 @@ def big_category(db):
 
 @pytest.fixture
 def category_normal(db, big_category):
+    """誰でも閲覧可能なCategoryクラス（restrict=False）を作成"""
     return Category.objects.create(
         name="cat1",
         path_name="cat1",
@@ -71,6 +78,7 @@ def category_normal(db, big_category):
 
 @pytest.fixture
 def category_restrict(db, big_category):
+    """restrict=True の Categoryクラスを作成"""
     return Category.objects.create(
         name="cat2",
         path_name="cat2",

@@ -68,10 +68,11 @@ def pdf_view(request, pk):
 
     # グループと「カテゴリ権限」「ファイル権限」による閲覧制御
     if "chairman" not in groups:
+        # 機密ファイルはchairmanグループ以外閲覧禁止
         if fn.is_confidential:
             return redirect("notice:news_card")
-
-        if "data_manager" not in groups and fn.category.restrict:
+        # 未ログインユーザはrestrict=Trueのカテゴリのファイル閲覧禁止
+        if groups is None and fn.category.restrict:
             return redirect("notice:news_card")
 
     # 配信するファイル名
