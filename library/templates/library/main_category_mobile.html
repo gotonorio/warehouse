@@ -55,9 +55,7 @@
           {% comment %} <td class="has-text-left"><a href="{{file.src.url}}" target="_blank" rel="noopener noreferrer" download>{{file.title}}</a></td> {% endcomment %}
           <td class="has-text-left"><a href="{% url 'library:pdf_view' file.pk %}" download>{{file.title}}</a></td>
         {% else %}
-          {% comment %} nginxで配布させると効率的だが、表示urlのコピーでログイン無しで再表示できてしまう {% endcomment %}
-          {% comment %} <td class="has-text-left"><a href="{{file.src.url}}" target="_blank" rel="noopener noreferrer">{{file.title}}</a></td> {% endcomment %}
-          <td class="has-text-left"><a href="{% url 'library:pdf_view' file.pk %}" target="_blank">{{file.title}}</a></td>
+          <td class="has-text-left"><a href="{% url 'library:pdf_view' file.pk %}">{{file.title}}</a></td>
         {% endif %}
         {% if forloop.counter < comment_limit %}
           <td class="has-text-left">{{file.summary|escape|linebreaksbr|urlize}}</td>

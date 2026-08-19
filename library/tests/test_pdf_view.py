@@ -26,6 +26,8 @@ def test_pdf_view_access_control(
 
     client = Client()
 
+    response = client.get(reverse("library:pdf_view", args=[file_confidential.pk]))
+    assert response.status_code == 403
     # -------------------------
     # chairman → 全部閲覧可能
     # -------------------------
@@ -35,6 +37,7 @@ def test_pdf_view_access_control(
 
     # -------------------------
     # data_manager → restrict 閲覧可能
+    # data_manager → confidential 閲覧不可
     # -------------------------
     user_dm = User.objects.create_user(username="dm", password="pass")
     user_dm.groups.add(test_group_data_manager)
@@ -43,19 +46,19 @@ def test_pdf_view_access_control(
     client.force_login(user_dm)
     response = client.get(reverse("library:pdf_view", args=[file_restrict.pk]))
     assert response.status_code == 200
+    response = client.get(reverse("library:pdf_view", args=[file_confidential.pk]))
+    assert response.status_code == 403
 
     # -------------------------
-    # 一般ユーザー → restrict / confidential 閲覧不可
+    # sophiag → restrict 閲覧可能
+    # sophiag → confidential 閲覧不可
     # -------------------------
     client.force_login(test_user_no_perm)
 
-    response = client.get(reverse("library:pdf_view", args=[file_confidential.pk]))
-    assert response.status_code == 302
-    assert response.url == reverse("notice:news_card")
-
     response = client.get(reverse("library:pdf_view", args=[file_restrict.pk]))
-    assert response.status_code == 302
-    assert response.url == reverse("notice:news_card")
+    assert response.status_code == 200
+    response = client.get(reverse("library:pdf_view", args=[file_confidential.pk]))
+    assert response.status_code == 403
 
 
 # -----------------------------------------------------------------------------

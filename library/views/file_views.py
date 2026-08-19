@@ -4,10 +4,12 @@ import os
 import urllib.parse
 
 from django.conf import settings
-from django.contrib.auth.decorators import permission_required
+
+# from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import FileResponse, HttpResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.views import generic
 
 from library.models import File
@@ -70,10 +72,10 @@ def pdf_view(request, pk):
     if "chairman" not in groups:
         # 機密ファイルはchairmanグループ以外閲覧禁止
         if fn.is_confidential:
-            return redirect("notice:news_card")
+            raise PermissionDenied()
         # 未ログインユーザはrestrict=Trueのカテゴリのファイル閲覧禁止
         if groups is None and fn.category.restrict:
-            return redirect("notice:news_card")
+            raise PermissionDenied()
 
     # 配信するファイル名
     filename = os.path.basename(fn.src.name)
