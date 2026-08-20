@@ -13,10 +13,9 @@ User = get_user_model()
 # -----------------------------------------------------------------------------
 @pytest.mark.django_db
 def test_pdf_view_access_control(
-    test_user_no_perm,
+    test_user_sophiag,
+    test_user_data_manager,
     test_user_chairman,
-    test_group_data_manager,
-    test_permission_view_file,
     file_confidential,
     file_restrict,
 ):
@@ -26,8 +25,15 @@ def test_pdf_view_access_control(
 
     client = Client()
 
+    # -------------------------
+    # 未ログインユーザ → restrict 閲覧不可
+    # 未ログインユーザ → confidential 閲覧不可
+    # -------------------------
+    response = client.get(reverse("library:pdf_view", args=[file_restrict.pk]))
+    assert response.status_code == 403
     response = client.get(reverse("library:pdf_view", args=[file_confidential.pk]))
     assert response.status_code == 403
+
     # -------------------------
     # chairman → 全部閲覧可能
     # -------------------------
@@ -36,24 +42,17 @@ def test_pdf_view_access_control(
     assert response.status_code == 200
 
     # -------------------------
-    # data_manager → restrict 閲覧可能
-    # data_manager → confidential 閲覧不可
+    # data_manager → 全部閲覧可能
     # -------------------------
-    user_dm = User.objects.create_user(username="dm", password="pass")
-    user_dm.groups.add(test_group_data_manager)
-    user_dm.user_permissions.add(test_permission_view_file)
-
-    client.force_login(user_dm)
-    response = client.get(reverse("library:pdf_view", args=[file_restrict.pk]))
-    assert response.status_code == 200
+    client.force_login(test_user_data_manager)
     response = client.get(reverse("library:pdf_view", args=[file_confidential.pk]))
-    assert response.status_code == 403
+    assert response.status_code == 200
 
     # -------------------------
     # sophiag → restrict 閲覧可能
     # sophiag → confidential 閲覧不可
     # -------------------------
-    client.force_login(test_user_no_perm)
+    client.force_login(test_user_sophiag)
 
     response = client.get(reverse("library:pdf_view", args=[file_restrict.pk]))
     assert response.status_code == 200

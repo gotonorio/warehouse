@@ -60,22 +60,26 @@ class FileCategoryView(PermissionRequiredMixin, generic.ListView):
 def pdf_view(request, pk):
     """ファイル配信処理
     - ローカル環境：Djangoが FileResponse で直接ファイルを配信する。
-    - 本番環境：  nginxが HttpResponse で配信することで、nginxの設定（internal）で
-                外部からのURL直打ちを防止できる。
+    - 本番環境：  nginxが HttpResponse で配信する。
+                nginxの設定（internal）で、外部からのURL直打ちを防止できる。
+    - data_manager、chairmanグループは機密書類（file.is_confidential=True）の閲覧可能とする
     """
     fn = get_object_or_404(File, pk=pk)
 
-    # ログインユーザのグループ名を取得する
+    # ログインユーザのグループ名を取得して、その全レコードの集合とする
+    # anonymousユーザの場合は、空ののset()を返す
     groups = set(request.user.groups.values_list("name", flat=True))
 
-    # グループと「カテゴリ権限」「ファイル権限」による閲覧制御
-    if "chairman" not in groups:
-        # 機密ファイルはchairmanグループ以外閲覧禁止
-        if fn.is_confidential:
+    # anonymous（未ログインユーザ）
+    # 「category.restrict=True」「file.is_confidential=True」は閲覧不可
+    if not request.user.is_authenticated:
+        if fn.is_confidential or fn.category.restrict:
             raise PermissionDenied()
-        # 未ログインユーザはrestrict=Trueのカテゴリのファイル閲覧禁止
-        if groups is None and fn.category.restrict:
-            raise PermissionDenied()
+
+    # sophiag
+    # 「file.is_confidential=True」は閲覧不可
+    if "sophiag" in groups and fn.is_confidential:
+        raise PermissionDenied()
 
     # 配信するファイル名
     filename = os.path.basename(fn.src.name)

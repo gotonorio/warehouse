@@ -8,6 +8,9 @@ from library.models import BigCategory, Category, File
 User = get_user_model()
 
 
+# -----------------------------------------------------------------------------
+# テスト用グループの作成
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def test_group_chairman(db):
     """テスト用のchairmanグループを作成するfixture"""
@@ -21,16 +24,34 @@ def test_group_data_manager(db):
 
 
 @pytest.fixture
+def test_group_sophiag(db):
+    """テスト用のsophiagグループを作成するfixture"""
+    return Group.objects.create(name="sophiag")
+
+
+@pytest.fixture
 def test_permission_view_file(db):
     """パーミッション取得"""
     return Permission.objects.get(codename="view_file")
 
 
+# -----------------------------------------------------------------------------
+# テスト用ユーザーの作成
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def test_user_no_perm(db, test_permission_view_file):
     user = User.objects.create_user(username="noperm", password="pass")
     user.user_permissions.remove(test_permission_view_file)
     return user
+
+
+@pytest.fixture
+def test_user_sophiag(db, test_group_sophiag, test_permission_view_file):
+    """sophiagユーザー"""
+    user_sophiag = User.objects.create_user(username="sophiag", password="pass")
+    user_sophiag.groups.add(test_group_sophiag)
+    user_sophiag.user_permissions.add(test_permission_view_file)
+    return user_sophiag
 
 
 @pytest.fixture
@@ -42,11 +63,13 @@ def test_user_chairman(db, test_group_chairman, test_permission_view_file):
     return user_chairman
 
 
-# 不要?
-# @pytest.fixture
-# def test_user_data_manager(db):
-#     """data_managerユーザー"""
-#     return User.objects.create_user(username="dm", password="pass")
+@pytest.fixture
+def test_user_data_manager(db, test_group_data_manager, test_permission_view_file):
+    """data_managerユーザー"""
+    user_data_manager = User.objects.create_user(username="dm", password="pass")
+    user_data_manager.groups.add(test_group_data_manager)
+    user_data_manager.user_permissions.add(test_permission_view_file)
+    return user_data_manager
 
 
 # -----------------------------------------------------------------------------
