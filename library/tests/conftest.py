@@ -42,19 +42,11 @@ def test_user_chairman(db, test_group_chairman, test_permission_view_file):
     return user_chairman
 
 
+# 不要?
 # @pytest.fixture
-# def test_user_data_manager(db, test_group_data_manager, test_permission_view_file):
+# def test_user_data_manager(db):
 #     """data_managerユーザー"""
-#     user_data_manager = User.objects.create_user(username="data_manager", password="pass")
-#     user_data_manager.groups.add(test_group_data_manager)
-#     user_data_manager.user_permissions.add(test_permission_view_file)
-#     return user_data_manager
-
-
-@pytest.fixture
-def test_user_data_manager(db):
-    """data_managerユーザー"""
-    return User.objects.create_user(username="dm", password="pass")
+#     return User.objects.create_user(username="dm", password="pass")
 
 
 # -----------------------------------------------------------------------------

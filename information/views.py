@@ -17,12 +17,6 @@ class InformationListView(LoginRequiredMixin, generic.ListView):
     # context_object_name = "information_list"
     template_name = "information/pc_information.html"
 
-    # def get_template_names(self):
-    #     """デバイスによってテンプレートを切り替える (getattrで安全に取得)"""
-    #     if self.request.user_agent.is_mobile:
-    #         return ["information/mobile_information.html"]
-    #     return ["information/pc_information.html"]
-
     def get_queryset(self):
         """ユーザー権限に基づいてクエリセットをフィルタリングする"""
         user = self.request.user
@@ -37,13 +31,6 @@ class InformationListView(LoginRequiredMixin, generic.ListView):
         else:
             # 権限がない場合は「情報」タイプのみに絞り込む
             return qs.filter(type_name__type_name="情報").order_by("-sequense")
-
-    def get_context_data(self, **kwargs):
-        """一覧以外の追加データを渡す（必要であれば）"""
-        context = super().get_context_data(**kwargs)
-        # 例：最新の日付をタイトル用に取得するなど
-        # context["latest_date"] = ...
-        return context
 
 
 class InfoListView(generic.ListView):
