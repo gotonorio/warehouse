@@ -1,4 +1,5 @@
 # read base.txt
 -r base.txt
 # for debugging
-django-debug-toolbar==6.1.0
+pytest==9.1.1
+pytest-django==4.14.0
