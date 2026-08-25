@@ -84,3 +84,32 @@ class File(models.Model):
         """ファイル名を返す"""
         # return os.path.basename(self.src.name)
         return Path(self.src.name).name
+
+    def can_view(self, user):
+        """ログイングループによる閲覧権限を返す"""
+
+        # ログインしていないanonymousユーザーはgroupがないので
+        if not user.is_authenticated:
+            if self.is_confidential or self.category.restrict:
+                return False
+            else:
+                return True
+
+        # userの所属グループを集合として取得する
+        groups = set(user.groups.values_list("name", flat=True))
+
+        # chairman は全閲覧可能
+        if "chairman" in groups:
+            return True
+
+        # data_manager は restrict だけ閲覧可能
+        if "data_manager" in groups:
+            if self.is_confidential:
+                return False
+            return True
+
+        # sophiag は機密閲覧不可
+        if "sophiag" in groups and self.is_confidential:
+            return False
+
+        return True

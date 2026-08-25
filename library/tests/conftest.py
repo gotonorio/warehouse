@@ -12,25 +12,25 @@ User = get_user_model()
 # テスト用グループの作成
 # -----------------------------------------------------------------------------
 @pytest.fixture
-def test_group_chairman(db):
+def test_group_chairman():
     """テスト用のchairmanグループを作成するfixture"""
     return Group.objects.create(name="chairman")
 
 
 @pytest.fixture
-def test_group_data_manager(db):
+def test_group_data_manager():
     """テスト用のdata_managerグループを作成するfixture"""
     return Group.objects.create(name="data_manager")
 
 
 @pytest.fixture
-def test_group_sophiag(db):
+def test_group_sophiag():
     """テスト用のsophiagグループを作成するfixture"""
     return Group.objects.create(name="sophiag")
 
 
 @pytest.fixture
-def test_permission_view_file(db):
+def test_permission_view_file():
     """パーミッション取得"""
     return Permission.objects.get(codename="view_file")
 
@@ -39,14 +39,14 @@ def test_permission_view_file(db):
 # テスト用ユーザーの作成
 # -----------------------------------------------------------------------------
 @pytest.fixture
-def test_user_no_perm(db, test_permission_view_file):
+def test_user_no_perm(test_permission_view_file):
     user = User.objects.create_user(username="noperm", password="pass")
     user.user_permissions.remove(test_permission_view_file)
     return user
 
 
 @pytest.fixture
-def test_user_sophiag(db, test_group_sophiag, test_permission_view_file):
+def test_user_sophiag(test_group_sophiag, test_permission_view_file):
     """sophiagユーザー"""
     user_sophiag = User.objects.create_user(username="sophiag", password="pass")
     user_sophiag.groups.add(test_group_sophiag)
@@ -55,7 +55,7 @@ def test_user_sophiag(db, test_group_sophiag, test_permission_view_file):
 
 
 @pytest.fixture
-def test_user_chairman(db, test_group_chairman, test_permission_view_file):
+def test_user_chairman(test_group_chairman, test_permission_view_file):
     """chairmanユーザー"""
     user_chairman = User.objects.create_user(username="chairman", password="pass")
     user_chairman.groups.add(test_group_chairman)
@@ -64,7 +64,7 @@ def test_user_chairman(db, test_group_chairman, test_permission_view_file):
 
 
 @pytest.fixture
-def test_user_data_manager(db, test_group_data_manager, test_permission_view_file):
+def test_user_data_manager(test_group_data_manager, test_permission_view_file):
     """data_managerユーザー"""
     user_data_manager = User.objects.create_user(username="dm", password="pass")
     user_data_manager.groups.add(test_group_data_manager)
@@ -76,12 +76,12 @@ def test_user_data_manager(db, test_group_data_manager, test_permission_view_fil
 # conftest.py に追加
 # -----------------------------------------------------------------------------
 @pytest.fixture
-def big_category(db):
+def big_category():
     return BigCategory.objects.create(name="big")
 
 
 @pytest.fixture
-def category_normal(db, big_category):
+def category_normal(big_category):
     """誰でも閲覧可能なCategoryクラス（restrict=False）を作成"""
     return Category.objects.create(
         name="cat1",
@@ -92,7 +92,7 @@ def category_normal(db, big_category):
 
 
 @pytest.fixture
-def category_restrict(db, big_category):
+def category_restrict(big_category):
     """restrict=True の Categoryクラスを作成"""
     return Category.objects.create(
         name="cat2",
@@ -108,7 +108,7 @@ def test_pdf():
 
 
 @pytest.fixture
-def file_normal(db, category_normal, test_pdf):
+def file_normal(category_normal, test_pdf):
     return File.objects.create(
         title="normal",
         category=category_normal,
@@ -119,7 +119,7 @@ def file_normal(db, category_normal, test_pdf):
 
 
 @pytest.fixture
-def file_confidential(db, category_normal, test_pdf):
+def file_confidential(category_normal, test_pdf):
     return File.objects.create(
         title="secret",
         category=category_normal,
@@ -130,7 +130,7 @@ def file_confidential(db, category_normal, test_pdf):
 
 
 @pytest.fixture
-def file_restrict(db, category_restrict, test_pdf):
+def file_restrict(category_restrict, test_pdf):
     return File.objects.create(
         title="restrict",
         category=category_restrict,

@@ -66,19 +66,8 @@ def pdf_view(request, pk):
     """
     fn = get_object_or_404(File, pk=pk)
 
-    # ログインユーザのグループ名を取得して、その全レコードの集合とする
-    # anonymousユーザの場合は、空ののset()を返す
-    groups = set(request.user.groups.values_list("name", flat=True))
-
-    # anonymous（未ログインユーザ）
-    # 「category.restrict=True」「file.is_confidential=True」は閲覧不可
-    if not request.user.is_authenticated:
-        if fn.is_confidential or fn.category.restrict:
-            raise PermissionDenied()
-
-    # sophiag
-    # 「file.is_confidential=True」は閲覧不可
-    if "sophiag" in groups and fn.is_confidential:
+    # ログイングループの閲覧権限によるチェック
+    if not fn.can_view(request.user):
         raise PermissionDenied()
 
     # 配信するファイル名
