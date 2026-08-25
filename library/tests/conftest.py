@@ -73,7 +73,7 @@ def test_user_data_manager(test_group_data_manager, test_permission_view_file):
 
 
 # -----------------------------------------------------------------------------
-# conftest.py に追加
+# テスト用のpdfファイルを作成する
 # -----------------------------------------------------------------------------
 @pytest.fixture
 def big_category():
@@ -102,13 +102,22 @@ def category_restrict(big_category):
     )
 
 
+# test.pdfを保存するため、テスト用のMEDIA_ROOTを作成する
+# tmp_pathでsettings.MEDIA_ROOTを上書きすることで、テスト終了後に後始末をしてくれる
+@pytest.fixture
+def media_root(tmp_path, settings):
+    settings.MEDIA_ROOT = tmp_path
+    return tmp_path
+
+
 @pytest.fixture
 def test_pdf():
     return SimpleUploadedFile("test.pdf", b"%PDF-1.4 test content", content_type="application/pdf")
 
 
+# テスト用のMEDIA_ROOTにtest.pdfを作成する(fixtureを実行させるためにmedia_rootを指定する)
 @pytest.fixture
-def file_normal(category_normal, test_pdf):
+def file_normal(category_normal, test_pdf, media_root):
     return File.objects.create(
         title="normal",
         category=category_normal,
@@ -118,8 +127,9 @@ def file_normal(category_normal, test_pdf):
     )
 
 
+# テスト用のMEDIA_ROOTにtest.pdfを作成する(fixtureを実行させるためにmedia_rootを指定する)
 @pytest.fixture
-def file_confidential(category_normal, test_pdf):
+def file_confidential(category_normal, test_pdf, media_root):
     return File.objects.create(
         title="secret",
         category=category_normal,
@@ -129,8 +139,9 @@ def file_confidential(category_normal, test_pdf):
     )
 
 
+# テスト用のMEDIA_ROOTにtest.pdfを作成する(fixtureを実行させるためにmedia_rootを指定する)
 @pytest.fixture
-def file_restrict(category_restrict, test_pdf):
+def file_restrict(category_restrict, test_pdf, media_root):
     return File.objects.create(
         title="restrict",
         category=category_restrict,
