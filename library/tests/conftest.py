@@ -1,6 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.models import AnonymousUser, Group, Permission
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from library.models import BigCategory, Category, File
@@ -43,6 +43,11 @@ def test_user_no_perm(test_permission_view_file):
     user = User.objects.create_user(username="noperm", password="pass")
     user.user_permissions.remove(test_permission_view_file)
     return user
+
+
+@pytest.fixture
+def test_user_anonymous():
+    return AnonymousUser()
 
 
 @pytest.fixture
