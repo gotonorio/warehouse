@@ -3,7 +3,6 @@ import logging
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.core.exceptions import PermissionDenied
 from django.db import models
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -35,41 +34,16 @@ class BigCategoryView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         # TemplateViewの場合、get_object_or_404()が必要となる
         # big_category = get_object_or_404(BigCategory, pk=self.kwargs["pk"])
-        # DetailViewがURLのpkから自動取得したBigCategory
+        # DetailViewの場合、URLのpkから自動取得したBigCategoryインスタンスを取得できる
         big_category = self.object
         user = self.request.user
         limit = settings.SELECT_LIMIT_NUM
 
-        # 1. カテゴリの取得と閲覧制限の判定
-        # ログインしていない場合(user.id is None)の処理を整理
-        category_qs = Category.objects.filter(parent=big_category, alive=True)
+        # 1. カテゴリの取得と閲覧制限の判定（ログインしていない場合の処理）
+        category_obj = Category.for_user(big_category, user)
 
-        if not user.is_authenticated:
-            # 未ログイン時は制限(restrict)がないカテゴリのみ
-            category_qs = category_qs.filter(restrict=False)
-            if not category_qs.exists():
-                raise PermissionDenied()
-
-        category_obj = category_qs.order_by("parent__rank", "-rank")
-
-        # 2. カテゴリごとのファイルリストを作成
-        category_list = []
-        has_add_perm = user.has_perm("library.add_file")
-
-        for cat in category_obj:
-            # クエリの組み立て
-            file_qs = File.objects.filter(category=cat, alive=True)
-
-            # 権限がない場合は機密ファイル(is_confidential)を除外
-            if not has_add_perm:
-                file_qs = file_qs.filter(is_confidential=False)
-
-            # 並び替えとリミット適用
-            # 既存の forループで append する処理を list() で簡略化
-            files = list(file_qs.order_by("-rank", "-created_at")[:limit])
-
-            # 既存テンプレートに合わせて「ファイルのリスト」をリストに追加
-            category_list.append(files)
+        # 2. CategoryごとのFileオブジェクトのリストを作成（権限制約を考慮）
+        category_list = [File.for_user(cat, user, limit) for cat in category_obj]
 
         # 3. テンプレートへ渡すデータ
         context["category_list"] = category_list

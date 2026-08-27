@@ -31,7 +31,7 @@ def test_group_sophiag():
 
 @pytest.fixture
 def test_permission_view_file():
-    """パーミッション取得"""
+    """ログインユーザのパーミッション生成"""
     return Permission.objects.get(codename="view_file")
 
 
@@ -39,14 +39,8 @@ def test_permission_view_file():
 # テスト用ユーザーの作成
 # -----------------------------------------------------------------------------
 @pytest.fixture
-def test_user_no_perm(test_permission_view_file):
-    user = User.objects.create_user(username="noperm", password="pass")
-    user.user_permissions.remove(test_permission_view_file)
-    return user
-
-
-@pytest.fixture
 def test_user_anonymous():
+    """未ログインユーザー"""
     return AnonymousUser()
 
 
@@ -120,7 +114,8 @@ def test_pdf():
     return SimpleUploadedFile("test.pdf", b"%PDF-1.4 test content", content_type="application/pdf")
 
 
-# テスト用のMEDIA_ROOTにtest.pdfを作成する(fixtureを実行させるためにmedia_rootを指定する)
+# テスト用のMEDIA_ROOTにtest.pdfを作成する
+# fixtureを実行させるためにmedia_rootを引数に設定することで、tmp_pathのMEDIA_ROOTを使うことになる
 @pytest.fixture
 def file_normal(category_normal, test_pdf, media_root):
     return File.objects.create(
@@ -132,7 +127,8 @@ def file_normal(category_normal, test_pdf, media_root):
     )
 
 
-# テスト用のMEDIA_ROOTにtest.pdfを作成する(fixtureを実行させるためにmedia_rootを指定する)
+# テスト用のMEDIA_ROOTにtest.pdfを作成する
+# fixtureを実行させるためにmedia_rootを引数に設定することで、tmp_pathのMEDIA_ROOTを使うことになる
 @pytest.fixture
 def file_confidential(category_normal, test_pdf, media_root):
     return File.objects.create(
@@ -144,7 +140,8 @@ def file_confidential(category_normal, test_pdf, media_root):
     )
 
 
-# テスト用のMEDIA_ROOTにtest.pdfを作成する(fixtureを実行させるためにmedia_rootを指定する)
+# テスト用のMEDIA_ROOTにtest.pdfを作成する
+# fixtureを実行させるためにmedia_rootを引数に設定することで、tmp_pathのMEDIA_ROOTを使うことになる
 @pytest.fixture
 def file_restrict(category_restrict, test_pdf, media_root):
     return File.objects.create(

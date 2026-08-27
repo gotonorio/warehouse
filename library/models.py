@@ -1,7 +1,9 @@
 import logging
 from pathlib import Path
 
+from django.core.exceptions import PermissionDenied
 from django.db import models
+from django.db.models import Prefetch
 from django.utils import timezone
 
 logger = logging.getLogger(__name__)
@@ -41,6 +43,27 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def for_user(cls, big_category, user):
+        """
+        未ログインユーザの場合「権限エラー」を返す
+        ログイン済ユーザーの場合、カテゴリーに属するファイルオブジェクトをリストとして返す
+        """
+        qs = cls.objects.filter(parent=big_category, alive=True)
+
+        if not user.is_authenticated:
+            qs = qs.filter(restrict=False)
+            if not qs.exists():
+                raise PermissionDenied()
+        # CategoryからFileを利用する場合、Prefetchクラスを使うとN+1問題を避けられるようだ
+        return qs.order_by("parent__rank", "-rank").prefetch_related(
+            Prefetch(
+                "file_set",
+                queryset=File.objects.filter(alive=True).order_by("-rank", "-created_at"),
+                to_attr="files_all",  # Categoryインスタンスに属性として追加してリターンする
+            )
+        )
 
 
 def get_upload_to(instance, filename):
@@ -113,3 +136,13 @@ class File(models.Model):
             return False
 
         return True
+
+    @classmethod
+    def for_user(cls, category, user, limit):
+        files = category.files_all  # Fileオブジェクトをリストとして取得する（Prefetch 済み）
+
+        # 管理者以外のユーザーは「機密ファイル」を除外する
+        if not user.has_perm("library.add_file"):
+            files = [f for f in files if not f.is_confidential]
+
+        return files[:limit]

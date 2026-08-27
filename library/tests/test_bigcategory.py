@@ -13,7 +13,8 @@ from django.urls import reverse
 def test_bigcategory_category_restrict_control(
     big_category,
     category_normal,
-    test_user_no_perm,
+    # test_user_no_perm,
+    test_user_sophiag,
     # test_user_data_manager,
     # test_group_data_manager,
     # test_permission_view_file,
@@ -30,9 +31,10 @@ def test_bigcategory_category_restrict_control(
     response = client.get(reverse("library:bigcategory", args=[big_category.pk]))
     assert response.status_code == 403
 
-    # 3. ログインユーザー -> category.restrict=True は表示される
+    # 3. ログインユーザー（view_fileパーミッション保有ユーザー） -> category.restrict=True は閲覧可能
     # file.is_confidentialの制限チェックは test_pdf_view.py で行う
-    client.force_login(test_user_no_perm)
+    # client.force_login(test_user_no_perm)
+    client.force_login(test_user_sophiag)
     response = client.get(reverse("library:bigcategory", args=[big_category.pk]))
     assert response.status_code == 200
 
