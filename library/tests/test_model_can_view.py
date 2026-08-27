@@ -5,7 +5,7 @@ import pytest
 # 閲覧制御のテスト
 # -----------------------------------------------------------------------------
 @pytest.mark.django_db
-def test_can_view(
+def test_model_can_view(
     test_user_anonymous,
     test_user_sophiag,
     test_user_data_manager,
@@ -14,7 +14,7 @@ def test_can_view(
     file_normal,
     file_confidential,
 ):
-    """File.can_view()のテスト"""
+    """Fileモデルのモデル関数（can_view）のテスト"""
 
     # 1. category.restrict = True（区分所有者のみ閲覧可能）のファイル
     assert file_restrict.can_view(test_user_anonymous) is False  # 閲覧拒否

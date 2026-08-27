@@ -49,6 +49,7 @@ class Category(models.Model):
         """
         未ログインユーザの場合「権限エラー」を返す
         ログイン済ユーザーの場合、カテゴリーに属するファイルオブジェクトをリストとして返す
+        prefetch_relatedを使うことで、Categoryごとにforloopしなくて済む（N+1問題）
         """
         qs = cls.objects.filter(parent=big_category, alive=True)
 
@@ -139,7 +140,10 @@ class File(models.Model):
 
     @classmethod
     def for_user(cls, category, user, limit):
-        files = category.files_all  # Fileオブジェクトをリストとして取得する（Prefetch 済み）
+        """Categoryに属するFileオブジェクトをリストとして返す"""
+
+        # Prefetch済のFileオブジェクト
+        files = category.files_all
 
         # 管理者以外のユーザーは「機密ファイル」を除外する
         if not user.has_perm("library.add_file"):
