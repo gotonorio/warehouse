@@ -1,9 +1,15 @@
+import logging
+
 import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser, Group, Permission
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from library.models import BigCategory, Category, File
+
+# faker と factory_boy の DEBUG ログを強制的に WARNING 以上に制限
+logging.getLogger("faker").setLevel(logging.WARNING)
+logging.getLogger("factory").setLevel(logging.WARNING)
 
 User = get_user_model()
 

@@ -20,6 +20,10 @@ venv/
 local_settings.py
 inputs/balance_sheets/*.html
 
+# pytest関係
+.pytest_cache/
+.coverage
+
 # メディアファイルは巨大なためrsyncでバックアップする
 media/
 *.pdf

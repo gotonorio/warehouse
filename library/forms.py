@@ -79,16 +79,6 @@ class FileForm(forms.ModelForm):
                     "class": "input",
                 }
             ),
-            # "alive": forms.NullBooleanSelect(
-            #     attrs={
-            #         "class": "select-css",
-            #     }
-            # ),
-            # "download": forms.NullBooleanSelect(
-            #     attrs={
-            #         "class": "select-css",
-            #     }
-            # ),
         }
         help_texts = {
             "src": "※ fileサイズは50MB以下にしてください。",
@@ -172,9 +162,7 @@ class BigCategoryForm(forms.ModelForm):
         bigcategory_name.name = unicodedata.normalize("NFKC", bigcategory_name.name)
         # 重複チェック
         if BigCategory.objects.filter(name=bigcategory_name).exists():
-            raise forms.ValidationError(
-                "この親カテゴリ名は既に使用されています。別の名前を指定してください。"
-            )
+            raise forms.ValidationError("この親カテゴリ名は既に使用されています。別の名前を指定してください。")
         return bigcategory_name
 
     class Meta:
