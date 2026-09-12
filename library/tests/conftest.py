@@ -35,10 +35,25 @@ def test_group_sophiag():
     return Group.objects.create(name="sophiag")
 
 
+# -----------------------------------------------------------------------------
+# テスト用パーミッションの作成
+# -----------------------------------------------------------------------------
 @pytest.fixture
 def test_permission_view_file():
     """ログインユーザのパーミッション生成"""
-    return Permission.objects.get(codename="view_file")
+    return Permission.objects.get(
+        codename="view_file",
+        content_type__app_label="library",
+    )
+
+
+@pytest.fixture
+def test_permission_add_file():
+    """ファイル登録ユーザのパーミッション生成"""
+    return Permission.objects.get(
+        codename="add_file",
+        content_type__app_label="library",
+    )
 
 
 # -----------------------------------------------------------------------------
@@ -75,6 +90,25 @@ def test_user_data_manager(test_group_data_manager, test_permission_view_file):
     user_data_manager.groups.add(test_group_data_manager)
     user_data_manager.user_permissions.add(test_permission_view_file)
     return user_data_manager
+
+
+@pytest.fixture
+def data_manager(test_group_data_manager, test_permission_add_file):
+    """data_managerユーザー"""
+    user_data_manager = User.objects.create_user(username="dm", password="pass")
+    user_data_manager.groups.add(test_group_data_manager)
+    user_data_manager.user_permissions.add(test_permission_add_file)
+    return user_data_manager
+
+
+@pytest.fixture
+def test_staff_user(db):
+    """staffユーザ"""
+    return User.objects.create_user(
+        username="staff_user",
+        password="pass",
+        is_staff=True,
+    )
 
 
 # -----------------------------------------------------------------------------
@@ -123,7 +157,7 @@ def test_pdf():
 # テスト用のMEDIA_ROOTにtest.pdfを作成する
 # fixtureを実行させるためにmedia_rootを引数に設定することで、tmp_pathのMEDIA_ROOTを使うことになる
 @pytest.fixture
-def file_normal(category_normal, test_pdf, media_root):
+def file_normal(category_normal, test_pdf):
     return File.objects.create(
         title="normal",
         category=category_normal,
@@ -136,7 +170,7 @@ def file_normal(category_normal, test_pdf, media_root):
 # テスト用のMEDIA_ROOTにtest.pdfを作成する
 # fixtureを実行させるためにmedia_rootを引数に設定することで、tmp_pathのMEDIA_ROOTを使うことになる
 @pytest.fixture
-def file_confidential(category_normal, test_pdf, media_root):
+def file_confidential(category_normal, test_pdf):
     return File.objects.create(
         title="secret",
         category=category_normal,
@@ -149,7 +183,7 @@ def file_confidential(category_normal, test_pdf, media_root):
 # テスト用のMEDIA_ROOTにtest.pdfを作成する
 # fixtureを実行させるためにmedia_rootを引数に設定することで、tmp_pathのMEDIA_ROOTを使うことになる
 @pytest.fixture
-def file_restrict(category_restrict, test_pdf, media_root):
+def file_restrict(category_restrict, test_pdf):
     return File.objects.create(
         title="restrict",
         category=category_restrict,
@@ -157,3 +191,48 @@ def file_restrict(category_restrict, test_pdf, media_root):
         is_confidential=False,
         download=False,
     )
+
+
+# -----------------------------------------------------------------------------
+# 検索処理用のテストデータ
+# -----------------------------------------------------------------------------
+@pytest.fixture
+def normal_user(db):
+    return User.objects.create_user(
+        username="normal_user",
+        password="pass",
+    )
+
+
+@pytest.fixture
+def file_factory(db, category_restrict, test_pdf):
+    def create_file(**kwargs):
+        defaults = {
+            "title": "テストタイトル",
+            "category": category_restrict,
+            "src": test_pdf,
+            "key_word": "テストキーワード",
+            "summary": "テスト概要",
+            "alive": True,
+            "is_confidential": False,
+        }
+        defaults.update(kwargs)
+        return File.objects.create(**defaults)
+
+    return create_file
+
+
+# @pytest.fixture
+# def data_manager(db):
+#     user = User.objects.create_user(
+#         username="data_manager",
+#         password="pass",
+#     )
+
+#     permission = Permission.objects.get(
+#         codename="add_file",
+#         content_type__app_label="library",
+#     )
+#     user.user_permissions.add(permission)
+
+#     return user

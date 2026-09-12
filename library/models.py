@@ -151,26 +151,3 @@ class File(models.Model):
             files = [f for f in files if not f.is_confidential]
 
         return files[:limit]
-
-    @classmethod
-    def search(cls, keyword, user):
-        """File検索クエリを返す"""
-
-        if not keyword:
-            return cls.objects.none()
-
-        # キーワードのリストを作成
-        kw_list = keyword.split()
-
-        queryset = cls.objects.order_by("-created_at")
-
-        # データ管理者、スタッフ権限保持者以外は機密ファイル以外を検索できる
-        if not (user.has_perm("library.add_file") or user.is_staff):
-            queryset = queryset.filter(alive=True, is_confidential=False)
-
-        # Q オブジェクト生成
-        q_obj = Q()
-        for value in kw_list:
-            q_obj &= Q(title__icontains=value) | Q(key_word__icontains=value) | Q(summary__icontains=value)
-
-        return queryset.filter(q_obj).distinct()
