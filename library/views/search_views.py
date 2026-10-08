@@ -16,7 +16,8 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
     """
 
     model = File
-    template_name = "notice/search_list.html"
+    # template_name = "notice/search_list.html"
+    template_name = "library/search_list.html"
     # paginate_by = 10
 
     def get_queryset(self):
