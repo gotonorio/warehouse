@@ -324,20 +324,16 @@ else:
 # ------------------------------------------------------------------------------
 
 # ipアドレス単位でロック
+# usernameでログイン制限すると、sophiagアカウントは区分所有者共通なので、
+# 一人がログイン失敗すると全員ログイン不可能になってしまうため。
 AXES_LOCKOUT_PARAMETERS = ["ip_address"]
 
-# # Classic: 3 failures -> 30 min lockout
-# AXES_FAILURE_LIMIT = 3
-# AXES_COOLOFF_TIME = timedelta(minutes=30)
-
-# # Rolling window: max 5 failures in any 15-minute period
-# AXES_FAILURE_LIMIT = 5
-# AXES_COOLOFF_TIME = timedelta(minutes=15)
-# AXES_USE_ATTEMPT_EXPIRATION = True
-
-# Hard lockout (manual reset only)
+# Rolling window: max 5 failures in any 60-minute period
+# クーリングタイム設定しないと、管理者がログイン失敗した場合、管理画面への接続もできなくなるため。
 AXES_FAILURE_LIMIT = 5
-AXES_COOLOFF_TIME = None
+AXES_COOLOFF_TIME = timedelta(minutes=60)
+# AXES_COOLOFF_TIME = None
+AXES_USE_ATTEMPT_EXPIRATION = True
 
 # refer to the Django request and response objects documentation
 # https://django-axes.readthedocs.io/en/stable/4_configuration.html
@@ -346,6 +342,4 @@ AXES_IPWARE_META_PRECEDENCE_ORDER = [
     "REMOTE_ADDR",
 ]
 # 管理画面のみでロックを有効化する設定
-# ログイン制限すると、sophiagアカウントは区分所有者共通なので、
-# 一人がログイン失敗すると全員ログイン不可能になってしまう。
 AXES_ONLY_ADMIN_SITE = True
