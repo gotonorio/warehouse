@@ -15,8 +15,8 @@ logger = logging.getLogger(__name__)
 
 
 def test_view(request):
-    logger.debug(request.META.get("REMOTE_ADDR"))
-    logger.debug(request.META.get("HTTP_X_FORWARDED_FOR"))
+    logger.warning(request.META.get("REMOTE_ADDR"))
+    logger.warning(request.META.get("HTTP_X_FORWARDED_FOR"))
 
 
 class Login(LoginView):
