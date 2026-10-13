@@ -276,12 +276,30 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "simple",
         },
+        # 何もしない（ログを捨てる）ハンドラを定義 (2026-10-13)
+        "null": {
+            "class": "logging.NullHandler",
+        },
     },
-    # ロガーはルートロガーのみとする。
-    "root": {
-        "handlers": ["info", "warning", "error", "debug"],
-        "level": "DEBUG",
+    "loggers": {
+        # 2. 不正なホスト名（DisallowedHost）のエラーを発生させるロガーを指定
+        "django.security.DisallowedHost": {
+            "handlers": ["null"],  # ログを「null（ゴミ箱）」に送る
+            "propagate": False,  # 上位のロガーにエラーを伝播させない
+        },
+        # これにより、通常のバグやエラーが各ログファイルへ正しく出力される
+        "": {
+            "handlers": ["info", "warning", "error", "debug"],
+            "level": "INFO",
+        },
     },
+    # "root"キーを独立して設定する場合は下記のように"loggers"と並列することもできるが、
+    # DisallowedHostを"loggers"に設定するため、コメントアウトする
+    # # ロガーはルートロガーのみとする。
+    # "root": {
+    #     "handlers": ["info", "warning", "error", "debug"],
+    #     "level": "DEBUG",
+    # },
 }
 
 # -----------------------------------------------------------------------------
