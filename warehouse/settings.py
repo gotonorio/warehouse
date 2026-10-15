@@ -191,7 +191,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2026-10-08"
+VERSION_NO = "2026-10-15"
 
 # アップロードファイルのpermissionとサイズを設定
 # https://qiita.com/y-oota/items/8d6d0068abca8e26ab04
@@ -212,6 +212,9 @@ LOGOUT_REDIRECT_URL = "notice:news_card"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # ログイン状態を維持する秒数（24x60x60 = 86,400）
 SESSION_COOKIE_AGE = 86400
+
+# Categoryクラス閲覧権限
+VIEW_CATEGORY = "view_category"
 
 # マークダウンの拡張
 MARKDOWN_EXTENSIONS = [
@@ -288,13 +291,13 @@ LOGGING = {
             "propagate": False,  # 上位のロガーにエラーを伝播させない
         },
         # これにより、通常のバグやエラーが各ログファイルへ正しく出力される
-        "": {
+        "root": {
             "handlers": ["info", "warning", "error", "debug"],
             "level": "INFO",
         },
     },
-    # "root"キーを独立して設定する場合は下記のように"loggers"と並列することもできるが、
-    # DisallowedHostを"loggers"に設定するため、コメントアウトする
+    # # "root"キーを独立して設定する場合は下記のように"loggers"と並列することもできるが、
+    # # DisallowedHostを"loggers"に設定するため、コメントアウトする
     # # ロガーはルートロガーのみとする。
     # "root": {
     #     "handlers": ["info", "warning", "error", "debug"],

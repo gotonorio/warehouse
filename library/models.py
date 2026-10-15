@@ -1,6 +1,9 @@
 import logging
 from pathlib import Path
 
+from django.conf import settings
+
+# from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django.db import models
 from django.db.models import Prefetch, Q
@@ -39,6 +42,7 @@ class Category(models.Model):
     rank = models.IntegerField("表示順", default=0)
     created_at = models.DateTimeField("作成日", default=timezone.now)
     restrict = models.BooleanField("制限", default=False)
+    only_director = models.BooleanField("理事専用", default=False)
     alive = models.BooleanField("有効", default=True)
 
     def __str__(self):
@@ -54,10 +58,18 @@ class Category(models.Model):
         """
         qs = cls.objects.filter(parent=big_category, alive=True)
 
+        # 未ログインユーザの対応
         if not user.is_authenticated:
             qs = qs.filter(restrict=False)
             if not qs.exists():
                 raise PermissionDenied()
+
+        # ログインユーザは単一グループ所属とする
+        if user.groups.exists():
+            group = user.groups.first()
+            only_director = group.permissions.filter(codename=settings.VIEW_CATEGORY).exists()
+            logger.info(only_director)
+
         # CategoryからFileを利用する場合、Prefetchクラスを使うとN+1問題を避けられる
         return qs.order_by("parent__rank", "-rank").prefetch_related(
             Prefetch(
@@ -101,6 +113,7 @@ class File(models.Model):
     alive = models.BooleanField(verbose_name="表示", default=True)
     download = models.BooleanField(verbose_name="ダウンロード", default=False)
     is_confidential = models.BooleanField(verbose_name="機密", default=False)
+    only_director = models.BooleanField("理事専用", default=False)
 
     def __str__(self):
         return self.title
@@ -141,7 +154,9 @@ class File(models.Model):
 
     @classmethod
     def for_user(cls, category, user, limit):
-        """Categoryに属するFileオブジェクトをリストとして返す"""
+        """Categoryに属するFileオブジェクトをリストとして返す
+        もし、ファイル単位で「理事会」制限が必要なら、ここで判定除外をする
+        """
 
         # Prefetch済のFileオブジェクト一覧リスト
         files = category.files_all
