@@ -29,7 +29,6 @@ class SearchlistView(LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         keyword = self.request.GET.get("keyword")
         context["keyword"] = keyword
-        logger.debug(context["keyword"])
         return context
 
 

@@ -57,6 +57,7 @@
         <th class="has-text-centered">ファイルパス名</th>
         <th class="has-text-centered">親カテゴリ名</th>
         <th class="has-text-centered">ログイン制限</th>
+        <th class="has-text-centered">理事専用</th>
         <th class="has-text-centered">有効</th>
         <th class="has-text-centered">rank</th>
         <th class="has-text-centered">#</th>
@@ -70,12 +71,14 @@
           <td class="has-text-left">{{ category.path_name }}</td>
           <td class="has-text-left">{{ category.parent }}</td>
           <td class="has-text-centered">{{ category.restrict }}</td>
+          <td class="has-text-centered">{{ category.only_director }}</td>
           <td class="has-text-centered">{{ category.alive }}</td>
         {% else %}
           <td class="has-text-left has-text-danger">{{ category.name|truncatechars:20 }}</td>
           <td class="has-text-left has-text-danger">{{ category.path_name }}</td>
           <td class="has-text-left has-text-danger">{{ category.parent }}</td>
           <td class="has-text-centered has-text-danger">{{ category.restrict }}</td>
+          <td class="has-text-centered">{{ category.only_director }}</td>
           <td class="has-text-centered has-text-danger">{{ category.alive }}</td>
         {% endif %}
         <td class="has-text-centered">{{ category.rank }}</td>

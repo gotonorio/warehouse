@@ -64,11 +64,12 @@ class Category(models.Model):
             if not qs.exists():
                 raise PermissionDenied()
 
-        # ログインユーザは単一グループ所属とする
+        # Categoryクラスの理事会閲覧権限をチェック
         if user.groups.exists():
             group = user.groups.first()
-            only_director = group.permissions.filter(codename=settings.VIEW_CATEGORY).exists()
-            logger.info(only_director)
+            only_director_flg = group.permissions.filter(codename=settings.VIEW_CATEGORY).exists()
+            if not only_director_flg:
+                qs = qs.exclude(only_director=True)
 
         # CategoryからFileを利用する場合、Prefetchクラスを使うとN+1問題を避けられる
         return qs.order_by("parent__rank", "-rank").prefetch_related(

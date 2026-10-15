@@ -113,7 +113,11 @@ class CategoryForm(forms.ModelForm):
 
     class Meta:
         model = Category
-        fields = ("name", "path_name", "parent", "rank", "restrict", "alive")
+        fields = ("name", "path_name", "parent", "rank", "restrict", "only_director", "alive")
+        labels = {
+            "restrict": "ログイン制限",
+            "only_director": "理事会専用",
+        }
         widgets = {
             "name": forms.TextInput(
                 attrs={
@@ -141,6 +145,11 @@ class CategoryForm(forms.ModelForm):
                 }
             ),
             "restrict": forms.CheckboxInput(
+                attrs={
+                    "class": "checkboxinput",
+                }
+            ),
+            "only_director": forms.CheckboxInput(
                 attrs={
                     "class": "checkboxinput",
                 }
