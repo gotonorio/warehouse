@@ -27,15 +27,15 @@ class TempUserCreateForm(UserCreationForm):
     emailを必須フィールドにするため上書きする。
     """
 
-    username = forms.CharField(label="ユーザ名")
+    # username = forms.CharField(label="ユーザ名")
     email = forms.EmailField(required=True)
 
     class Meta:
         model = User
-        fields = (
-            "username",
-            "email",
-        )
+        fields = ("username", "email")
+        widgets = {
+            "username": forms.TextInput(attrs={"placeholder": "部屋番号_ユーザ名"}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

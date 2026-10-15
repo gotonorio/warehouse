@@ -1,12 +1,40 @@
-{% extends "common/base_single_page.html" %}
+{% extends 'common/base_single_page.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block header %}
+{% endblock header %}
+
+{% block navbar %}
+{# https://bulma.io/documentation/components/navbar/ #}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">【SG川崎】</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="{% url 'notice:news_card' %}">戻る</a>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
 
 {% block content %}
 <div class="container is-fluid ">
   <br>
-  <div class="content has-text-centered">
+  <div class="content">
     <p>
-    ここはソフィア・ガーデンズ川崎管理組合の委員会メンバー専用です。<br>
-    仮登録した後、認証して本登録となります。本登録完了したらメールでお知らせします。
+    ここはソフィア・ガーデンズ川崎管理組合のメンバー専用です。<br>
+    仮登録した後、認証して本登録となります。本登録完了したらメールでお知らせします。<br>
+    区分所有者は「ユーザ名」に部屋番号を入れてください。
     <hr>
     </p>
   </div>
