@@ -1,21 +1,23 @@
 import logging
 
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 
+from common.mixins import CustomPermissionRequiredMixin
 from information.forms import InformationForm
 from information.models import Information
 
 logger = logging.getLogger(__name__)
 
 
-class InformationListView(LoginRequiredMixin, generic.ListView):
-    """情報一覧 権限と表示フラグを考慮する"""
+class InformationListView(PermissionRequiredMixin, generic.ListView):
+    """区分所有者用の情報一覧"""
 
     model = Information
-    # context_object_name = "information_list"
     template_name = "information/pc_information.html"
+    # 区分所有者権限
+    permission_required = "library.view_file"
 
     def get_queryset(self):
         """ユーザー権限に基づいてクエリセットをフィルタリングする"""
@@ -80,3 +82,21 @@ class InformationDeleteView(PermissionRequiredMixin, generic.DeleteView):
     # 権限がない場合、Forbidden 403を返す。これがない場合はログイン画面に飛ばす。
     raise_exception = True
     success_url = reverse_lazy("information:info_list")
+
+
+class BoardInformationListView(InformationListView, CustomPermissionRequiredMixin):
+    """理事会用の情報一覧
+    - 理事会メンバー以上の権限が必要
+    """
+
+    # diretorグループ以上の権限
+    permission_required = "library.view_category"
+    # 権限がない場合に表示される
+    permission_denied_template = "403_board_information.html"
+
+    def get_queryset(self):
+        """ユーザー権限に基づいてクエリセットをフィルタリングする"""
+        # 共通のベースクエリ（表示フラグがTrueのもの）
+        qs = Information.objects.filter(display_info=True).filter(type_name__type_name="理事会").order_by("-sequense")
+
+        return qs

@@ -191,7 +191,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2026-10-15"
+VERSION_NO = "2026-11-09"
 
 # アップロードファイルのpermissionとサイズを設定
 # https://qiita.com/y-oota/items/8d6d0068abca8e26ab04
@@ -293,7 +293,7 @@ LOGGING = {
         # これにより、通常のバグやエラーが各ログファイルへ正しく出力される
         "root": {
             "handlers": ["info", "warning", "error", "debug"],
-            "level": "INFO",
+            "level": "DEBUG",
         },
     },
     # # "root"キーを独立して設定する場合は下記のように"loggers"と並列することもできるが、

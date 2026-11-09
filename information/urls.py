@@ -8,6 +8,7 @@ urlpatterns = [
     # Informationの表示
     path("", views.InformationListView.as_view(), name="information"),
     path("information/", views.InformationListView.as_view(), name="information"),
+    path("board_information/", views.BoardInformationListView.as_view(), name="board_information"),
     # 編集用のtitle一覧表示
     path("info_list/", views.InfoListView.as_view(), name="info_list"),
     # 情報の作成
