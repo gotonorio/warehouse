@@ -7,9 +7,11 @@ from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import redirect, resolve_url
 from django.urls import reverse_lazy
 from django.views import generic
+
 from register.forms import PasswordUpdateForm, TempUserCreateForm, UserUpdateForm
 
 User = get_user_model()
+
 logger = logging.getLogger(__name__)
 
 

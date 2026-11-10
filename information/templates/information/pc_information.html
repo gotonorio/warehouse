@@ -9,7 +9,7 @@
 {% block navbar %}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="{% url 'register:menu' %}">戻る</a>
+    <a class="navbar-item" href="{% url 'register:menu' %}">{{page_title}}</a>
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -33,7 +33,7 @@
     <div class="hero-body">
       <div class="has-text-centered">
         <div class="title">ソフィア・ガーデンズ川崎</div>
-        <div class="subtitle">マンション情報</div>
+        <div class="subtitle">{{page_title}}</div>
       </div>
     </div>
   </section>

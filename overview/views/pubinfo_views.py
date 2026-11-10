@@ -3,6 +3,7 @@ import logging
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
+
 from overview.forms import PublicInformationForm
 from overview.models import PublicInformation
 

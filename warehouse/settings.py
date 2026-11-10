@@ -191,7 +191,7 @@ STATIC_URL = "/static/"
 CSRF_TRUSTED_ORIGINS = ["https://*.sophiagardens.org"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-VERSION_NO = "2026-11-09"
+VERSION_NO = "2026-11-10"
 
 # アップロードファイルのpermissionとサイズを設定
 # https://qiita.com/y-oota/items/8d6d0068abca8e26ab04
@@ -215,6 +215,11 @@ SESSION_COOKIE_AGE = 86400
 
 # Categoryクラス閲覧権限
 VIEW_CATEGORY = "view_category"
+
+# 管理組合情報種類
+TYPE_NAME_INFO = "情報"
+TYPE_NAME_BOARD = "理事会"
+TYPE_NAME_MANAGER = "管理者"
 
 # マークダウンの拡張
 MARKDOWN_EXTENSIONS = [

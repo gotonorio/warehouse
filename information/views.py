@@ -1,5 +1,6 @@
 import logging
 
+from django.conf import settings
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
@@ -12,27 +13,30 @@ logger = logging.getLogger(__name__)
 
 
 class InformationListView(PermissionRequiredMixin, generic.ListView):
-    """区分所有者用の情報一覧"""
+    """区分所有者用の情報一覧
+    - 情報タイプ（type_name）が「情報」のデータを表示
+    """
 
     model = Information
     template_name = "information/pc_information.html"
-    # 区分所有者権限
+    # 区分所有者権限以上がアクセス可能
     permission_required = "library.view_file"
+    # テンプレートへ渡したい変数を辞書で指定する
+    extra_context = {
+        "page_title": "マンション情報",
+    }
 
     def get_queryset(self):
         """ユーザー権限に基づいてクエリセットをフィルタリングする"""
-        user = self.request.user
 
         # 共通のベースクエリ（表示フラグがTrueのもの）
-        qs = Information.objects.filter(display_info=True)
+        qs = (
+            Information.objects.filter(display_info=True)
+            .filter(type_name__type_name=settings.TYPE_NAME_INFO)
+            .order_by("-sequense")
+        )
 
-        # 権限による分岐
-        if user.has_perm("library.add_file") or user.has_perm("notice.add_news"):
-            # 特定の権限がある場合は全表示
-            return qs.order_by("-sequense")
-        else:
-            # 権限がない場合は「情報」タイプのみに絞り込む
-            return qs.filter(type_name__type_name="情報").order_by("-sequense")
+        return qs
 
 
 class InfoListView(generic.ListView):
@@ -89,14 +93,30 @@ class BoardInformationListView(InformationListView, CustomPermissionRequiredMixi
     - 理事会メンバー以上の権限が必要
     """
 
-    # diretorグループ以上の権限
+    # diretorグループ以上の権限以上がアクセス可能
     permission_required = "library.view_category"
     # 権限がない場合に表示される
     permission_denied_template = "403_board_information.html"
+    # テンプレートへ渡したい変数を辞書で指定する
+    extra_context = {
+        "page_title": "理事会専用情報",
+    }
 
     def get_queryset(self):
-        """ユーザー権限に基づいてクエリセットをフィルタリングする"""
-        # 共通のベースクエリ（表示フラグがTrueのもの）
-        qs = Information.objects.filter(display_info=True).filter(type_name__type_name="理事会").order_by("-sequense")
 
-        return qs
+        # アクセスユーザを取得
+        user = self.request.user
+
+        # type_nameが「情報」は除外
+        qs = (
+            Information.objects.filter(display_info=True)
+            .exclude(type_name__type_name=settings.TYPE_NAME_INFO)
+            .order_by("-sequense")
+        )
+
+        # data_manager権限以上は全て表示
+        if user.has_perm("library.add_file"):
+            return qs.order_by("-sequense")
+        else:
+            # director権限（理事会メンバー）の場合は「理事会」タイプのみに絞り込む
+            return qs.filter(type_name__type_name=settings.TYPE_NAME_BOARD).order_by("-sequense")
