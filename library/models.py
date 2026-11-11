@@ -2,11 +2,9 @@ import logging
 from pathlib import Path
 
 from django.conf import settings
-
-# from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django.db import models
-from django.db.models import Prefetch, Q
+from django.db.models import Prefetch
 from django.utils import timezone
 
 logger = logging.getLogger(__name__)

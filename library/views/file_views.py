@@ -48,7 +48,9 @@ class FileCategoryView(PermissionRequiredMixin, generic.ListView):
         return File.objects.filter(category__pk=category_pk).order_by("-alive", "is_confidential", "-rank")
 
     def get_context_data(self, *args, **kwargs):
-        """カテゴリのpkをテンプレートへ渡す."""
+        """カテゴリのpkをテンプレートへ渡す。
+        - 固定値を渡すならばextra_contextでも良い
+        """
         context = super().get_context_data(*args, **kwargs)
         context["category_pk"] = self.kwargs.get("category_pk")
         return context

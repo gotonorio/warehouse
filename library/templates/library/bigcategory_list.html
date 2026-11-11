@@ -51,6 +51,7 @@
           <th class="has-text-centered">親カテゴリ名</th>
           <th class="has-text-centered">作成日</th>
           <th class="has-text-centered">有効</th>
+          <th class="has-text-centered">区分所有者専用</th>
           <th class="has-text-centered">rank</th>
           <th class="has-text-centered">#</th>
         </tr>
@@ -62,11 +63,13 @@
               <td class="has-text-left">{{ pcategory.name }}</td>
               <td class="has-text-left">{{ pcategory.created_at }}</td>
               <td class="has-text-left">{{ pcategory.alive }}</td>
+              <td class="has-text-centered">{{ pcategory.is_admin }}</td>
               <td class="has-text-centered">{{ pcategory.rank }}</td>
             {% else %}
               <td class="has-text-left has-text-danger">{{ pcategory.name }}</td>
               <td class="has-text-left has-text-danger">{{ pcategory.created_at }}</td>
               <td class="has-text-left has-text-danger">{{ pcategory.alive }}</td>
+              <td class="has-text-centered has-text-danger">{{ pcategory.is_admin }}</td>
               <td class="has-text-centered has-text-danger">{{ pcategory.rank }}</td>
             {% endif %}
             <td>

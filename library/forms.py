@@ -101,10 +101,7 @@ class CategoryForm(forms.ModelForm):
         return path_name
 
     def clean_name(self):
-        """カテゴリ名の重複チェックと正規化
-        - モデルクラスでnameにuniqueを設定し忘れたため、更新処理で重複チェックが必要
-        - 新規作成か更新かに応じて self.instance の状態が変わる
-        """
+        """カテゴリ名の正規化"""
         category_name = self.cleaned_data["name"]
         # カテゴリ名の正規化
         category_name = unicodedata.normalize("NFKC", category_name)
@@ -163,20 +160,30 @@ class CategoryForm(forms.ModelForm):
 
 
 class BigCategoryForm(forms.ModelForm):
-    """親Categoryモデルのフォーム"""
+    """親Categoryモデルのフォーム
+    - nameにunique属性を追加したため重複チェックは不要だが参考のために残す。
+    """
 
     def clean_name(self):
         bigcategory_name = self.cleaned_data["name"]
         # 親カテゴリ名の正規化
-        bigcategory_name.name = unicodedata.normalize("NFKC", bigcategory_name.name)
-        # 重複チェック
-        if BigCategory.objects.filter(name=bigcategory_name).exists():
+        bigcategory_name = unicodedata.normalize("NFKC", bigcategory_name)
+
+        # 重複チェック（自分自身を除外）
+        qs = BigCategory.objects.filter(name=bigcategory_name)
+        if self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+
+        if qs.exists():
             raise forms.ValidationError("この親カテゴリ名は既に使用されています。別の名前を指定してください。")
         return bigcategory_name
 
     class Meta:
         model = BigCategory
         fields = ("name", "rank", "created_at", "alive", "is_admin")
+        labels = {
+            "is_admin": "区分所有者専用",
+        }
         widgets = {
             "name": forms.TextInput(
                 attrs={
